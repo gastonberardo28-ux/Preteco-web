@@ -68,10 +68,18 @@ export function Effects() {
 
   // Observa los elementos animables de cada página nueva
   useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in]), [data-draw]:not([data-in])"));
+    const all = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in]), [data-draw]:not([data-in])"));
     if (!("IntersectionObserver" in window)) {
-      els.forEach((el) => el.setAttribute("data-in", ""));
+      all.forEach((el) => el.setAttribute("data-in", ""));
       return;
+    }
+    // Lo que ya está visible al cargar se anima de inmediato, sin esperar al observer.
+    const vh = window.innerHeight;
+    const els: HTMLElement[] = [];
+    for (const el of all) {
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.95 && r.bottom > 0) el.setAttribute("data-in", "");
+      else els.push(el);
     }
     const io = new IntersectionObserver(
       (entries) => {

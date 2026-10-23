@@ -51,7 +51,7 @@ export function PageHero({
               <Eyebrow>{eyebrow}</Eyebrow>
             </div>
           )}
-          <h1 className={`${home ? "t-display" : "t-display-sm"} words max-w-[18ch]`}>
+          <h1 className={`${home ? "t-display" : "t-display-sm"} words max-w-[20ch]`}>
             {title.split(" ").map((w, i) => (
               <span key={i} style={{ ["--i" as string]: i }}>
                 {w}
