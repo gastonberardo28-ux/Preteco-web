@@ -44,6 +44,7 @@ let ok = 0;
 let fail = 0;
 const failures = [];
 for (const p of [...paths].sort()) {
+  if (p.includes("${")) continue; // plantillas del código, no archivos reales
   const dest = join(PUBLIC, p);
   if (existsSync(dest)) { ok++; continue; }
   try {

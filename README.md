@@ -14,14 +14,9 @@ npm run build
 
 ## Imágenes
 
-Por ahora las imágenes se cargan desde `https://preteco.com`. Para que el sitio sea independiente:
+Todas las imágenes y PDF (127 archivos) están en `public/`, así que el sitio no depende del anterior.
 
-```bash
-npm run fetch-assets   # descarga todas las imágenes y PDFs usados a /public
-git add public && git commit -m "chore: assets locales"
-```
-
-Después, en Vercel, definí la variable `NEXT_PUBLIC_ASSET_BASE` con valor vacío.
+Si se agrega una imagen nueva del sitio viejo al código, `npm run fetch-assets` la descarga (también corre solo en GitHub Actions cuando cambia el script). Las fotos del equipo y las portadas del blog se bajan pidiendo antes un link firmado a `/service/file/…`, como hace el sitio actual.
 
 ## Páginas
 
@@ -88,5 +83,4 @@ Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links exi
 
 - [ ] Agregar las ilustraciones internas de los artículos (en el sitio actual están incrustadas en el texto; se migró solo la imagen de portada).
 - [ ] Conectar `/api/contact` a un proveedor de email o CRM.
-- [ ] Correr `npm run fetch-assets` y servir las imágenes desde este proyecto.
 - [ ] Página de AI Readiness (hoy enlaza al sitio actual).
