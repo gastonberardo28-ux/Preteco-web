@@ -28,19 +28,22 @@ Si se agrega una imagen nueva del sitio viejo al código, `npm run fetch-assets`
 | `/products` | Oracle, Okta, MuleSoft, AWS |
 | `/cases` | Casos de éxito |
 | `/blogs` | Blog |
-| `/blog/article/[id]` | 10 artículos (Markdown en `src/content/blog/`) |
+| `/blog/article/[id]` | Artículos (se editan desde la planilla de Google) |
 | `/about-us` | Nosotros, valores, equipo y búsqueda de talentos |
 | `/compliance` | Programa de compliance |
 | `/contact` | Contacto y oficinas |
 
 Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links existentes.
 
-## Editar contenido
+## Documentación
 
-- `src/content/services.ts`: servicios, metodología y herramientas.
-- `src/content/company.ts`: casos, productos, valores, equipo, blog y compliance.
-- `src/content/site.ts`: navegación, partners, redes y oficinas.
-- `src/content/blog/<id>.md`: cuerpo de cada artículo. Para sumar uno nuevo, agregá el archivo y su entrada (título, bajada, fecha, imagen) en `company.ts`.
+| Documento | Para quién |
+| --- | --- |
+| [`docs/GUIA-DE-EDICION.md`](docs/GUIA-DE-EDICION.md) | **Cualquier persona del equipo**: dónde está cada texto, cómo cambiarlo desde GitHub, cómo agregar personas, casos, servicios o secciones |
+| [`docs/CMS-Y-LEADS.md`](docs/CMS-Y-LEADS.md) | Blog desde Google Sheets y formularios hacia Supabase y Salesforce |
+| [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) | Desarrolladores: capas, convenciones, SEO técnico |
+
+**En una línea:** los textos y datos están en `src/content/`, el diseño en `src/components/`, y cada URL en `src/app/`.
 
 ## Mejoras de UX/UI respecto del sitio actual
 
@@ -82,5 +85,5 @@ Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links exi
 ## Pendientes
 
 - [ ] Agregar las ilustraciones internas de los artículos (en el sitio actual están incrustadas en el texto; se migró solo la imagen de portada).
-- [ ] Conectar `/api/contact` a un proveedor de email o CRM.
-- [ ] Página de AI Readiness (hoy enlaza al sitio actual).
+- [x] Blog en Google Sheets; leads en Supabase y Salesforce: ver `docs/CMS-Y-LEADS.md`.
+- [ ] **Página de AI Readiness:** hoy enlaza a `preteco.com/ai-readiness/` del sitio anterior. Cuando el dominio apunte al sitio nuevo, ese link deja de funcionar: hay que migrarla o mover el sitio viejo a un subdominio.

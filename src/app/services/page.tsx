@@ -1,25 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
-import { Section, SectionHeader, Hl } from "@/components/ui";
+import { Section, SectionHeader } from "@/components/ui";
 import { Icon, IconTile } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
-import { getService, serviceGroups, workSteps, tools } from "@/content/services";
+import { getService, serviceGroups, workSteps, tools } from "@/content/collections/services";
+import { servicesPage as c } from "@/content/pages/services";
+import { pageMeta } from "@/lib/seo";
 import { groupIcon, serviceIcon, stepIcons, toolIcons } from "@/content/icons";
 
-export const metadata: Metadata = {
-  title: "Servicios",
-  description: "Sistemas críticos, infraestructura, cloud, inteligencia artificial, seguridad y desarrollo de aplicaciones.",
-};
+/* SERVICIOS · textos en content/pages/services.ts · servicios en content/collections/services.ts */
+
+export const metadata = pageMeta(c.seo, "/services");
 
 export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Servicios"
-        title="¿Por qué elegir nuestros servicios?"
-        text="Acompañamos tu transformación digital de punta a punta: cinco áreas, un mismo equipo y una forma de trabajar probada en sectores críticos."
+        eyebrow={c.hero.eyebrow}
+        title={c.hero.title}
+        text={c.hero.text}
       >
         <ul data-reveal style={{ ["--d" as string]: 5 }} className="flex flex-wrap gap-2 pt-2">
           {serviceGroups.map((g) => (
@@ -45,12 +45,12 @@ export default function ServicesPage() {
               data-reveal
               className="spotlight grid items-stretch overflow-hidden rounded-[32px] border border-line bg-surface/70 lg:grid-cols-[1fr_400px]"
             >
-              <div className={`flex flex-col gap-6 p-7 md:p-10 ${i % 2 ? "lg:order-2" : ""}`}>
+              <div className={`flex flex-col gap-5 p-5 sm:p-7 md:gap-6 md:p-10 ${i % 2 ? "lg:order-2" : ""}`}>
                 <div className="flex items-center gap-4">
                   <IconTile name={groupIcon[g.name]} tone="lime" size="lg" />
                   <div>
                     <p className="t-eyebrow text-[11px]">Área {String(i + 1).padStart(2, "0")}</p>
-                    <h2 className="t-h2 text-[clamp(26px,2.6vw,34px)]">{g.name}</h2>
+                    <h2 className="t-h2 text-[clamp(24px,2.6vw,34px)]">{g.name}</h2>
                   </div>
                 </div>
                 <ul className="grid gap-2">
@@ -60,16 +60,16 @@ export default function ServicesPage() {
                       <li key={s}>
                         <Link
                           href={`/services/${s}`}
-                          className="group -mx-3 flex items-center gap-4 rounded-2xl border border-transparent px-3 py-4 transition-colors hover:border-line hover:bg-bg/50"
+                          className="group -mx-2 flex items-center gap-3 rounded-2xl border border-transparent px-2 py-3 transition-colors hover:border-line hover:bg-bg/50 sm:-mx-3 sm:gap-4 sm:px-3 sm:py-4"
                         >
-                          <Icon name={serviceIcon[s]} className="size-6 text-violet" />
+                          <Icon name={serviceIcon[s]} className="hidden size-6 text-violet sm:block" />
                           <span className="flex-1">
-                            <span className="block text-xl font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-accent">
+                            <span className="block text-lg font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-accent sm:text-xl">
                               {svc.overviewTitle}
                             </span>
                             <span className="block text-muted">{svc.overviewText}</span>
                           </span>
-                          <span className="inline-flex size-10 items-center justify-center rounded-full border border-line text-accent transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
+                          <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line text-accent transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
                             <Icon name="arrowRight" className="size-4" />
                           </span>
                         </Link>
@@ -78,9 +78,9 @@ export default function ServicesPage() {
                   })}
                 </ul>
               </div>
-              <div className={`relative flex items-center justify-center overflow-hidden bg-bg/60 p-10 ${i % 2 ? "lg:order-1" : ""}`}>
+              <div className={`relative flex items-center justify-center overflow-hidden bg-bg/60 p-6 sm:p-10 ${i % 2 ? "lg:order-1" : ""}`}>
                 <div aria-hidden="true" className="absolute size-64 rounded-full bg-accent/15 blur-[70px]" />
-                <img src={g.image} alt="" loading="lazy" className="relative max-h-[260px] w-auto animate-float" style={{ animationDelay: `${-i * 1.7}s` }} />
+                <img src={g.image} alt="" loading="lazy" className="relative max-h-[150px] w-auto animate-float sm:max-h-[260px]" style={{ animationDelay: `${-i * 1.7}s` }} />
               </div>
             </li>
           ))}
@@ -90,13 +90,9 @@ export default function ServicesPage() {
       {/* Metodología: línea de tiempo que se dibuja al hacer scroll */}
       <Section tone="surface">
         <SectionHeader
-          eyebrow="Metodología"
-          title={
-            <>
-              Así trabajamos en <Hl>Preteco</Hl>
-            </>
-          }
-          text="Cinco etapas claras, del primer café a la evolución continua de la solución."
+          eyebrow={c.method.eyebrow}
+          title={c.method.title}
+          text={c.method.text}
         />
         <div className="relative mt-16">
           <div aria-hidden="true" className="absolute top-0 bottom-0 left-[27px] w-px bg-line lg:top-[27px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto" />
@@ -125,10 +121,10 @@ export default function ServicesPage() {
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="Stack" title="Herramientas y tecnologías" />
+        <SectionHeader eyebrow={c.stack.eyebrow} title={c.stack.title} />
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {tools.map((t, i) => (
-            <div key={t.area} data-reveal style={{ ["--d" as string]: i }} className="spotlight glow-border rounded-3xl border border-line bg-surface/70 p-7">
+            <div key={t.area} data-reveal style={{ ["--d" as string]: i }} className="spotlight glow-border rounded-3xl border border-line bg-surface/70 p-6 md:p-7">
               <div className="flex items-center gap-3">
                 <IconTile name={toolIcons[t.area] ?? "box"} />
                 <h3 className="t-h3">{t.area}</h3>
@@ -144,36 +140,27 @@ export default function ServicesPage() {
           ))}
         </div>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
-          <div data-reveal className="spotlight rounded-3xl border border-violet/30 bg-violet-deep/40 p-8">
+          <div data-reveal className="spotlight rounded-3xl border border-violet/30 bg-violet-deep/40 p-6 md:p-8">
             <div className="flex items-center gap-3">
               <IconTile name="layers" />
-              <h3 className="t-h3">PMO</h3>
+              <h3 className="t-h3">{c.stack.pmo.title}</h3>
             </div>
-            <p className="mt-4 text-text/90">
-              A través de nuestra PMO gestionamos los proyectos con un enfoque híbrido que combina estructura y agilidad. Esto
-              nos permite adaptarnos con rapidez, sin perder calidad ni orden.
-            </p>
+            <p className="mt-4 text-text/90">{c.stack.pmo.text}</p>
           </div>
-          <div data-reveal style={{ ["--d" as string]: 1 }} className="rounded-3xl bg-gradient-to-br from-accent to-accent-soft p-8 text-bg">
+          <div data-reveal style={{ ["--d" as string]: 1 }} className="rounded-3xl bg-gradient-to-br from-accent to-accent-soft p-6 text-bg md:p-8">
             <div className="flex items-center gap-3">
               <span className="inline-flex size-11 items-center justify-center rounded-xl bg-bg/10">
                 <Icon name="target" className="size-5" />
               </span>
-              <h3 className="text-xl font-semibold">El resultado</h3>
+              <h3 className="text-xl font-semibold">{c.stack.result.title}</h3>
             </div>
-            <p className="mt-4 text-bg/85">
-              Soluciones listas para implementar, con menos riesgos, menor curva de aprendizaje y un impacto real, medible y
-              sostenible.
-            </p>
+            <p className="mt-4 text-bg/85">{c.stack.result.text}</p>
           </div>
         </div>
       </Section>
 
       <Section className="!pt-0">
-        <ContactForm
-          title="¿Querés ver cómo funciona en acción? Nosotros te mostramos."
-          text="Completá el formulario y coordinamos una llamada sin compromiso."
-        />
+        <ContactForm title={c.form.title} text={c.form.text} />
       </Section>
     </>
   );

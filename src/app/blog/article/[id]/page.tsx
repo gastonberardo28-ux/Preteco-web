@@ -2,38 +2,48 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { posts, formatDate } from "@/content/company";
+import { formatDate } from "@/content/collections/blog";
+import { articlePage as c } from "@/content/pages/article";
+import { pageMeta, SITE_URL } from "@/lib/seo";
 import { tagIcon } from "@/content/icons";
-import { Markdown, readArticle, readingMinutes } from "@/lib/markdown";
-import { Button, Section, SectionHeader } from "@/components/ui";
+import { Markdown, readingMinutes } from "@/lib/markdown";
+import { getPosts } from "@/lib/cms";
+import { Breadcrumbs, Button, JsonLd, Section, SectionHeader } from "@/components/ui";
 import { Icon } from "@/components/Icon";
 import { HeroBackground } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 
+/* ARTÍCULO · el contenido viene de la planilla del blog; textos fijos en content/pages/article.ts */
+
 // Misma URL que el sitio actual (/blog/article/N) para no romper links ni SEO.
-export function generateStaticParams() {
-  return posts.map((p) => ({ id: String(p.id) }));
+// Los artículos nuevos de la planilla se generan la primera vez que alguien los visita
+// y se actualizan cada 5 minutos (o al instante con /api/revalidate).
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return (await getPosts()).map((p) => ({ id: String(p.id) }));
 }
 
 type Props = { params: Promise<{ id: string }> };
 
-const findPost = (id: string) => posts.find((p) => String(p.id) === id);
+const findPost = async (id: string) => (await getPosts()).find((p) => String(p.id) === id);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = findPost((await params).id);
+  const post = await findPost((await params).id);
   if (!post) return {};
-  return {
-    title: post.title,
-    description: post.dek,
-    openGraph: { title: post.title, description: post.dek, images: [post.image], type: "article" },
-  };
+  return pageMeta({ title: post.title, description: post.dek }, `/blog/article/${post.id}`, {
+    openGraph: { title: post.title, description: post.dek, images: [post.image], type: "article", publishedTime: post.date },
+  });
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const post = findPost((await params).id);
+  const posts = await getPosts();
+  const { id } = await params;
+  const post = posts.find((p) => String(p.id) === id);
   if (!post) notFound();
 
-  const body = readArticle(post.id);
+  const body = post.body;
   const related = [
     ...posts.filter((p) => p.id !== post.id && p.tag === post.tag),
     ...posts.filter((p) => p.id !== post.id && p.tag !== post.tag),
@@ -44,12 +54,9 @@ export default async function ArticlePage({ params }: Props) {
       <article>
         <header className="relative isolate overflow-hidden border-b border-line/60">
           <HeroBackground />
-          <div className="container-page grid gap-12 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
-            <div className="flex flex-col gap-6">
-              <Link href="/blogs" className="group inline-flex items-center gap-2 self-start text-[15px] text-muted hover:text-accent">
-                <Icon name="arrowRight" className="size-4 rotate-180 transition-transform group-hover:-translate-x-1" />
-                Volver al blog
-              </Link>
+          <div className="container-page grid gap-10 py-12 md:gap-12 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+            <div className="flex flex-col gap-5 md:gap-6">
+              <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Blog", href: "/blogs" }, { label: post.title }]} />
               <p data-reveal="fade" className="flex flex-wrap items-center gap-3 text-sm text-muted">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-violet/40 bg-violet/10 px-3 py-1 text-violet-soft">
                   <Icon name={tagIcon[post.tag] ?? "book"} className="size-3.5" />
@@ -61,10 +68,10 @@ export default async function ArticlePage({ params }: Props) {
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Icon name="clock" className="size-3.5" />
-                  {readingMinutes(body)} min de lectura
+                  {readingMinutes(body)} {c.readingTime}
                 </span>
               </p>
-              <h1 className="words max-w-[22ch] font-mono text-[clamp(30px,3.8vw,50px)] leading-[1.08] tracking-[-0.04em] text-accent">
+              <h1 className="words max-w-[22ch] font-mono text-[clamp(28px,3.8vw,50px)] leading-[1.1] tracking-[-0.04em] text-accent [overflow-wrap:anywhere]">
                 {post.title.split(" ").map((w, i) => (
                   <span key={i} style={{ ["--i" as string]: i }}>
                     {w}
@@ -82,28 +89,43 @@ export default async function ArticlePage({ params }: Props) {
             </div>
           </div>
         </header>
-        <div className="container-page py-16 md:py-24">
+        <div className="container-page py-12 md:py-24">
           <div className="mx-auto max-w-[70ch]">
             <Markdown source={body} />
-            <div data-reveal className="mt-14 flex flex-col items-start gap-5 rounded-3xl border border-violet/30 bg-violet-deep/40 p-7 md:flex-row md:items-center md:justify-between">
-              <p className="t-h3">¿Te interesa aplicar esto en tu organización?</p>
-              <Button href="#formulario">Hablemos</Button>
+            <div data-reveal className="mt-14 flex flex-col items-stretch gap-5 rounded-3xl border border-violet/30 bg-violet-deep/40 p-6 sm:items-start md:flex-row md:items-center md:justify-between md:p-7">
+              <p className="t-h3">{c.inlineCta.text}</p>
+              <Button href="#formulario" className="w-full sm:w-auto">
+                {c.inlineCta.label}
+              </Button>
             </div>
           </div>
         </div>
       </article>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.dek,
+          image: post.image.startsWith("http") ? post.image : `${SITE_URL}${post.image}`,
+          datePublished: post.date,
+          url: `${SITE_URL}/blog/article/${post.id}`,
+          author: { "@type": "Organization", name: "Preteco" },
+          publisher: { "@type": "Organization", name: "Preteco", logo: { "@type": "ImageObject", url: `${SITE_URL}/assets/image/logo.svg` } },
+        }}
+      />
 
       <Section tone="surface">
         <SectionHeader
-          eyebrow="Blog"
-          title="Seguí leyendo"
+          eyebrow={c.related.eyebrow}
+          title={c.related.title}
           action={
             <Button href="/blogs" variant="tertiary">
-              Ver todas las notas
+              {c.related.link}
             </Button>
           }
         />
-        <ul className="mt-12 grid gap-6 md:grid-cols-3">
+        <ul className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
           {related.map((p, i) => (
             <li key={p.id} data-reveal style={{ ["--d" as string]: i }}>
               <Link
@@ -124,7 +146,7 @@ export default async function ArticlePage({ params }: Props) {
       </Section>
 
       <Section>
-        <ContactForm title="¿Querés que lo conversemos?" text="Contanos tu desafío y coordinamos una llamada sin compromiso con nuestro equipo." />
+        <ContactForm title={c.form.title} text={c.form.text} />
       </Section>
     </>
   );

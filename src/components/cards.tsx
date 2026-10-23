@@ -1,18 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { cases, posts, formatDate } from "@/content/company";
+import { cases } from "@/content/collections/cases";
+import { formatDate } from "@/content/collections/blog";
+import { blogPage } from "@/content/pages/blog";
+import { getPosts } from "@/lib/cms";
 import { tagIcon } from "@/content/icons";
 import { Icon } from "./Icon";
 
 export function CaseCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" }) {
   const H = headingLevel;
   return (
-    <ul className="grid gap-6 md:grid-cols-3">
+    <ul className="grid gap-4 md:grid-cols-3 md:gap-6">
       {cases.map((c, i) => (
         <li key={c.client} data-reveal style={{ ["--d" as string]: i }}>
           <Link
             href={c.service.href}
-            className="spotlight glow-border group relative flex h-full min-h-[400px] flex-col justify-end overflow-hidden rounded-3xl border border-line"
+            className="spotlight glow-border group relative flex h-full min-h-[320px] flex-col justify-end overflow-hidden rounded-3xl border border-line md:min-h-[400px]"
           >
             <img
               src={c.image}
@@ -25,7 +28,7 @@ export function CaseCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" 
               <span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
               {c.badge && <img src={c.badge} alt={c.badgeAlt} className="h-6 w-auto" />}
             </div>
-            <div className="flex flex-col gap-3 p-7">
+            <div className="flex flex-col gap-3 p-6 md:p-7">
               <H className="t-h3 text-2xl">{c.client}</H>
               <p className="text-text/90">{c.summary}</p>
               <span className="mt-2 inline-flex items-center gap-2 border-t border-line/80 pt-4 text-sm text-accent">
@@ -40,10 +43,12 @@ export function CaseCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" 
   );
 }
 
-export function PostCards({ limit }: { limit?: number }) {
+export async function PostCards({ limit }: { limit?: number }) {
+  const posts = await getPosts();
   const list = limit ? posts.slice(0, limit) : posts;
+  if (list.length === 0) return <p className="t-lead">{blogPage.empty}</p>;
   return (
-    <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
       {list.map((p, i) => (
         <li key={p.id} data-reveal style={{ ["--d" as string]: i % 3 }}>
           <Link
