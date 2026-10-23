@@ -1,5 +1,6 @@
 import { pageMeta } from "@/lib/seo";
 import { autoText, resolveStats } from "@/lib/auto";
+import { hourlyShuffle } from "@/lib/shuffle";
 import { PageHero } from "@/components/PageHero";
 import { Section, SectionHeader } from "@/components/ui";
 import { IconTile } from "@/components/Icon";
@@ -12,6 +13,9 @@ import { aboutPage as c } from "@/content/pages/about";
 /* NOSOTROS · textos en content/pages/about.ts · equipo y valores en content/collections/team.ts */
 
 export const metadata = pageMeta(c.seo, "/about-us");
+
+// El orden del equipo se mezcla cada hora para que todas las personas tengan visibilidad.
+export const revalidate = 3600;
 
 export default function AboutPage() {
   return (
@@ -44,7 +48,7 @@ export default function AboutPage() {
       <Section id="equipo" tone="surface">
         <SectionHeader eyebrow={autoText(c.team.eyebrow)} title={c.team.title} text={c.team.text} />
         <div className="mt-12 md:mt-14">
-          <TeamGrid people={team} showAll={c.team.showAll} showLess={c.team.showLess} />
+          <TeamGrid people={hourlyShuffle(team)} showAll={c.team.showAll} showLess={c.team.showLess} />
         </div>
       </Section>
 

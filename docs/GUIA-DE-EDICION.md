@@ -84,7 +84,7 @@ En `src/content/pages/home.ts` → `hero.stats`. Los valores `"auto:team"` y `"a
 ### Agregar una persona al equipo
 1. Subí la foto (cuadrada, ~600 px) a `public/preteco/preteco-web/`.
 2. En `src/content/collections/team.ts`, agregá una línea en `teamRaw`: `["Nombre Apellido", "nombre-del-archivo.jpg"],`
-3. El contador de personas del sitio se actualiza solo.
+3. El contador de personas del sitio se actualiza solo. El orden no importa: el equipo se mezcla cada hora y las fotos visibles van rotando para que todos aparezcan.
 
 ### Agregar un caso de éxito
 En `src/content/collections/cases.ts`, copiá un bloque `{ … }` completo, pegalo debajo y cambiá cliente, resumen, imagen y servicio relacionado.

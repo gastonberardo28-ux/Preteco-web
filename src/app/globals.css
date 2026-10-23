@@ -207,6 +207,18 @@ html.fx [data-draw][data-in] { transform: scaleX(1); }
   html.fx [data-draw][data-in] { transform: scaleY(1); }
 }
 
+/* Equipo "muro vivo": la persona que entra aparece con un fundido y un aro lima que se desvanece */
+.team-swap-in { animation: team-swap-in 0.9s var(--ease-out-expo) both; }
+@keyframes team-swap-in {
+  from { opacity: 0; transform: scale(0.9); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+.team-swap-ring { animation: team-swap-ring 1.6s ease-out forwards; }
+@keyframes team-swap-ring {
+  0% { opacity: 0.9; transform: scale(0.96); }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+
 /* Textura de puntos para fondos */
 @utility bg-dots {
   background-image: radial-gradient(rgb(203 255 0 / 0.12) 1px, transparent 1px);
