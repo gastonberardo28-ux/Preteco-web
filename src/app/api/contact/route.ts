@@ -1,38 +1,30 @@
 import { NextResponse } from "next/server";
 
-type Payload = {
-  nombre?: string;
-  email?: string;
-  telefono?: string;
-  empresa?: string;
-  mensaje?: string;
-};
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ALLOWED = ["nombre", "email", "telefono", "empresa", "interes", "linkedin", "area", "tema", "mensaje", "origen"] as const;
 
 export async function POST(req: Request) {
-  let body: Payload;
+  let raw: Record<string, unknown>;
   try {
-    body = (await req.json()) as Payload;
+    raw = (await req.json()) as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
 
-  const nombre = body.nombre?.trim();
-  const email = body.email?.trim();
-  if (!nombre || !email || !EMAIL_RE.test(email)) {
+  const data: Record<string, string> = {};
+  for (const key of ALLOWED) {
+    const v = raw[key];
+    if (typeof v === "string" && v.trim()) data[key] = v.trim().slice(0, 4000);
+  }
+
+  if (!data.nombre || !data.email || !EMAIL_RE.test(data.email)) {
     return NextResponse.json({ ok: false, error: "missing_fields" }, { status: 422 });
   }
 
   // TODO: conectar a un proveedor real (Resend, SendGrid, HubSpot, Salesforce...).
+  // `origen` indica qué formulario se usó: contact | careers | blog | compliance.
   // Las credenciales van en variables de entorno (ver .env.example), nunca en el código.
-  console.log("[contacto]", {
-    nombre,
-    email,
-    telefono: body.telefono?.trim() ?? "",
-    empresa: body.empresa?.trim() ?? "",
-    mensaje: body.mensaje?.trim() ?? "",
-  });
+  console.log("[formulario]", data);
 
   return NextResponse.json({ ok: true });
 }

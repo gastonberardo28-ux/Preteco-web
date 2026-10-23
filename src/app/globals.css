@@ -1,61 +1,47 @@
 @import "tailwindcss";
 
-/* ───────── Design tokens: Preteco OS ───────── */
+/* ───────── Tokens: identidad actual de Preteco (DM Sans / DM Mono, verde lima sobre oliva) ───────── */
 @theme {
-  --color-bg: #0a0d06;
-  --color-panel: #0d1108;
-  --color-surface: #0f1309;
-  --color-surface-2: #12170b;
-  --color-field: #161c0d;
-  --color-line: #222a14;
-  --color-line-2: #2e3a1a;
-  --color-ink: #f2f6e4;
-  --color-text: #e6ebd6;
-  --color-soft: #b7c1a0;
-  --color-muted: #9aa585;
-  --color-dim: #8e9879;
-  --color-accent: #c8f04a;
-  --color-accent-hover: #e4ff8a;
-  --color-syntax: #c792ea;
+  --color-bg: #141900;
+  --color-surface: #1a2100;
+  --color-panel: #222c00;
+  --color-field: #293300;
+  --color-line: #3a4711;
+  --color-line-strong: #5a6e12;
+  --color-ink: #f5ffcc;
+  --color-text: #fafee5;
+  --color-muted: #c4cc9e;
+  --color-accent: #cbff00;
+  --color-accent-hover: #dcff4d;
+  --color-accent-soft: #ebff99;
+  --color-danger: #ffb4a3;
 
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
 
-  --animate-blink: blink 1s steps(1) infinite;
-  --animate-marquee: marquee 32s linear infinite;
-  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
 
-  @keyframes blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-  }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  @keyframes pulse-soft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-sans);
-  }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+  body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
   ::selection { background: var(--color-accent); color: var(--color-bg); }
-  input::placeholder, textarea::placeholder { color: #6f7a5c; }
-  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  input::placeholder, textarea::placeholder { color: #8d9a5c; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
+  img { max-width: 100%; height: auto; }
 }
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(rgb(200 240 74 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(200 240 74 / 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1240px;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) { padding-inline: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
