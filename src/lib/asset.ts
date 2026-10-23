@@ -1,9 +1,9 @@
 /**
- * Las imágenes se sirven por ahora desde el sitio actual (https://preteco.com).
- * Corré `npm run fetch-assets` para descargarlas a /public, y después definí
- * NEXT_PUBLIC_ASSET_BASE="" (vacío) en Vercel para servirlas desde este proyecto.
+ * Las imágenes y documentos viven en /public (se descargan del sitio anterior con
+ * `npm run fetch-assets`). Si alguna vez hiciera falta servirlas desde otro dominio
+ * o CDN, definí NEXT_PUBLIC_ASSET_BASE con esa URL base.
  */
-const BASE = process.env.NEXT_PUBLIC_ASSET_BASE ?? "https://preteco.com";
+const BASE = process.env.NEXT_PUBLIC_ASSET_BASE ?? "";
 
 export function asset(path: string) {
   return `${BASE}${path}`;
