@@ -17,7 +17,7 @@ export default function BlogPage() {
     <>
       <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} text={c.hero.text} actions={c.hero.actions} />
       <Section>
-        <PostCards />
+        <PostCards layout="list" />
       </Section>
       <Section className="!pt-0">
         <ContactForm variant="blog" title={c.form.title} text={c.form.text} />

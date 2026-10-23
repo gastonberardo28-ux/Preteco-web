@@ -7,7 +7,9 @@ import { useEffect } from "react";
    - Entrada de elementos al hacer scroll ([data-reveal], [data-draw])
    - Spotlight que sigue al cursor en las cards (.spotlight)
    - Barra de progreso de lectura y estado "scrolleado" del header
-   - Parallax suave en elementos con [data-parallax="0.2"] */
+   - Parallax suave en elementos con [data-parallax="0.2"]
+   - En pantallas táctiles (sin hover): la tarjeta más cercana al centro de la pantalla
+     recibe [data-focus] y se "enciende" como si tuviera el mouse encima */
 export function Effects() {
   const pathname = usePathname();
 
@@ -16,6 +18,24 @@ export function Effects() {
     const root = document.documentElement;
     root.classList.add("fx");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const touch = window.matchMedia("(hover: none)");
+    let focused: HTMLElement | null = null;
+    const focusCenter = () => {
+      const mid = window.innerHeight / 2;
+      let best: HTMLElement | null = null;
+      let bestDist = window.innerHeight * 0.3; // solo si está razonablemente cerca del centro
+      document.querySelectorAll<HTMLElement>(".glow-border").forEach((el) => {
+        if (el.closest(".carousel")) return; // en carruseles manda la tarjeta activa
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight || r.height > window.innerHeight * 0.9) return;
+        const d = Math.abs(r.top + r.height / 2 - mid);
+        if (d < bestDist) (bestDist = d), (best = el);
+      });
+      if (best === focused) return;
+      focused?.removeAttribute("data-focus");
+      (best as HTMLElement | null)?.setAttribute("data-focus", "");
+      focused = best;
+    };
 
     let ticking = false;
     const onScroll = () => {
@@ -27,6 +47,7 @@ export function Effects() {
         root.style.setProperty("--scroll", String(max > 0 ? y / max : 0));
         if (y > 12) root.setAttribute("data-scrolled", "");
         else root.removeAttribute("data-scrolled");
+        if (touch.matches && !reduce) focusCenter();
         if (!reduce) {
           document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
             const speed = Number(el.dataset.parallax) || 0.15;

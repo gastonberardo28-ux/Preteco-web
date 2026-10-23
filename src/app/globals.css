@@ -219,6 +219,64 @@ html.fx [data-draw][data-in] { transform: scaleX(1); }
   100% { opacity: 0; transform: scale(1.12); }
 }
 
+/* ── Carrusel (components/Carousel.tsx) ────────────────────────────────
+   Debajo de su breakpoint la grilla pasa a ser una fila deslizable con snap. */
+.carousel { --item: 84%; --gutter: 1.25rem; }
+@media (width >= 40rem) { .carousel { --item: 46%; } }
+@media (width >= 48rem) { .carousel { --gutter: 2rem; --item: 44%; } }
+
+@media (width < 40rem) {
+  .carousel[data-until] { display: flex !important; }
+}
+@media (width < 48rem) {
+  .carousel[data-until="md"], .carousel[data-until="lg"] { display: flex !important; }
+}
+@media (width < 64rem) {
+  .carousel[data-until="lg"] { display: flex !important; }
+}
+.carousel { scrollbar-width: none; }
+.carousel::-webkit-scrollbar { display: none; }
+
+@media (width < 40rem) {
+  .carousel[data-until] { gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 10px; scroll-padding-inline: var(--gutter); }
+  .carousel[data-until] > * { flex: 0 0 var(--item); min-width: 0; scroll-snap-align: start; }
+}
+@media (40rem <= width < 48rem) {
+  .carousel[data-until="md"], .carousel[data-until="lg"] { gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 10px; scroll-padding-inline: var(--gutter); }
+  .carousel[data-until="md"] > *, .carousel[data-until="lg"] > * { flex: 0 0 var(--item); min-width: 0; scroll-snap-align: start; }
+}
+@media (48rem <= width < 64rem) {
+  .carousel[data-until="lg"] { gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; margin-inline: calc(var(--gutter) * -1); padding: 4px var(--gutter) 10px; scroll-padding-inline: var(--gutter); }
+  .carousel[data-until="lg"] > * { flex: 0 0 var(--item); min-width: 0; scroll-snap-align: start; }
+}
+/* Las tarjetas que no están al frente se atenúan apenas (solo en modo carrusel) */
+html.fx .carousel > [data-in] { transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo); }
+html.fx .carousel[data-until] > [data-in]:not([data-current]) { opacity: 0.55; transform: scale(0.97); }
+/* "Amague" para sugerir que se puede deslizar */
+.carousel[data-hint] > * { animation: carousel-hint 1.3s var(--ease-out-expo); }
+@keyframes carousel-hint { 0%, 100% { translate: 0; } 35% { translate: -36px; } }
+
+/* Feedback al tocar en pantallas táctiles: las tarjetas se "hunden" levemente */
+@media (hover: none) {
+  .glow-border:active, .tap:active { transform: scale(0.98); transition-duration: 0.12s; }
+  .spotlight:active::before { opacity: 1; }
+  /* Sin mouse: la tarjeta en el centro de la pantalla (o la activa del carrusel) se enciende */
+  .glow-border[data-focus] { border-color: color-mix(in oklab, var(--color-violet) 45%, transparent); }
+  .spotlight[data-focus]::before,
+  .carousel[data-until] > [data-current] .spotlight::before,
+  .carousel[data-until] > [data-current].spotlight::before { opacity: 0.85; }
+  [data-focus] img.grayscale,
+  .carousel[data-until] > [data-current] img.grayscale { filter: none; opacity: 0.8; }
+}
+
+/* Formulario paso a paso (mobile): la pregunta entra desde el costado */
+.step-in-next { animation: step-in-next 0.5s var(--ease-out-expo) both; }
+.step-in-prev { animation: step-in-prev 0.5s var(--ease-out-expo) both; }
+@keyframes step-in-next { from { opacity: 0; transform: translate3d(40px, 0, 0); } to { opacity: 1; transform: none; } }
+@keyframes step-in-prev { from { opacity: 0; transform: translate3d(-40px, 0, 0); } to { opacity: 1; transform: none; } }
+.step-chip { animation: chip-in 0.45s var(--ease-out-expo) both; }
+@keyframes chip-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+
 /* Textura de puntos para fondos */
 @utility bg-dots {
   background-image: radial-gradient(rgb(203 255 0 / 0.12) 1px, transparent 1px);

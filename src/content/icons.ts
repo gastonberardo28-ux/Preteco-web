@@ -16,19 +16,9 @@ export const serviceIcon: Record<string, IconName> = {
 export const groupIcon: Record<string, IconName> = {
   "Database, Middleware & Virtualización": "database",
   Cloud: "cloud",
-  "Inteligencia artificial": "sparkles",
+  "Inteligencia artificial": "network",
   Seguridad: "shield",
   Desarrollo: "code",
-};
-
-export const stepIcons: IconName[] = ["message", "search", "pen", "rocket", "handshake"];
-
-export const valueIcons: IconName[] = ["users", "target", "eye", "award", "message", "sparkles"];
-
-export const toolIcons: Record<string, IconName> = {
-  "UX/UI": "pen",
-  Desarrollo: "code",
-  "Gestión ágil": "layers",
 };
 
 export const pillarIcons: IconName[] = ["users", "shield", "layers", "chart", "handshake", "graduation", "megaphone"];
@@ -38,6 +28,6 @@ export const tagIcon: Record<string, IconName> = {
   CriticalOps: "activity",
   Seguridad: "shield",
   Cloud: "cloud",
-  IA: "sparkles",
+  IA: "network",
   Desarrollo: "code",
 };

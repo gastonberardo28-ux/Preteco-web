@@ -3,11 +3,9 @@ import { autoText, resolveStats } from "@/lib/auto";
 import { hourlyShuffle } from "@/lib/shuffle";
 import { PageHero } from "@/components/PageHero";
 import { Section, SectionHeader } from "@/components/ui";
-import { IconTile } from "@/components/Icon";
 import { TeamGrid } from "@/components/TeamGrid";
 import { ContactForm } from "@/components/ContactForm";
 import { team, values } from "@/content/collections/team";
-import { valueIcons } from "@/content/icons";
 import { aboutPage as c } from "@/content/pages/about";
 
 /* NOSOTROS · textos en content/pages/about.ts · equipo y valores en content/collections/team.ts */
@@ -36,9 +34,9 @@ export default function AboutPage() {
               key={v}
               data-reveal
               style={{ ["--d" as string]: i % 3 }}
-              className="spotlight glow-border flex items-center gap-4 rounded-2xl border border-line bg-surface/70 p-4 sm:gap-5 sm:rounded-3xl sm:p-6"
+              className="spotlight glow-border flex items-baseline gap-4 rounded-2xl border border-line bg-surface/70 p-5 sm:gap-5 sm:rounded-3xl sm:p-6"
             >
-              <IconTile name={valueIcons[i]} tone={i % 2 ? "violet" : "lime"} />
+              <span className="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
               <span className="text-base font-medium text-ink sm:text-lg">{v}</span>
             </li>
           ))}

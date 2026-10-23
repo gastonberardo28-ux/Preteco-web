@@ -4,10 +4,11 @@ import { PageHero } from "@/components/PageHero";
 import { Section, SectionHeader } from "@/components/ui";
 import { Icon, IconTile } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
+import { Carousel } from "@/components/Carousel";
 import { getService, serviceGroups, workSteps, tools } from "@/content/collections/services";
 import { servicesPage as c } from "@/content/pages/services";
 import { pageMeta } from "@/lib/seo";
-import { groupIcon, serviceIcon, stepIcons, toolIcons } from "@/content/icons";
+import { groupIcon, serviceIcon } from "@/content/icons";
 
 /* SERVICIOS · textos en content/pages/services.ts · servicios en content/collections/services.ts */
 
@@ -28,7 +29,6 @@ export default function ServicesPage() {
                 href={`#${slug(g.name)}`}
                 className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-4 py-2 text-sm text-text transition-colors hover:border-violet hover:text-violet-soft"
               >
-                <Icon name={groupIcon[g.name]} className="size-4 text-violet" />
                 {g.name}
               </a>
             </li>
@@ -104,13 +104,11 @@ export default function ServicesPage() {
           <ol className="relative grid gap-10 lg:grid-cols-5 lg:gap-6">
             {workSteps.map((s, i) => (
               <li key={s.phase} data-reveal style={{ ["--d" as string]: i }} className="flex gap-5 lg:flex-col">
-                <span className="relative z-10 inline-flex size-14 shrink-0 items-center justify-center rounded-2xl border border-violet/40 bg-bg text-violet shadow-[0_0_30px_-8px_rgb(165_148_255/0.6)]">
-                  <Icon name={stepIcons[i]} className="size-6" />
+                <span className="relative z-10 inline-flex size-14 shrink-0 items-center justify-center rounded-full border border-line-strong bg-bg font-mono text-lg tracking-tight text-accent">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex flex-col gap-2">
-                  <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
-                    <span className="text-accent">{String(i + 1).padStart(2, "0")}</span> · {s.phase}
-                  </p>
+                  <p className="font-mono text-xs tracking-[0.14em] text-violet uppercase">{s.phase}</p>
                   <h3 className="t-h3">{s.title}</h3>
                   <p className="text-[15px] leading-relaxed text-muted">{s.text}</p>
                 </div>
@@ -122,13 +120,10 @@ export default function ServicesPage() {
 
       <Section>
         <SectionHeader eyebrow={c.stack.eyebrow} title={c.stack.title} />
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <Carousel until="lg" label="Herramientas" className="mt-12 grid gap-5 lg:grid-cols-3">
           {tools.map((t, i) => (
-            <div key={t.area} data-reveal style={{ ["--d" as string]: i }} className="spotlight glow-border rounded-3xl border border-line bg-surface/70 p-6 md:p-7">
-              <div className="flex items-center gap-3">
-                <IconTile name={toolIcons[t.area] ?? "box"} />
-                <h3 className="t-h3">{t.area}</h3>
-              </div>
+            <li key={t.area} data-reveal style={{ ["--d" as string]: i }} className="spotlight glow-border rounded-3xl border border-line bg-surface/70 p-6 md:p-7">
+              <h3 className="t-h3">{t.area}</h3>
               <ul className="mt-6 flex flex-wrap gap-2">
                 {t.items.map((x) => (
                   <li key={x} className="rounded-full border border-line bg-bg/60 px-3 py-1 font-mono text-[13px] text-text">
@@ -136,24 +131,16 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </li>
           ))}
-        </div>
+        </Carousel>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           <div data-reveal className="spotlight rounded-3xl border border-violet/30 bg-violet-deep/40 p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <IconTile name="layers" />
-              <h3 className="t-h3">{c.stack.pmo.title}</h3>
-            </div>
+            <h3 className="t-h3">{c.stack.pmo.title}</h3>
             <p className="mt-4 text-text/90">{c.stack.pmo.text}</p>
           </div>
           <div data-reveal style={{ ["--d" as string]: 1 }} className="rounded-3xl bg-gradient-to-br from-accent to-accent-soft p-6 text-bg md:p-8">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex size-11 items-center justify-center rounded-xl bg-bg/10">
-                <Icon name="target" className="size-5" />
-              </span>
-              <h3 className="text-xl font-semibold">{c.stack.result.title}</h3>
-            </div>
+            <h3 className="text-xl font-semibold">{c.stack.result.title}</h3>
             <p className="mt-4 text-bg/85">{c.stack.result.text}</p>
           </div>
         </div>

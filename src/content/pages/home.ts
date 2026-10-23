@@ -24,7 +24,7 @@ export const home = {
     /** Las 3 tarjetas al costado del título. */
     pillars: [
       {
-        icon: "sparkles" as IconName,
+        icon: "network" as IconName,
         title: "Inteligencia artificial",
         text: "Automatizamos procesos y potenciamos la toma de decisiones con IA aplicada a tu negocio.",
         href: "/services/agent-development",

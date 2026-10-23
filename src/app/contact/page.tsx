@@ -5,6 +5,7 @@ import { Icon, IconTile } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
 import { offices, COMPLIANCE_EMAIL } from "@/content/site";
 import { contactPage as c } from "@/content/pages/contact";
+import { Carousel } from "@/components/Carousel";
 
 /* CONTACTO · textos en content/pages/contact.ts · oficinas en content/site.ts */
 
@@ -19,7 +20,7 @@ export default function ContactPage() {
       </Section>
       <Section tone="surface">
         <SectionHeader eyebrow={c.offices.eyebrow} title={c.offices.title} text={c.offices.text} />
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 md:mt-12 md:gap-4 lg:grid-cols-4">
+        <Carousel until="md" label="Oficinas" className="mt-10 grid gap-3 md:mt-12 md:grid-cols-2 md:gap-4 lg:grid-cols-4">
           {offices.map((o, i) => (
             <li key={o.city} data-reveal style={{ ["--d" as string]: i }}>
               <a
@@ -40,7 +41,7 @@ export default function ContactPage() {
               </a>
             </li>
           ))}
-        </ul>
+        </Carousel>
         <p data-reveal className="mt-10 flex flex-wrap items-center gap-2 text-muted">
           <Icon name="mail" className="size-4 text-violet" />
           {c.complianceLabel}
