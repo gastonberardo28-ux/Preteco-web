@@ -70,3 +70,19 @@ export const offices = [
 }));
 
 export const COMPLIANCE_EMAIL = "compliance@preteco.com";
+
+/** Botón fijo inferior en mobile ("CTA sticky").
+ *  - Aparece después del primer pantallazo y se oculta cuando el formulario o el pie están a la vista.
+ *  - Si la página tiene formulario, lleva a él; si no, va a /contact.
+ *  - El texto cambia según la sección (se usa la primera coincidencia por inicio de URL). */
+export const stickyCta = {
+  hideOn: ["/contact"],
+  labels: [
+    { path: "/services/", label: "Consultar por este servicio" },
+    { path: "/about-us", label: "Sumate al equipo" },
+    { path: "/blogs", label: "Proponé un post" },
+    { path: "/compliance", label: "Hacer una consulta" },
+  ],
+  defaultLabel: "Hablemos",
+  note: "Sin compromiso",
+};

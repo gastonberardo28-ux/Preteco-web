@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, DM_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
+import { StickyCta } from "@/components/StickyCta";
 import { Footer } from "@/components/Footer";
 import { Effects } from "@/components/Effects";
 import { JsonLd } from "@/components/ui";
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="contenido">{children}</main>
         <Footer />
+        <StickyCta />
         <JsonLd data={organizationJsonLd} />
       </body>
     </html>

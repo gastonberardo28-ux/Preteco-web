@@ -277,6 +277,17 @@ html.fx .carousel[data-until] > [data-in]:not([data-current]) { opacity: 0.55; t
 .step-chip { animation: chip-in 0.45s var(--ease-out-expo) both; }
 @keyframes chip-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
 
+/* CTA fijo de mobile (components/StickyCta.tsx): entra desde abajo; degradé para que no "corte" el contenido */
+.sticky-cta {
+  background: linear-gradient(to top, rgb(18 23 0 / 0.92) 40%, transparent);
+  transform: translate3d(0, 110%, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s var(--ease-out-expo), opacity 0.3s ease;
+}
+.sticky-cta.is-shown { transform: none; opacity: 1; pointer-events: auto; }
+html[data-menu] .sticky-cta { transform: translate3d(0, 110%, 0); opacity: 0; pointer-events: none; }
+
 /* Textura de puntos para fondos */
 @utility bg-dots {
   background-image: radial-gradient(rgb(203 255 0 / 0.12) 1px, transparent 1px);

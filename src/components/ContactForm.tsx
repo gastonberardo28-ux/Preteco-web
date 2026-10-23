@@ -76,6 +76,7 @@ export function ContactForm({
     <div
       id={id}
       data-reveal
+      data-cta-target
       className="spotlight relative grid gap-7 overflow-hidden rounded-[28px] border border-line bg-surface/80 p-5 sm:p-8 md:gap-10 md:rounded-[32px] md:p-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"
     >
       <div aria-hidden="true" className="pointer-events-none absolute -top-32 -left-32 size-[420px] rounded-full bg-violet/15 blur-[100px]" />

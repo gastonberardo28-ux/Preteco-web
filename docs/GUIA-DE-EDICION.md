@@ -66,6 +66,7 @@ Si algo sale mal, el pull request muestra un ❌ y el sitio publicado **no se ro
 | **Menú** principal | `src/content/site.ts` → `mainNav` |
 | **Pie de página** (textos y links) | `src/content/site.ts` → `footer`, `footerNav` |
 | **Redes sociales**, **partners**, **oficinas**, mail de compliance | `src/content/site.ts` |
+| Texto del **botón fijo de mobile** según la sección (o en qué páginas no aparece) | `src/content/site.ts` → `stickyCta` |
 | Campos y textos de los **formularios** | `src/content/forms.ts` |
 | Qué **ícono** usa cada servicio, área o pilar | `src/content/icons.ts` (lista de íconos disponibles en `src/components/Icon.tsx`). Criterio: íconos solo donde ayudan a reconocer algo; para listas de conceptos (valores, pasos) se usan números |
 | **Colores** y **tipografías** | `src/app/globals.css` (bloque `@theme`) — *tarea de diseño* |
