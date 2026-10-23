@@ -3,6 +3,10 @@ name: Descargar imágenes del sitio actual
 # Corre scripts/fetch-assets.mjs y commitea en la misma rama todo lo que bajó a public/.
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/fetch-assets.mjs"
+      - ".github/workflows/fetch-assets.yml"
 
 permissions:
   contents: write
