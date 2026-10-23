@@ -41,6 +41,7 @@ export function Header() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    document.documentElement.toggleAttribute("data-menu", open); // el CTA fijo de mobile se oculta con el menú abierto
   }, [open]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
