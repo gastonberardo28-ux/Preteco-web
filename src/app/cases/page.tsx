@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
-import { Section } from "@/components/ui";
+import { Button, Section } from "@/components/ui";
 import { CaseCards } from "@/components/cards";
 import { ContactForm } from "@/components/ContactForm";
 
@@ -13,13 +13,14 @@ export default function CasesPage() {
   return (
     <>
       <PageHero
-        title={
-          <>
-            Historias reales, <br className="hidden md:block" />
-            resultados concretos.
-          </>
-        }
+        eyebrow="Casos de éxito"
+        title="Historias reales, resultados concretos."
         text="Descubrí cómo ayudamos a distintas organizaciones a transformar sus desafíos en soluciones reales."
+        actions={
+          <Button href="#formulario" variant="secondary" size="lg">
+            Contanos tu desafío
+          </Button>
+        }
       />
       <Section>
         <CaseCards headingLevel="h2" />

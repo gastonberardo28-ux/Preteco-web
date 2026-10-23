@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Icon, type IconName } from "./Icon";
 
 /* Mejoras UX:
    - Los campos tienen name, autocomplete y validación con mensajes claros.
@@ -79,7 +80,35 @@ const messageLabel: Record<Variant, { label: string; placeholder: string }> = {
 };
 
 const inputCls =
-  "w-full min-h-12 rounded-lg border border-line bg-field px-4 text-base text-ink transition-colors hover:border-line-strong focus:border-accent focus:outline-none aria-[invalid=true]:border-danger";
+  "w-full min-h-12 rounded-xl border border-line bg-bg/60 px-4 text-base text-ink transition-[border-color,box-shadow] duration-200 hover:border-line-strong focus:border-violet focus:shadow-[0_0_0_4px_rgb(165_148_255/0.15)] focus:outline-none aria-[invalid=true]:border-danger";
+
+const eyebrowByVariant: Record<Variant, string> = {
+  contact: "Contacto",
+  careers: "Trabajá con nosotros",
+  blog: "Escribí en el blog",
+  compliance: "Puertas abiertas",
+};
+
+const pointsByVariant: Record<Variant, { icon: IconName; text: string }[]> = {
+  contact: [
+    { icon: "clock", text: "Te respondemos a la brevedad" },
+    { icon: "calendar", text: "Coordinamos una llamada sin compromiso" },
+    { icon: "globe", text: "Equipos en Argentina, Uruguay y Bolivia" },
+  ],
+  careers: [
+    { icon: "users", text: "Más de 70 personas en el equipo" },
+    { icon: "graduation", text: "Formación y especialización continua" },
+    { icon: "globe", text: "Proyectos en toda Latinoamérica" },
+  ],
+  blog: [
+    { icon: "pen", text: "Compartí tu experiencia y aprendizajes" },
+    { icon: "book", text: "IA, cloud, datos y seguridad" },
+  ],
+  compliance: [
+    { icon: "mail", text: "compliance@preteco.com" },
+    { icon: "shield", text: "Consultas tratadas con confidencialidad" },
+  ],
+};
 
 type Status = "idle" | "sending" | "ok" | "error";
 
@@ -139,9 +168,31 @@ export function ContactForm({
   }
 
   return (
-    <div id={id} className="rounded-2xl border border-line bg-surface p-6 md:p-10">
-      <h2 className="font-mono text-[clamp(24px,2.6vw,32px)] leading-tight text-accent">{title}</h2>
-      <p className="mt-3 max-w-[60ch] text-lg text-ink/90">{text}</p>
+    <div
+      id={id}
+      data-reveal
+      className="spotlight relative grid gap-10 overflow-hidden rounded-[32px] border border-line bg-surface/80 p-6 md:p-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"
+    >
+      <div aria-hidden="true" className="pointer-events-none absolute -top-32 -left-32 size-[420px] rounded-full bg-violet/15 blur-[100px]" />
+      <div className="relative flex flex-col gap-5">
+        <p className="t-eyebrow flex items-center gap-3">
+          <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-violet to-transparent" />
+          {eyebrowByVariant[variant]}
+        </p>
+        <h2 className="t-h2 text-[clamp(28px,3vw,40px)]">{title}</h2>
+        <p className="t-lead">{text}</p>
+        <ul className="mt-2 grid gap-3 text-[15px] text-muted">
+          {pointsByVariant[variant].map((p) => (
+            <li key={p.text} className="flex items-center gap-3">
+              <span className="inline-flex size-9 items-center justify-center rounded-xl border border-violet/30 bg-violet/10 text-violet">
+                <Icon name={p.icon} className="size-[18px]" />
+              </span>
+              {p.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="relative">
 
       {status === "ok" ? (
         <div role="status" className="mt-8 flex items-start gap-3 rounded-xl border border-accent/40 bg-accent/10 p-5 text-ink">
@@ -229,9 +280,10 @@ export function ContactForm({
             <button
               type="submit"
               disabled={status === "sending"}
-              className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-accent px-8 text-base font-medium text-bg transition-colors hover:bg-accent-hover disabled:opacity-60 md:w-auto"
+              className="btn-sheen group inline-flex min-h-13 w-full items-center justify-center gap-2.5 rounded-full bg-accent px-8 text-base font-medium text-bg shadow-[0_8px_30px_-10px_rgb(203_255_0/0.7)] transition-colors hover:bg-accent-hover disabled:opacity-60 md:w-auto"
             >
-              {status === "sending" ? "Enviando…" : "Enviar"}
+              <span className="relative">{status === "sending" ? "Enviando…" : "Enviar"}</span>
+              <Icon name="arrowRight" className="relative size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
           {status === "error" && (
@@ -241,6 +293,7 @@ export function ContactForm({
           )}
         </form>
       )}
+      </div>
     </div>
   );
 }

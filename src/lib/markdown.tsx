@@ -61,13 +61,17 @@ export function Markdown({ source }: { source: string }) {
       {parse(source).map((b, i) => {
         if (b.type === "h2")
           return (
-            <h2 key={i} className="mt-8 font-mono text-[clamp(24px,2.4vw,30px)] leading-snug text-accent">
+            <h2
+              key={i}
+              data-reveal
+              className="mt-10 border-l-2 border-violet pl-5 text-[clamp(24px,2.4vw,32px)] leading-tight font-semibold tracking-[-0.025em] text-ink"
+            >
               {inline(b.text)}
             </h2>
           );
         if (b.type === "h3")
           return (
-            <h3 key={i} className="mt-4 text-xl font-medium text-ink">
+            <h3 key={i} className="mt-4 text-xl font-semibold text-accent-soft">
               {inline(b.text)}
             </h3>
           );
@@ -76,7 +80,7 @@ export function Markdown({ source }: { source: string }) {
             <ul key={i} className="grid gap-2 pl-1">
               {b.items.map((it, j) => (
                 <li key={j} className="flex gap-3">
-                  <span aria-hidden="true" className="mt-[0.7em] size-1.5 shrink-0 rounded-full bg-accent" />
+                  <span aria-hidden="true" className="mt-[0.65em] size-2 shrink-0 rotate-45 rounded-[2px] bg-violet" />
                   <span>{inline(it)}</span>
                 </li>
               ))}
