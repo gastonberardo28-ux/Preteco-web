@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { img } from "@/lib/asset";
 import { mainNav } from "@/content/site";
-import { services, serviceGroups } from "@/content/services";
+import { services, serviceGroups } from "@/content/collections/services";
 import { serviceIcon } from "@/content/icons";
 import { Icon } from "./Icon";
 
@@ -156,24 +156,47 @@ export function Header() {
       {open && (
         <nav id="menu-mobile" aria-label="Principal" className="page-in h-[calc(100dvh-76px)] overflow-y-auto border-t border-line bg-bg lg:hidden">
           <div className="container-page py-6">
-            <p className="t-eyebrow mb-3">Servicios</p>
-            <ul className="mb-6 grid gap-1">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/services/${s.slug}`} className="flex items-center gap-3 rounded-2xl px-3 py-3 text-lg text-ink hover:bg-surface">
-                    <Icon name={serviceIcon[s.slug]} className="size-5 text-violet" />
-                    {s.menuLabel}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <ul className="grid gap-1 border-t border-line pt-4">
-              {mainNav.map((item) => (
+            {/* Mobile: primero las secciones, con Servicios desplegable para no repetirlo */}
+            <ul className="grid gap-1">
+              <li>
+                <details className="group" open={isActive("/services")}>
+                  <summary
+                    className={`flex min-h-13 cursor-pointer list-none items-center justify-between rounded-2xl px-3 text-xl hover:bg-surface [&::-webkit-details-marker]:hidden ${
+                      isActive("/services") ? "text-accent" : "text-ink"
+                    }`}
+                  >
+                    Servicios
+                    <svg aria-hidden="true" viewBox="0 0 12 12" className="size-4 transition-transform duration-300 group-open:rotate-180">
+                      <path d="m2.5 4.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </summary>
+                  <ul className="mt-1 mb-2 grid gap-0.5 border-l border-line pl-3 ml-4">
+                    {services.map((s) => (
+                      <li key={s.slug}>
+                        <Link
+                          href={`/services/${s.slug}`}
+                          aria-current={pathname === `/services/${s.slug}` ? "page" : undefined}
+                          className="flex min-h-11 items-center gap-3 rounded-xl px-3 py-2 text-base text-text hover:bg-surface aria-[current=page]:text-accent"
+                        >
+                          <Icon name={serviceIcon[s.slug]} className="size-[18px] text-violet" />
+                          {s.menuLabel}
+                        </Link>
+                      </li>
+                    ))}
+                    <li>
+                      <Link href="/services" className="flex min-h-11 items-center gap-2 rounded-xl px-3 py-2 text-base text-accent hover:bg-surface">
+                        Ver todos <Icon name="arrowRight" className="size-4" />
+                      </Link>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              {mainNav.slice(1).map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`block rounded-2xl px-3 py-3 text-xl hover:bg-surface ${isActive(item.href) ? "text-accent" : "text-ink"}`}
+                    className={`flex min-h-13 items-center rounded-2xl px-3 text-xl hover:bg-surface ${isActive(item.href) ? "text-accent" : "text-ink"}`}
                   >
                     {item.label}
                   </Link>

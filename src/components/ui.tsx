@@ -23,7 +23,7 @@ export function Button({ href, children, variant = "primary", size = "md", icon,
 
   const cls =
     variant === "tertiary"
-      ? "group inline-flex items-center gap-2 font-medium text-accent hover:text-accent-hover"
+      ? "group inline-flex min-h-11 items-center gap-2 font-medium text-accent hover:text-accent-hover"
       : `group inline-flex items-center justify-center gap-2.5 rounded-full font-medium transition-[background-color,border-color,color,box-shadow,transform] duration-300 active:scale-[0.98] ${sizes[size]} ${
           variant === "primary"
             ? "btn-sheen bg-accent text-bg shadow-[0_8px_30px_-10px_rgb(203_255_0/0.7)] hover:bg-accent-hover hover:shadow-[0_10px_40px_-8px_rgb(203_255_0/0.85)]"
@@ -56,6 +56,43 @@ export function Button({ href, children, variant = "primary", size = "md", icon,
     <Link href={href} className={`${cls} ${className}`}>
       {content}
     </Link>
+  );
+}
+
+/* ═══ Botones como datos ═══════════════════════════════════════════════
+   Los archivos de content/pages describen los botones así:
+     { label: "Ver soluciones", href: "/services", variant: "primary" }
+   y este componente los dibuja. En mobile ocupan todo el ancho. */
+export type Action = { label: string; href: string; variant?: "primary" | "secondary" | "tertiary" };
+
+export function Actions({ items, size = "lg" }: { items?: Action[]; size?: "md" | "lg" }) {
+  if (!items?.length) return null;
+  return (
+    <>
+      {items.map((a) => (
+        <Button
+          key={a.label}
+          href={a.href}
+          variant={a.variant ?? "primary"}
+          size={size}
+          icon={a.href.startsWith("mailto:") ? "none" : undefined}
+          className={a.variant === "tertiary" ? "" : "w-full sm:w-auto"}
+        >
+          {a.label}
+        </Button>
+      ))}
+    </>
+  );
+}
+
+/* ═══ Texto enriquecido simple ═════════════════════════════════════════
+   En los textos de content/ podés resaltar una parte de un título
+   escribiéndola entre asteriscos:  "Así trabajamos en *Preteco*"
+   → "Preteco" se muestra en mono y color lima. */
+export function rich(text: string): React.ReactNode {
+  if (!text.includes("*")) return text;
+  return text.split(/(\*[^*]+\*)/g).map((part, i) =>
+    part.startsWith("*") && part.endsWith("*") ? <Hl key={i}>{part.slice(1, -1)}</Hl> : part,
   );
 }
 
@@ -129,7 +166,7 @@ export function SectionHeader({
           </div>
         )}
         <h2 data-reveal style={{ ["--d" as string]: 1 }} className="t-h2 max-w-[22ch]">
-          {title}
+          {typeof title === "string" ? rich(title) : title}
         </h2>
         {text && (
           <p data-reveal style={{ ["--d" as string]: 2 }} className={`t-lead max-w-[60ch] ${center ? "mx-auto" : ""}`}>
@@ -173,4 +210,46 @@ export function Section({
 /* Card base consistente: borde, spotlight y elevación en hover. */
 export function cardCls(interactive = true) {
   return `spotlight rounded-3xl border border-line bg-surface/70 ${interactive ? "glow-border" : ""}`;
+}
+
+/* ═══ Migas de pan ═════════════════════════════════════════════════════
+   Muestran dónde está la persona (Inicio › Servicios › Cloud) y suman
+   los datos estructurados para Google. */
+export function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.label,
+      ...(it.href ? { item: `https://preteco.com${it.href}` } : {}),
+    })),
+  };
+  return (
+    <nav aria-label="Ubicación" className="text-sm">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-muted">
+        {items.map((it, i) => (
+          <li key={it.label} className="flex items-center gap-2">
+            {i > 0 && <span aria-hidden="true" className="text-line-strong">/</span>}
+            {it.href ? (
+              <Link href={it.href} className="link-underline transition-colors hover:text-accent">
+                {it.label}
+              </Link>
+            ) : (
+              <span aria-current="page" className="text-text">
+                {it.label}
+              </span>
+            )}
+          </li>
+        ))}
+      </ol>
+      <JsonLd data={jsonLd} />
+    </nav>
+  );
+}
+
+/* Datos estructurados (schema.org) para buscadores. */
+export function JsonLd({ data }: { data: object }) {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

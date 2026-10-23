@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { img } from "@/lib/asset";
-import { Eyebrow } from "./ui";
+import { Actions, Breadcrumbs, Eyebrow, type Action } from "./ui";
 import { Counter } from "./Counter";
 
 /* Hero único para todo el sitio: misma estructura, fondo y animación en cada página.
@@ -18,6 +18,7 @@ export function PageHero({
   image,
   imageAlt = "",
   actions,
+  breadcrumbs,
   aside,
   stats,
   variant = "page",
@@ -28,7 +29,10 @@ export function PageHero({
   text?: React.ReactNode;
   image?: string;
   imageAlt?: string;
-  actions?: React.ReactNode;
+  /** Botones: lista de { label, href, variant } (ver content/pages) o elementos propios. */
+  actions?: Action[] | React.ReactNode;
+  /** Migas de pan para páginas internas: [{ label: "Servicios", href: "/services" }, { label: "Cloud" }] */
+  breadcrumbs?: { label: string; href?: string }[];
   aside?: React.ReactNode;
   stats?: HeroStat[];
   variant?: "home" | "page";
@@ -41,11 +45,16 @@ export function PageHero({
     <section className={`relative isolate overflow-hidden border-b border-line/60 ${home ? "min-h-[min(92vh,900px)]" : ""}`}>
       <HeroBackground />
       <div
-        className={`container-page relative grid items-center gap-12 ${home ? "py-24 md:py-32" : "py-20 md:py-28"} ${
+        className={`container-page relative grid items-center gap-10 md:gap-12 ${home ? "py-16 md:py-32" : "py-14 md:py-28"} ${
           hasSide ? "lg:grid-cols-[1.15fr_1fr]" : ""
         }`}
       >
-        <div className="flex flex-col gap-7">
+        <div className="flex flex-col gap-6 md:gap-7">
+          {breadcrumbs && (
+            <div data-reveal="fade">
+              <Breadcrumbs items={[{ label: "Inicio", href: "/" }, ...breadcrumbs]} />
+            </div>
+          )}
           {eyebrow && (
             <div data-reveal="fade">
               <Eyebrow>{eyebrow}</Eyebrow>
@@ -65,15 +74,15 @@ export function PageHero({
             </p>
           )}
           {actions && (
-            <div data-reveal style={{ ["--d" as string]: 4 }} className="flex flex-wrap gap-3 pt-1">
-              {actions}
+            <div data-reveal style={{ ["--d" as string]: 4 }} className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
+              {Array.isArray(actions) ? <Actions items={actions as Action[]} /> : actions}
             </div>
           )}
           {children}
         </div>
 
         {image && (
-          <div data-reveal="scale" style={{ ["--d" as string]: 2 }} className="relative mx-auto w-full max-w-[540px]">
+          <div data-reveal="scale" style={{ ["--d" as string]: 2 }} className="relative mx-auto w-full max-w-[300px] sm:max-w-[420px] lg:max-w-[540px]">
             <div aria-hidden="true" className="absolute inset-[12%] -z-10 rounded-full bg-accent/20 blur-[80px]" />
             <img src={image} alt={imageAlt} className="w-full animate-float drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]" />
           </div>
@@ -83,9 +92,9 @@ export function PageHero({
 
       {stats && stats.length > 0 && (
         <div className="relative border-t border-line/60 bg-bg/40 backdrop-blur-sm">
-          <dl className="container-page grid grid-cols-2 gap-y-8 py-8 md:grid-cols-4">
+          <dl className="container-page grid grid-cols-2 gap-x-4 gap-y-6 py-7 md:grid-cols-4 md:gap-y-8 md:py-8">
             {stats.map((s, i) => (
-              <div key={s.label} data-reveal style={{ ["--d" as string]: i }} className="flex flex-col gap-1 border-l border-line pl-5">
+              <div key={s.label} data-reveal style={{ ["--d" as string]: i }} className="flex flex-col gap-1 border-l border-line pl-4 md:pl-5">
                 <dt className="sr-only">{s.label}</dt>
                 <dd className="font-mono text-[clamp(28px,3vw,40px)] leading-none tracking-[-0.04em] text-accent">
                   <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { posts as localPosts } from "@/content/company";
+import { posts as localPosts } from "@/content/collections/blog";
 import { asset } from "@/lib/asset";
 
 /* ═════════════════════════════════════════════════════════════════════

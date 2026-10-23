@@ -1,5 +1,12 @@
 import { img } from "@/lib/asset";
 
+/* ═════════════════════════════════════════════════════════════════════
+   SERVICIOS · todo el contenido de /services y de cada /services/<slug>
+   - Para editar un servicio: buscá su "slug" y cambiá los textos.
+   - Para agregar uno: copiá un bloque completo de `services`, cambiá el slug,
+     sumalo a un grupo en `serviceGroups` y asignale un ícono en content/icons.ts.
+   ═════════════════════════════════════════════════════════════════════ */
+
 /* ── Logos de clientes disponibles ──────────────────────────────────────
    Mejora UX: el sitio original mostraba la MISMA grilla de logos en todas
    las páginas de servicio, aunque el texto nombrara a otros clientes.
@@ -22,7 +29,10 @@ export type ServiceHow =
   | { kind: "list"; intro?: string; items: string[] };
 
 export type Service = {
+  /** Parte final de la URL: /services/<slug>. No cambiar: rompe links existentes. */
   slug: string;
+  /** Opción que queda preseleccionada en "¿Sobre qué querés hablar?" del formulario. */
+  formInterest: string;
   category: string;
   menuLabel: string;
   overviewTitle: string;
@@ -47,6 +57,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "critical-ops",
+    formInterest: "Sistemas críticos (CriticalOps)",
     category: "Database, Middleware & Virtualización",
     menuLabel: "CriticalOps",
     overviewTitle: "Gestión de sistemas críticos",
@@ -84,6 +95,7 @@ export const services: Service[] = [
   },
   {
     slug: "cloud-modernization-infrastructure",
+    formInterest: "Modernización de infraestructura",
     category: "Database, Middleware & Virtualización",
     menuLabel: "Modernización de infraestructura",
     overviewTitle: "Modernización de infraestructura",
@@ -123,6 +135,7 @@ export const services: Service[] = [
   },
   {
     slug: "cloud",
+    formInterest: "Cloud",
     category: "Cloud",
     menuLabel: "Cloud",
     overviewTitle: "Cloud Adoption Services",
@@ -166,6 +179,7 @@ export const services: Service[] = [
   },
   {
     slug: "agent-development",
+    formInterest: "Inteligencia artificial",
     category: "Inteligencia artificial",
     menuLabel: "Desarrollo de agentes",
     overviewTitle: "Desarrollo de agentes",
@@ -209,6 +223,7 @@ export const services: Service[] = [
   },
   {
     slug: "workforce-customer-indentity",
+    formInterest: "Seguridad e identidades",
     category: "Seguridad",
     menuLabel: "Workforce & Customer Identity",
     overviewTitle: "Workforce & Customer Identity",
@@ -249,6 +264,7 @@ export const services: Service[] = [
   },
   {
     slug: "legacy-apps",
+    formInterest: "Desarrollo y modernización de aplicaciones",
     category: "Desarrollo",
     menuLabel: "Modernización de aplicaciones legacy",
     overviewTitle: "Modernización de aplicaciones legacy",
@@ -297,6 +313,7 @@ export const services: Service[] = [
   },
   {
     slug: "app-development",
+    formInterest: "Desarrollo y modernización de aplicaciones",
     category: "Desarrollo",
     menuLabel: "Desarrollo de aplicaciones",
     overviewTitle: "Desarrollo de aplicaciones",

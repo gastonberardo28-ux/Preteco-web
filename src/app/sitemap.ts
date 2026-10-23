@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { services } from "@/content/services";
+import { services } from "@/content/collections/services";
 import { getPosts } from "@/lib/cms";
 
 const BASE = "https://preteco.com";

@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
-import { Button, Check, Section, SectionHeader, Hl } from "@/components/ui";
+import { Check, JsonLd, Section, SectionHeader } from "@/components/ui";
 import { Icon, IconTile } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
-import { clientLogos, getService, services, type ServiceHow } from "@/content/services";
+import { clientLogos, getService, services, type ServiceHow } from "@/content/collections/services";
+import { serviceDetail as c } from "@/content/pages/services";
+import { pageMeta, SITE_URL } from "@/lib/seo";
 import { serviceIcon } from "@/content/icons";
 
 export function generateStaticParams() {
@@ -15,10 +17,13 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+/* PÁGINA DE SERVICIO · contenido de cada servicio en content/collections/services.ts,
+   textos fijos (botones, títulos de sección) en content/pages/services.ts */
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = getService((await params).slug);
   if (!s) return {};
-  return { title: s.menuLabel, description: s.metaDescription };
+  return pageMeta({ title: s.menuLabel, description: s.metaDescription }, `/services/${s.slug}`);
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -35,28 +40,26 @@ export default async function ServicePage({ params }: Props) {
         title={s.title}
         text={s.subtitle}
         image={s.heroImage}
-        actions={
-          <>
-            <Button href="#formulario" size="lg">
-              Coordinar una reunión
-            </Button>
-            <Button href="#como" variant="secondary" size="lg">
-              Cómo lo hacemos
-            </Button>
-          </>
-        }
+        breadcrumbs={[{ label: "Servicios", href: "/services" }, { label: s.menuLabel }]}
+        actions={c.heroActions}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: s.title,
+          description: s.metaDescription,
+          serviceType: s.category,
+          url: `${SITE_URL}/services/${s.slug}`,
+          provider: { "@type": "Organization", name: "Preteco", url: SITE_URL },
+          areaServed: ["Argentina", "Uruguay", "Bolivia", "Latinoamérica"],
+        }}
       />
 
       {/* Índice de la página, fijo al hacer scroll en desktop */}
       <nav aria-label="En esta página" className="sticky top-[76px] z-30 hidden border-b border-line/60 bg-bg/80 backdrop-blur-xl md:block">
         <ul className="container-page flex gap-1 overflow-x-auto py-2 text-sm">
-          {[
-            ["que-es", "Qué es"],
-            ["para-que", "Para qué sirve"],
-            ["como", "Cómo lo hacemos"],
-            ["por-que", "Por qué Preteco"],
-            ["casos", "Casos"],
-          ].map(([id, label]) => (
+          {c.index.map(({ id, label }) => (
             <li key={id}>
               <a href={`#${id}`} className="block rounded-full px-4 py-2 whitespace-nowrap text-muted transition-colors hover:bg-surface hover:text-accent">
                 {label}
@@ -77,8 +80,8 @@ export default async function ServicePage({ params }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-5">
-            <SectionHeader eyebrow="Qué es" title={s.whatTitle} />
-            <p data-reveal style={{ ["--d" as string]: 2 }} className="text-xl leading-relaxed text-ink md:text-2xl md:leading-relaxed">
+            <SectionHeader eyebrow={c.sections.what.eyebrow} title={s.whatTitle} />
+            <p data-reveal style={{ ["--d" as string]: 2 }} className="text-lg leading-relaxed text-ink sm:text-xl md:text-2xl md:leading-relaxed">
               {s.what}
             </p>
           </div>
@@ -86,14 +89,14 @@ export default async function ServicePage({ params }: Props) {
       </Section>
 
       <Section id="para-que" tone="surface">
-        <SectionHeader eyebrow="Beneficios" title="¿Para qué sirve?" text={s.purposeIntro} />
+        <SectionHeader eyebrow={c.sections.purposes.eyebrow} title={c.sections.purposes.title} text={s.purposeIntro} />
         <ul className="mt-12 grid gap-4 md:grid-cols-2">
           {s.purposes.map((p, i) => (
             <li
               key={p}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border flex items-start gap-4 rounded-2xl border border-line bg-bg/60 p-6 text-lg text-ink"
+              className="spotlight glow-border flex items-start gap-4 rounded-2xl border border-line bg-bg/60 p-5 text-base text-ink sm:p-6 sm:text-lg"
             >
               <Check className="mt-0.5" />
               {p}
@@ -103,41 +106,34 @@ export default async function ServicePage({ params }: Props) {
       </Section>
 
       <Section id="como">
-        <SectionHeader eyebrow="Enfoque" title="¿Cómo lo hacemos?" />
+        <SectionHeader eyebrow={c.sections.how.eyebrow} title={c.sections.how.title} />
         <How how={s.how} />
       </Section>
 
       <Section id="por-que" tone="surface">
-        <SectionHeader
-          eyebrow="Diferenciales"
-          title={
-            <>
-              ¿Por qué elegir <Hl>Preteco</Hl>?
-            </>
-          }
-        />
+        <SectionHeader eyebrow={c.sections.why.eyebrow} title={c.sections.why.title} />
         <ol className="mt-12 grid gap-4 md:grid-cols-2">
           {s.why.map((w, i) => (
             <li
               key={w}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border flex gap-5 rounded-2xl border border-line bg-bg/60 p-6"
+              className="spotlight glow-border flex gap-4 rounded-2xl border border-line bg-bg/60 p-5 sm:gap-5 sm:p-6"
             >
               <span className="font-mono text-3xl leading-none tracking-[-0.04em] text-violet">{String(i + 1).padStart(2, "0")}</span>
-              <p className="text-lg text-ink">{w}</p>
+              <p className="text-base text-ink sm:text-lg">{w}</p>
             </li>
           ))}
         </ol>
       </Section>
 
       <Section id="casos">
-        <div data-reveal className="spotlight relative overflow-hidden rounded-[32px] border border-line bg-surface/70 p-7 md:p-12">
+        <div data-reveal className="spotlight relative overflow-hidden rounded-[28px] border border-line bg-surface/70 p-5 sm:p-7 md:rounded-[32px] md:p-12">
           <div aria-hidden="true" className="pointer-events-none absolute -right-24 -bottom-24 size-80 rounded-full bg-accent/10 blur-[90px]" />
           <div className="relative grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div className="flex flex-col gap-4">
-              <p className="t-eyebrow">Casos de éxito</p>
-              <p className="t-h2 text-[clamp(26px,2.6vw,36px)]">Quienes ya confían en nosotros</p>
+              <p className="t-eyebrow">{c.sections.cases.eyebrow}</p>
+              <p className="t-h2 text-[clamp(26px,2.6vw,36px)]">{c.sections.cases.title}</p>
               <p className="t-lead">{s.casesText}</p>
             </div>
             {s.logos.length > 0 ? (
@@ -147,7 +143,7 @@ export default async function ServicePage({ params }: Props) {
                     key={k}
                     data-reveal="scale"
                     style={{ ["--d" as string]: i }}
-                    className="flex h-28 items-center justify-center rounded-2xl border border-line bg-bg/60 p-5 transition-colors hover:border-violet/50"
+                    className="flex h-24 items-center justify-center rounded-2xl border border-line bg-bg/60 p-4 transition-colors hover:border-violet/50 sm:h-28 sm:p-5"
                   >
                     <img src={clientLogos[k].logo} alt={clientLogos[k].name} loading="lazy" className="max-h-12 w-auto" />
                   </li>
@@ -155,7 +151,7 @@ export default async function ServicePage({ params }: Props) {
               </ul>
             ) : (
               <div className="flex items-center justify-center rounded-2xl border border-dashed border-line p-10">
-                <IconTile name="award" size="lg" />
+                <IconTile name={c.sections.cases.emptyIcon} size="lg" />
               </div>
             )}
           </div>
@@ -163,22 +159,22 @@ export default async function ServicePage({ params }: Props) {
       </Section>
 
       <Section className="!pt-0">
-        <ContactForm title={s.ctaTitle} text={s.ctaText} defaultInterest={interestFor(s.slug)} />
+        <ContactForm title={s.ctaTitle} text={s.ctaText} defaultInterest={s.formInterest} />
         <Link
           href={`/services/${next.slug}`}
           data-reveal
-          className="spotlight glow-border group mt-8 flex items-center justify-between gap-4 rounded-3xl border border-line bg-surface/70 p-6 md:p-8"
+          className="spotlight glow-border group mt-8 flex items-center justify-between gap-4 rounded-3xl border border-line bg-surface/70 p-5 md:p-8"
         >
-          <span className="flex items-center gap-5">
+          <span className="flex items-center gap-4 sm:gap-5">
             <IconTile name={serviceIcon[next.slug]} />
             <span>
-              <span className="t-eyebrow block text-[11px]">Siguiente servicio</span>
-              <span className="mt-1 block text-2xl font-semibold tracking-[-0.02em] text-ink transition-colors group-hover:text-accent">
+              <span className="t-eyebrow block text-[11px]">{c.nextLabel}</span>
+              <span className="mt-1 block text-xl font-semibold tracking-[-0.02em] text-ink transition-colors group-hover:text-accent sm:text-2xl">
                 {next.menuLabel}
               </span>
             </span>
           </span>
-          <span className="inline-flex size-12 items-center justify-center rounded-full border border-line text-accent transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
+          <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-line text-accent transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
             <Icon name="arrowRight" className="size-5" />
           </span>
         </Link>
@@ -251,17 +247,4 @@ function How({ how }: { how: ServiceHow }) {
       )}
     </>
   );
-}
-
-function interestFor(slug: string) {
-  const map: Record<string, string> = {
-    "critical-ops": "Sistemas críticos (CriticalOps)",
-    "cloud-modernization-infrastructure": "Modernización de infraestructura",
-    cloud: "Cloud",
-    "agent-development": "Inteligencia artificial",
-    "workforce-customer-indentity": "Seguridad e identidades",
-    "legacy-apps": "Desarrollo y modernización de aplicaciones",
-    "app-development": "Desarrollo y modernización de aplicaciones",
-  };
-  return map[slug];
 }

@@ -1,22 +1,28 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, DM_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Effects } from "@/components/Effects";
+import { JsonLd } from "@/components/ui";
+import { home } from "@/content/pages/home";
+import { SITE_URL, organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
 const dmMono = DM_Mono({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-dm-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://preteco.com"),
-  title: {
-    default: "Preteco | IA, cloud, datos y desarrollo",
-    template: "%s | Preteco",
-  },
-  description:
-    "Impulsamos tu evolución digital con IA, tecnología y datos. Consultora con más de 25 años en sistemas críticos, cloud, desarrollo y seguridad en Latinoamérica.",
-  openGraph: { siteName: "Preteco", locale: "es_AR", type: "website" },
+  metadataBase: new URL(SITE_URL),
+  title: { default: home.seo.title, template: "%s | Preteco" },
+  description: home.seo.description,
+  alternates: { canonical: "/" },
+  openGraph: { siteName: "Preteco", locale: "es_AR", type: "website", title: home.seo.title, description: home.seo.description },
+  twitter: { card: "summary_large_image" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#121700",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -33,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="contenido">{children}</main>
         <Footer />
+        <JsonLd data={organizationJsonLd} />
       </body>
     </html>
   );

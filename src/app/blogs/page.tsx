@@ -1,35 +1,26 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { Button, Section } from "@/components/ui";
+import { Section } from "@/components/ui";
 import { PostCards } from "@/components/cards";
 import { ContactForm } from "@/components/ContactForm";
+import { blogPage as c } from "@/content/pages/blog";
+
+/* BLOG · textos en content/pages/blog.ts · artículos en la planilla de Google (docs/CMS-Y-LEADS.md) */
 
 // El blog se lee de Google Sheets: la página se regenera cada 5 minutos.
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Tendencias, buenas prácticas y aprendizajes sobre IA, cloud, datos y seguridad.",
-};
+export const metadata = pageMeta(c.seo, "/blogs");
 
 export default function BlogPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Blog"
-        title="Ideas que suman. Experiencia que se comparte."
-        text="Tendencias, buenas prácticas y aprendizajes de nuestro trabajo diario."
-        actions={
-          <Button href="#formulario" variant="secondary" size="lg">
-            Proponé un post
-          </Button>
-        }
-      />
+      <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} text={c.hero.text} actions={c.hero.actions} />
       <Section>
         <PostCards />
       </Section>
       <Section className="!pt-0">
-        <ContactForm variant="blog" title="¿Querés sumar tu mirada?" text="Completá el formulario y envianos tu idea de post." />
+        <ContactForm variant="blog" title={c.form.title} text={c.form.text} />
       </Section>
     </>
   );

@@ -233,7 +233,7 @@ export function IconTile({
       : "border-violet/30 bg-violet/10 text-violet shadow-[0_0_24px_-6px_rgb(165_148_255/0.5)]";
   const sizeCls = size === "lg" ? "size-14 rounded-2xl [&_svg]:size-7" : "size-11 rounded-xl [&_svg]:size-5";
   return (
-    <span className={`inline-flex items-center justify-center border ${toneCls} ${sizeCls}`}>
+    <span className={`inline-flex shrink-0 items-center justify-center border ${toneCls} ${sizeCls}`}>
       <Icon name={name} />
     </span>
   );

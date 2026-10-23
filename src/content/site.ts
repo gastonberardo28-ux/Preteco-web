@@ -1,7 +1,15 @@
 import { img } from "@/lib/asset";
 
+/* ═════════════════════════════════════════════════════════════════════
+   DATOS GENERALES DEL SITIO · se usan en todas las páginas
+   Menú, pie de página, redes, partners, oficinas y mails.
+   ═════════════════════════════════════════════════════════════════════ */
+
+// ⚠️ Esta página vive en el sitio anterior. Cuando preteco.com apunte al sitio nuevo,
+// este link deja de funcionar: hay que migrarla o mover el sitio viejo a otro subdominio.
 export const AI_READINESS_URL = "https://preteco.com/ai-readiness/";
 
+/** Menú principal (header). El botón "Hablemos" va siempre aparte. */
 export const mainNav = [
   { label: "Servicios", href: "/services" },
   { label: "Productos", href: "/products" },
@@ -11,8 +19,20 @@ export const mainNav = [
   { label: "Compliance", href: "/compliance" },
 ];
 
+/** Textos del pie de página. */
+export const footer = {
+  tagline: "Trabajamos con vos para crear",
+  taglineHighlight: "impacto.",
+  servicesTitle: "Servicios",
+  navTitle: "Empresa",
+  officesTitle: "Oficinas",
+  partnersTitle: "Partners",
+  copyright: "Preteco. Todos los derechos reservados.",
+  badge: "Más de 25 años en sistemas críticos",
+};
+
+/** Links del pie de página (columna "Empresa"). */
 export const footerNav = [
-  { label: "Home", href: "/" },
   { label: "Servicios", href: "/services" },
   { label: "Productos", href: "/products" },
   { label: "Casos", href: "/cases" },
