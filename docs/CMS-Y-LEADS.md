@@ -1,11 +1,10 @@
-# Blog y leads con Google Sheets
+# Blog y leads
 
-El sitio usa dos planillas de Google Drive:
-
-| Planilla | Para qué | ¿Pública? |
+| Qué | Dónde vive | Quién lo usa |
 | --- | --- | --- |
-| **Preteco · Blog (CMS)** | Escribir y publicar artículos del blog | Sí, solo lectura con el enlace (el contenido ya es público) |
-| **Preteco · Leads del sitio** | Recibir los formularios del sitio | **No.** Solo la ven las personas con las que la compartas |
+| **Artículos del blog** | Planilla de Google **Preteco · Blog (CMS)** | Cualquiera del equipo que escriba notas |
+| **Leads comerciales** (formulario de contacto) | **Salesforce**, como *Lead* | Equipo comercial |
+| **Todos los formularios** (contacto, postulaciones, propuestas de post, compliance) | **Supabase**, tabla `leads` | Respaldo y registro completo |
 
 ## 1. Blog
 
@@ -40,27 +39,58 @@ Una fila = un artículo.
 
 ## 2. Leads
 
-### Configuración (una vez)
+### Cómo funciona
 
-1. Abrí **Preteco · Leads del sitio** → **Extensiones → Apps Script**. Borrá lo que haya y pegá `scripts/apps-script/leads.gs`. Guardá.
-2. *Configuración del proyecto* (ícono de engranaje) → *Propiedades del script* → agregá:
-   - `SECRET` = una clave larga inventada
-   - `NOTIFY_EMAIL` = (opcional) mail(s) que reciben un aviso por cada lead, separados por coma
-3. **Implementar → Nueva implementación** → tipo **Aplicación web**:
-   - *Ejecutar como:* **Yo**
-   - *Quién tiene acceso:* **Cualquier usuario**
-   - Autorizá los permisos que pide Google (la primera vez muestra un aviso de "app no verificada": *Configuración avanzada → Ir a…*). Es tu propio script.
-4. Copiá la URL que termina en `/exec`.
-5. En Vercel cargá `LEADS_WEBHOOK_URL` (la URL del paso 4) y `LEADS_WEBHOOK_SECRET` (la misma clave que `SECRET`). Redeploy.
+1. Cada envío de cualquier formulario se guarda en Supabase (tabla `leads`).
+2. Si es el formulario de **contacto**, además se crea un **Lead en Salesforce** (origen "Web") y en Supabase queda anotado el Id del Lead o el error, si lo hubo.
+3. Postulaciones, propuestas de post y consultas de compliance quedan **solo en Supabase**: no son oportunidades comerciales.
 
-> Si cambiás el código del script, hacé **Implementar → Administrar implementaciones → Editar → Nueva versión** para que la URL siga siendo la misma.
+Si Salesforce falla, el lead no se pierde: queda en Supabase con `sf_status = error` para reenviarlo.
 
-### Qué se guarda
+### Supabase (una vez)
 
-Una fila por envío con: fecha, origen (Contacto, Trabajá con nosotros, Propuesta de post, Compliance), nombre, email, teléfono, empresa, interés, LinkedIn, área, tema, mensaje, página desde donde se envió, **estado** (arranca en "Nuevo") y **notas** para el seguimiento comercial.
+1. En Vercel → tu proyecto → **Storage → Create / Connect → Supabase** (o creá el proyecto en supabase.com). Si lo conectás desde Vercel, las variables `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` se cargan solas.
+2. En Supabase → **SQL Editor → New query**, pegá `supabase/migrations/001_leads.sql` y ejecutalo.
+3. Para ver los leads: Supabase → **Table Editor → leads** (o la vista `leads_recientes`). Desde ahí filtrás, cambiás el `estado`, agregás `notas` y exportás a CSV.
+
+La tabla tiene la seguridad por filas activada y sin permisos públicos: solo el servidor del sitio (con la service_role key) puede escribir, y solo las personas con acceso al proyecto de Supabase pueden verla. **Nunca** pongas la service_role key en una variable `NEXT_PUBLIC_…`.
+
+### Salesforce (una vez)
+
+**Opción recomendada: Connected App (API).** Confirma que el Lead se creó y guarda su Id.
+
+1. Salesforce → **Setup → App Manager → New Connected App** (o *External Client App* en orgs nuevas).
+2. Activá **OAuth**, callback `https://login.salesforce.com/services/oauth2/success`, scopes **Manage user data via APIs (api)**.
+3. Activá **Enable Client Credentials Flow** y, en *Manage → Edit Policies*, elegí un **Run As** (un usuario de integración con permiso para crear Leads).
+4. Copiá **Consumer Key** y **Consumer Secret**.
+5. En Vercel cargá:
+   - `SF_LOGIN_URL` = `https://<tu-dominio>.my.salesforce.com` (Setup → My Domain)
+   - `SF_CLIENT_ID` = Consumer Key
+   - `SF_CLIENT_SECRET` = Consumer Secret
+   - `SF_LEAD_SOURCE` = `Web` (o el valor del picklist *Lead Source* que usen)
+
+**Opción simple: Web-to-Lead.** Sin Connected App, pero Salesforce no confirma si el Lead se creó.
+
+1. Setup → **Web-to-Lead** → activalo.
+2. Copiá el **Organization ID** (Setup → Company Information) en `SF_ORG_ID`.
+
+Si están las dos configuradas, se usa la API.
+
+### Qué llega a Salesforce
+
+| Campo del Lead | Viene de |
+| --- | --- |
+| First Name / Last Name | "Nombre y apellido" (la última palabra va como apellido) |
+| Email, Phone | Email, Teléfono |
+| Company | Empresa (si falta: "Sin especificar") |
+| Lead Source | `SF_LEAD_SOURCE` (por defecto "Web") |
+| Description | Tema de interés, mensaje y página desde donde se envió |
+
+Si tienen reglas de duplicados, el Lead se guarda igual y el equipo comercial decide. Para mapear "interés" a un campo propio de Salesforce, hay que agregarlo en `src/lib/leads/salesforce.ts`.
+
+Después de cargar variables en Vercel, hacé **Redeploy**.
 
 ### Seguridad
 
-- La planilla de leads nunca se publica: el sitio le envía los datos al script con una clave compartida.
-- El formulario tiene un campo trampa invisible que descarta envíos de bots.
-- Los textos que empiezan con `=`, `+`, `-` o `@` se guardan como texto para que no se ejecuten como fórmulas.
+- Campo trampa invisible que descarta envíos de bots.
+- Validación de nombre y email en el servidor; solo se guardan los campos previstos.

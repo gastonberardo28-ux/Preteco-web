@@ -82,5 +82,5 @@ Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links exi
 ## Pendientes
 
 - [ ] Agregar las ilustraciones internas de los artículos (en el sitio actual están incrustadas en el texto; se migró solo la imagen de portada).
-- [x] Leads y blog con Google Sheets: ver `docs/CMS-Y-LEADS.md`.
+- [x] Blog en Google Sheets; leads en Supabase y Salesforce: ver `docs/CMS-Y-LEADS.md`.
 - [ ] Página de AI Readiness (hoy enlaza al sitio actual).
