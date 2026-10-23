@@ -1,59 +1,90 @@
 # preteco-web
 
-Sitio institucional de [Preteco](https://preteco.com), con el concepto visual **"Preteco OS"**: la web presentada como una consola.
+Réplica del sitio institucional de [Preteco](https://preteco.com) con el mismo contenido, estructura e identidad visual (DM Sans / DM Mono, verde #CBFF00 sobre #141900), más una serie de mejoras de UX/UI.
 
-**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Geist / Geist Mono.
+**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4.
 
 ## Desarrollo
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # build de producción
-npm start
+npm run dev            # http://localhost:3000
+npm run build
 ```
 
-## Estructura
+## Imágenes
 
+Por ahora las imágenes se cargan desde `https://preteco.com`. Para que el sitio sea independiente:
+
+```bash
+npm run fetch-assets   # descarga todas las imágenes y PDFs usados a /public
+git add public && git commit -m "chore: assets locales"
 ```
-src/
-├── app/
-│   ├── layout.tsx            # fuentes, metadata y SEO
-│   ├── page.tsx              # home: arma las secciones
-│   ├── globals.css           # design tokens (@theme) y utilidades
-│   └── api/contact/route.ts  # endpoint del formulario (TODO: proveedor de email/CRM)
-├── components/
-│   ├── Header.tsx
-│   ├── Hero.tsx + Terminal.tsx   # terminal interactiva por módulo
-│   ├── StackTicker.tsx           # marquee de partners
-│   ├── Services.tsx              # servicios como tabla de procesos
-│   ├── AiReadiness.tsx           # chequeo interactivo de madurez IA
-│   ├── Cases.tsx                 # casos como git log
-│   ├── Team.tsx                  # valores como archivo de config
-│   ├── Blog.tsx
-│   ├── Contact.tsx               # formulario estilo CLI
-│   ├── Footer.tsx
-│   └── ui.tsx                    # Button, Container, títulos, cursor
-└── content/
-    └── site.ts               # TODO el copy del sitio
-```
+
+Después, en Vercel, definí la variable `NEXT_PUBLIC_ASSET_BASE` con valor vacío.
+
+## Páginas
+
+| Ruta | Contenido |
+| --- | --- |
+| `/` | Home |
+| `/services` | Servicios, metodología y herramientas |
+| `/services/[slug]` | 7 páginas de servicio (una sola plantilla) |
+| `/products` | Oracle, Okta, MuleSoft, AWS |
+| `/cases` | Casos de éxito |
+| `/blogs` | Blog |
+| `/about-us` | Nosotros, valores, equipo y búsqueda de talentos |
+| `/compliance` | Programa de compliance |
+| `/contact` | Contacto y oficinas |
+
+Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links existentes.
 
 ## Editar contenido
 
-Todos los textos, servicios, casos, valores y links están en `src/content/site.ts`. Los componentes solo se ocupan del diseño.
+- `src/content/services.ts`: servicios, metodología y herramientas.
+- `src/content/company.ts`: casos, productos, valores, equipo, blog y compliance.
+- `src/content/site.ts`: navegación, partners, redes y oficinas.
 
-## Diseño
+## Mejoras de UX/UI respecto del sitio actual
 
-Los colores y las fuentes son tokens en `src/app/globals.css` (bloque `@theme`). Para cambiar el acento, editá `--color-accent`.
+**Botones y jerarquía**
+- Los CTA con borde punteado en mayúsculas se reemplazaron por un sistema de tres niveles: primario sólido, secundario con borde fino y link con flecha.
+- Un CTA de contacto fijo en el header.
+
+**Estructura y accesibilidad**
+- Cada página tiene un H1 real (la home no tenía ninguno) y metadata propia para SEO; sitemap y robots.
+- Link para saltar al contenido, foco visible, navegación por teclado, `aria-current` en el menú.
+- Menú mobile completo y dropdown de servicios accesible.
+- Respeta "reducir movimiento" del sistema.
+
+**Servicios**
+- Las páginas de servicio tenían la ilustración del hero tapando el título: ahora texto e imagen no se superponen.
+- Cada servicio muestra solo los logos de los clientes que menciona (antes todas las páginas repetían la misma grilla, aunque el texto nombrara otros clientes).
+- "¿Para qué sirve?" pasó de cajas centradas a una lista con íconos, fácil de escanear.
+- "¿Por qué elegir Preteco?" usa un estilo consistente (antes los colores alternaban al azar).
+- Se eliminaron textos duplicados (un punto repetido textual en infraestructura y dos en agentes de IA).
+- Link al siguiente servicio al final de cada página.
+- Los 5 pasos de "Así trabajamos" eran un carrusel donde solo se leía el primero: ahora se ven todos.
+
+**Formularios**
+- Validación con mensajes claros, estados de envío, éxito y error.
+- Campos con `name` y `autocomplete` (el original no tenía `name`).
+- El formulario de búsqueda de talentos pide LinkedIn/CV y área, en vez de "Empresa".
+- El formulario de contacto pregunta el tema de interés, preseleccionado según la página.
+
+**Contenido y otras páginas**
+- Blog ordenado por fecha, con título primero, bajada legible y sin textos cortados.
+- Casos: las cards parecían clickeables pero no llevaban a ningún lado; ahora enlazan al servicio aplicado.
+- Se quitó el filtro "Casos" de la home, que tenía una sola opción.
+- Productos: Oracle no tenía título y en el resto el título estaba pegado a la descripción sin espacio.
+- Equipo: grilla completa con nombres (antes era un carrusel de 8 páginas sin nombres).
+- Compliance: los pilares abrían modales; ahora se despliegan en el lugar. La tabla de fabricantes muestra links legibles en vez de URLs crudas. Las métricas quedan en una fila pareja.
+- Contacto: los 4 mapas embebidos (lentos e incómodos en mobile) se reemplazaron por links "Cómo llegar".
+- Corrección de typos y voseo consistente ("estrategicos", "mejora continúa", "Optimiza", "Accede", "Contáctanos", signos de pregunta faltantes).
 
 ## Pendientes
 
-- [ ] Artículos reales del blog (hoy hay placeholders) — idealmente MDX o un CMS.
+- [ ] Migrar el cuerpo de los 10 artículos del blog (hoy las cards abren el artículo en el sitio actual).
 - [ ] Conectar `/api/contact` a un proveedor de email o CRM.
-- [ ] URLs reales de redes sociales y página de Compliance.
-- [ ] Páginas internas: detalle de servicio, detalle de caso, nosotros, productos.
-- [ ] Logos de partners en SVG para el ticker.
-
-## Deploy
-
-Pensado para [Vercel](https://vercel.com): importá el repo y no hace falta configuración extra.
+- [ ] Correr `npm run fetch-assets` y servir las imágenes desde este proyecto.
+- [ ] Página de AI Readiness (hoy enlaza al sitio actual).
