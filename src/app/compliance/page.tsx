@@ -2,10 +2,12 @@
 import type { Metadata } from "next";
 import { img, asset } from "@/lib/asset";
 import { PageHero } from "@/components/PageHero";
-import { H2, Section, Check, Lead, Arrow } from "@/components/ui";
+import { Button, Check, Section, SectionHeader, Hl } from "@/components/ui";
+import { Icon, IconTile } from "@/components/Icon";
 import { Accordion } from "@/components/Accordion";
 import { ContactForm } from "@/components/ContactForm";
-import { codesOfConduct, compliancePillars, complianceStats, frameworks, vendorTrust } from "@/content/company";
+import { codesOfConduct, compliancePillars, frameworks, vendorTrust } from "@/content/company";
+import { pillarIcons } from "@/content/icons";
 import { COMPLIANCE_EMAIL } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -17,83 +19,100 @@ export default function CompliancePage() {
   return (
     <>
       <PageHero
+        eyebrow="Compliance"
         title="Transformamos la confianza en un sistema vivo"
         text="Compliance, gestión de riesgos y control interno de vanguardia para la era digital."
-      >
-        {/* Mejora: las tres métricas quedaban escalonadas (2 + 1); ahora es una fila pareja. */}
-        <dl className="mt-6 grid gap-4 sm:grid-cols-3">
-          {complianceStats.map((s) => (
-            <div key={s.value} className="rounded-2xl border border-accent/30 bg-panel/80 p-5 backdrop-blur-sm">
-              <dt className="sr-only">{s.label}</dt>
-              <dd className="font-mono text-2xl text-accent">{s.value}</dd>
-              <dd className="mt-1 text-sm text-ink/90">{s.label}</dd>
-            </div>
-          ))}
-        </dl>
-      </PageHero>
+        actions={
+          <>
+            <Button href="#pilares" size="lg">
+              Ver el programa
+            </Button>
+            <Button href={`mailto:${COMPLIANCE_EMAIL}`} variant="secondary" size="lg" icon="none">
+              Escribirle al equipo
+            </Button>
+          </>
+        }
+        stats={[
+          { value: 10259, prefix: "+", label: "días sin sanciones ni multas" },
+          { value: 2, prefix: "+USD ", suffix: "M", label: "ahorrados previniendo incumplimientos" },
+          { value: 822, label: "terceros bajo monitoreo continuo" },
+          { value: compliancePillars.length, label: "pilares del programa" },
+        ]}
+      />
 
       <Section>
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col gap-4">
-            <p className="font-mono text-sm tracking-[0.14em] text-accent-soft uppercase">Nuestra misión</p>
-            <H2>Integridad sostenible</H2>
-            <p className="text-lg leading-relaxed text-ink">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="flex flex-col gap-5">
+            <SectionHeader
+              eyebrow="Nuestra misión"
+              title={
+                <>
+                  Integridad <Hl>sostenible</Hl>
+                </>
+              }
+            />
+            <p data-reveal style={{ ["--d" as string]: 2 }} className="t-lead">
               En Preteco, el cumplimiento no es reactivo. Nuestra gestión de riesgos y compliance se anticipa, evoluciona y
               actúa con base en estándares globales, tecnología segura y gobernanza ética.
             </p>
           </div>
-          <img src={img("integridadSosteniblev2.png")} alt="" loading="lazy" className="w-full rounded-3xl" />
+          <div data-reveal="scale" className="relative">
+            <div aria-hidden="true" className="absolute inset-[15%] -z-10 rounded-full bg-violet/20 blur-[80px]" />
+            <img src={img("integridadSosteniblev2.png")} alt="" loading="lazy" className="w-full animate-float rounded-[32px]" />
+          </div>
         </div>
       </Section>
 
-      <Section tone="surface">
-        <p className="font-mono text-sm tracking-[0.14em] text-accent-soft uppercase">¿Cómo lo hacemos?</p>
-        <H2 className="mt-3">Compliance, gestión de riesgos y control interno: los pilares de nuestro sistema</H2>
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_340px]">
+      <Section id="pilares" tone="surface">
+        <SectionHeader
+          eyebrow="Cómo lo hacemos"
+          title="Compliance, gestión de riesgos y control interno: los pilares de nuestro sistema"
+        />
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">
           <Accordion
-            items={compliancePillars.map((p) => ({
+            items={compliancePillars.map((p, i) => ({
               title: p.title,
+              icon: pillarIcons[i],
               content: (
                 <>
                   <ul className="grid gap-3">
-                    {p.items.map((i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <Check className="mt-0.5 text-accent" />
-                        {i}
+                    {p.items.map((it) => (
+                      <li key={it} className="flex items-start gap-3">
+                        <Check className="mt-0.5" />
+                        {it}
                       </li>
                     ))}
                   </ul>
                   {p.link && (
-                    <a
-                      href={p.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group mt-5 inline-flex items-center gap-2 text-accent hover:text-accent-hover"
-                    >
-                      {p.link.label} <Arrow external />
-                    </a>
+                    <div className="mt-6">
+                      <Button href={p.link.href} variant="secondary">
+                        {p.link.label}
+                      </Button>
+                    </div>
                   )}
                 </>
               ),
             }))}
           />
-          <aside className="h-fit rounded-2xl bg-panel p-6">
-            <h3 className="text-xl font-medium text-accent">Nuestros códigos de conducta</h3>
-            <p className="mt-2 text-ink/90">Descargá los códigos de conducta vigentes.</p>
-            <ul className="mt-5 grid gap-3">
+          <aside data-reveal className="h-fit rounded-3xl border border-violet/30 bg-violet-deep/40 p-7 lg:sticky lg:top-28">
+            <IconTile name="book" />
+            <h3 className="t-h3 mt-5">Nuestros códigos de conducta</h3>
+            <p className="mt-2 text-muted">Descargá los códigos de conducta vigentes.</p>
+            <ul className="mt-6 grid gap-3">
               {codesOfConduct.map((c) => (
                 <li key={c.href}>
                   <a
                     href={asset(c.href)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between gap-3 rounded-xl border border-line bg-bg px-4 py-3 text-ink hover:border-accent"
+                    className="group flex items-center gap-3 rounded-2xl border border-line bg-bg/60 px-4 py-3 text-ink transition-colors hover:border-accent"
                   >
-                    <span>
+                    <Icon name="file" className="size-5 text-violet" />
+                    <span className="flex-1 text-[15px]">
                       {c.label}
                       <span className="block text-xs text-muted">PDF</span>
                     </span>
-                    <span aria-hidden="true" className="text-accent">↓</span>
+                    <Icon name="download" className="size-4 text-accent transition-transform group-hover:translate-y-0.5" />
                   </a>
                 </li>
               ))}
@@ -102,26 +121,27 @@ export default function CompliancePage() {
         </div>
       </Section>
 
-      {/* Mejora: la tabla mostraba las URLs crudas; ahora son links legibles y escaneables. */}
       <Section>
-        <H2>Comercialización de bienes y servicios enfocados en la seguridad de los datos</H2>
-        <Lead className="mt-5">
-          Preteco firmó acuerdos de comercialización con los principales referentes tecnológicos del mercado para ofrecer
-          a sus clientes soluciones innovadoras, útiles, eficaces y seguras para sus operaciones y su información.
-        </Lead>
-        <p className="mt-4 max-w-[75ch] text-ink/90">
-          Desde rigurosas políticas de privacidad hasta el uso de los marcos de referencia más exigentes, las soluciones
-          que comercializamos adoptan los más altos estándares de la industria:
-        </p>
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {frameworks.map((f) => (
-            <li key={f} className="rounded-full border border-line px-3 py-1 font-mono text-sm text-accent-soft">
+        <SectionHeader
+          eyebrow="Seguridad de los datos"
+          title="Comercialización de bienes y servicios enfocados en la seguridad de los datos"
+          text="Firmamos acuerdos de comercialización con los principales referentes tecnológicos para ofrecer soluciones innovadoras, útiles, eficaces y seguras. Las soluciones que comercializamos adoptan los más altos estándares de la industria:"
+        />
+        <ul className="mt-8 flex flex-wrap gap-2">
+          {frameworks.map((f, i) => (
+            <li
+              key={f}
+              data-reveal="scale"
+              style={{ ["--d" as string]: i % 5 }}
+              className="inline-flex items-center gap-1.5 rounded-full border border-violet/30 bg-violet/10 px-3 py-1.5 font-mono text-sm text-violet-soft"
+            >
+              <Icon name="shield" className="size-3.5" />
               {f}
             </li>
           ))}
         </ul>
 
-        <div className="mt-10 overflow-x-auto rounded-2xl border border-line">
+        <div data-reveal className="mt-12 overflow-x-auto rounded-3xl border border-line">
           <table className="w-full min-w-[560px] text-left">
             <caption className="sr-only">Políticas y certificaciones de cada fabricante</caption>
             <thead className="bg-surface text-sm text-muted">
@@ -133,8 +153,8 @@ export default function CompliancePage() {
             </thead>
             <tbody>
               {vendorTrust.map((v) => (
-                <tr key={v.vendor} className="border-t border-line">
-                  <th scope="row" className="px-6 py-4 font-medium text-ink">{v.vendor}</th>
+                <tr key={v.vendor} className="border-t border-line transition-colors hover:bg-surface/60">
+                  <th scope="row" className="px-6 py-4 font-semibold text-ink">{v.vendor}</th>
                   <td className="px-6 py-4">
                     <ExtLink href={v.trust}>Ver trust center</ExtLink>
                   </td>
@@ -151,8 +171,8 @@ export default function CompliancePage() {
       <Section className="!pt-0">
         <ContactForm
           variant="compliance"
-          title="Puertas abiertas"
-          text={`Si tenés dudas o querés conocer más sobre compliance en Preteco, escribinos a ${COMPLIANCE_EMAIL} o completá el formulario.`}
+          title="¿Tenés dudas sobre compliance?"
+          text={`Escribinos a ${COMPLIANCE_EMAIL} o completá el formulario.`}
         />
       </Section>
     </>
@@ -162,7 +182,8 @@ export default function CompliancePage() {
 function ExtLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1.5 text-accent hover:text-accent-hover">
-      {children} <Arrow external />
+      <span className="link-underline">{children}</span>
+      <Icon name="arrowUpRight" className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
     </a>
   );
 }

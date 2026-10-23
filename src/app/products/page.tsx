@@ -2,7 +2,8 @@
 import type { Metadata } from "next";
 import { img } from "@/lib/asset";
 import { PageHero } from "@/components/PageHero";
-import { H2, Section, Button } from "@/components/ui";
+import { Button, Section, SectionHeader, Hl } from "@/components/ui";
+import { Icon } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
 import { products } from "@/content/company";
 
@@ -15,41 +16,72 @@ export default function ProductsPage() {
   return (
     <>
       <PageHero
+        eyebrow="Productos"
         title="Soluciones tecnológicas que impulsan el crecimiento de tu empresa"
-        text="En Preteco comercializamos e implementamos productos líderes en hardware y software que mejoran la productividad, optimizan procesos y garantizan la seguridad de tu infraestructura."
+        text="Comercializamos e implementamos productos líderes en hardware y software que mejoran la productividad, optimizan procesos y garantizan la seguridad de tu infraestructura."
+        actions={
+          <>
+            <Button href="#productos" size="lg">
+              Ver productos
+            </Button>
+            <Button href="#formulario" variant="secondary" size="lg">
+              Consultar
+            </Button>
+          </>
+        }
       />
 
       <Section>
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div className="flex flex-col gap-5">
-            <H2>¿Qué ofrecemos?</H2>
-            <p className="text-lg leading-relaxed text-ink">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="flex flex-col gap-6">
+            <SectionHeader
+              eyebrow="Qué ofrecemos"
+              title={
+                <>
+                  Tecnología empresarial <Hl>de primer nivel</Hl>
+                </>
+              }
+            />
+            <p data-reveal style={{ ["--d" as string]: 2 }} className="t-lead">
               No solo diseñamos e implementamos soluciones de transformación digital: también proveemos tecnología
-              empresarial de primer nivel para asegurar el máximo rendimiento de tus operaciones.
+              empresarial para asegurar el máximo rendimiento de tus operaciones.
             </p>
-            <p className="text-lg leading-relaxed text-ink">
+            <p data-reveal style={{ ["--d" as string]: 3 }} className="t-lead">
               Trabajamos con Oracle, Okta, MuleSoft y AWS, líderes mundiales que garantizan un stack robusto, probado y
               adaptable a las necesidades de tu organización.
             </p>
           </div>
-          <img src={img("product.png")} alt="" loading="lazy" className="w-full rounded-3xl object-cover" />
+          <div data-reveal="scale" className="overflow-hidden rounded-[32px] border border-line">
+            <div data-parallax="0.06" className="-my-10">
+              <img src={img("product.png")} alt="" loading="lazy" className="w-full object-cover" />
+            </div>
+          </div>
         </div>
       </Section>
 
-      {/* Mejora: cada producto tiene título propio y el CTA lleva al formulario con el producto ya elegido. */}
-      <Section tone="surface">
-        <H2>Nuestros productos tecnológicos</H2>
-        <ul className="mt-10 grid gap-6 md:grid-cols-2">
-          {products.map((p) => (
-            <li key={p.id} className="flex flex-col gap-4 rounded-2xl border border-line bg-bg p-7">
-              <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-auto self-start" />
-              <h3 className="text-xl font-medium text-accent">{p.title}</h3>
-              <p className="flex-1 text-ink/90">{p.text}</p>
-              <div>
-                <Button href="#formulario" variant="link">
-                  Consultar por {p.name}
-                </Button>
+      <Section id="productos" tone="surface">
+        <SectionHeader eyebrow="Portfolio" title="Nuestros productos tecnológicos" />
+        <ul className="mt-12 grid gap-5 md:grid-cols-2">
+          {products.map((p, i) => (
+            <li
+              key={p.id}
+              data-reveal
+              style={{ ["--d" as string]: i % 2 }}
+              className="spotlight glow-border group relative flex flex-col gap-5 overflow-hidden rounded-[28px] border border-line bg-bg/60 p-8"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-auto" />
+                <span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
               </div>
+              <h3 className="t-h3 text-2xl">{p.title}</h3>
+              <p className="flex-1 text-muted">{p.text}</p>
+              <a
+                href="#formulario"
+                className="group/link inline-flex items-center gap-2 self-start border-t border-line pt-4 font-medium text-accent"
+              >
+                <span className="link-underline">Consultar por {p.name}</span>
+                <Icon name="arrowRight" className="size-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+              </a>
             </li>
           ))}
         </ul>

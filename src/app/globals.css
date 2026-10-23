@@ -1,38 +1,58 @@
 @import "tailwindcss";
 
-/* ───────── Tokens: identidad actual de Preteco (DM Sans / DM Mono, verde lima sobre oliva) ───────── */
+/* ═════════════════════════════════════════════════════════════════════
+   Preteco · sistema visual v2
+   Primario: lima #CBFF00 (acción, foco, datos destacados)
+   Secundario: violeta #A594FF (etiquetas, acentos de apoyo, botón secundario)
+   Tipografía: DM Mono para display y etiquetas · DM Sans para títulos y texto
+   ═════════════════════════════════════════════════════════════════════ */
 @theme {
-  --color-bg: #141900;
-  --color-surface: #1a2100;
-  --color-panel: #222c00;
-  --color-field: #293300;
-  --color-line: #3a4711;
-  --color-line-strong: #5a6e12;
-  --color-ink: #f5ffcc;
-  --color-text: #fafee5;
-  --color-muted: #c4cc9e;
+  --color-bg: #121700;
+  --color-surface: #191f02;
+  --color-panel: #212a03;
+  --color-field: #273202;
+  --color-line: #33400f;
+  --color-line-strong: #4e6015;
+  --color-ink: #f6ffd6;
+  --color-text: #e9efd2;
+  --color-muted: #b9c39a;
   --color-accent: #cbff00;
-  --color-accent-hover: #dcff4d;
+  --color-accent-hover: #dcff52;
   --color-accent-soft: #ebff99;
+  --color-violet: #a594ff;
+  --color-violet-soft: #d4ccff;
+  --color-violet-deep: #2b2552;
   --color-danger: #ffb4a3;
 
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), ui-monospace, monospace;
 
-  --animate-marquee: marquee 40s linear infinite;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-spin-slow: spin 80s linear infinite;
+  --animate-drift: drift 18s ease-in-out infinite alternate;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes drift {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(-6%, 8%, 0) scale(1.15); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(203 255 0 / 0.5); }
+    50% { box-shadow: 0 0 0 7px rgb(203 255 0 / 0); }
   }
 }
 
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
-  ::selection { background: var(--color-accent); color: var(--color-bg); }
-  input::placeholder, textarea::placeholder { color: #8d9a5c; }
-  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--color-violet); color: var(--color-bg); }
+  input::placeholder, textarea::placeholder { color: #87925f; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 6px; }
   img { max-width: 100%; height: auto; }
 }
 
@@ -44,7 +64,158 @@
   @media (width >= 48rem) { padding-inline: 2rem; }
 }
 
+/* ── Tipografía: jerarquía ─────────────────────────────────────────── */
+@utility t-display {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(40px, 6.2vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  color: var(--color-accent);
+  text-wrap: balance;
+}
+@utility t-display-sm {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+  text-wrap: balance;
+}
+@utility t-h2 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+@utility t-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--color-ink);
+}
+@utility t-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-violet);
+}
+@utility t-lead {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--color-text) 88%, transparent);
+  text-wrap: pretty;
+}
+
+/* ── Animación de entrada al scroll ────────────────────────────────────
+   Solo se oculta si el JS de efectos está activo (html.fx), así el contenido
+   nunca queda invisible si algo falla. */
+html.fx [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+html.fx [data-reveal="fade"] { transform: none; }
+html.fx [data-reveal="scale"] { transform: scale(0.96); }
+html.fx [data-reveal="left"] { transform: translate3d(-28px, 0, 0); }
+html.fx [data-reveal][data-in] { opacity: 1; transform: none; }
+
+/* Títulos que aparecen palabra por palabra */
+.words > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0) rotate(2deg);
+  filter: blur(6px);
+  animation: word-in 0.9s var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--i) * 70ms + 120ms);
+}
+@keyframes word-in { to { opacity: 1; transform: none; filter: blur(0); } }
+
+/* Transición entre páginas */
+.page-in { animation: page-in 0.7s var(--ease-out-expo) both; }
+@keyframes page-in { from { opacity: 0; transform: translate3d(0, 12px, 0); } to { opacity: 1; transform: none; } }
+
+/* ── Spotlight: luz que sigue al cursor sobre las cards ─────────────── */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(165 148 255 / 0.16),
+    rgb(203 255 0 / 0.06) 40%,
+    transparent 70%
+  );
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* Borde que se ilumina en hover */
+.glow-border { transition: border-color 0.3s ease, transform 0.4s var(--ease-out-expo); }
+.glow-border:hover { border-color: color-mix(in oklab, var(--color-violet) 55%, transparent); transform: translateY(-3px); }
+
+/* ── Botón primario: brillo que cruza en hover ─────────────────────── */
+.btn-sheen { position: relative; overflow: hidden; }
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease-out-expo);
+}
+.btn-sheen:hover::after { transform: translateX(120%); }
+
+/* Subrayado animado para links terciarios */
+.link-underline { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.4s var(--ease-out-expo); }
+.link-underline:hover { background-size: 100% 1px; }
+
+/* Barra de progreso de lectura */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 60;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--scroll, 0));
+  background: linear-gradient(90deg, var(--color-violet), var(--color-accent));
+}
+
+/* Header que se compacta al hacer scroll */
+html[data-scrolled] .site-header { background: rgb(18 23 0 / 0.82); border-color: var(--color-line); }
+
+/* Línea de tiempo que se "dibuja" al entrar en pantalla */
+html.fx [data-draw] { transform: scaleX(0); transform-origin: left; transition: transform 1.6s var(--ease-out-expo) 0.2s; }
+html.fx [data-draw][data-in] { transform: scaleX(1); }
+@media (width < 64rem) {
+  html.fx [data-draw] { transform: scaleY(0); transform-origin: top; }
+  html.fx [data-draw][data-in] { transform: scaleY(1); }
+}
+
+/* Textura de puntos para fondos */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(203 255 0 / 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
+  html.fx [data-reveal], html.fx [data-draw] { opacity: 1 !important; transform: none !important; }
+  .words > span { opacity: 1; transform: none; filter: none; }
 }
