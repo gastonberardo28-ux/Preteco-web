@@ -2,7 +2,9 @@ import { cdn } from "@/lib/asset";
 
 /* ── Equipo y valores ───────────────────────────────────────────────────
    Para sumar una persona: subí su foto a public/preteco/preteco-web/ y
-   agregá una línea ["Nombre Apellido", "archivo.jpg"] en teamRaw. */
+   agregá una línea ["Nombre Apellido", "archivo.jpg"] en teamRaw.
+   El orden de esta lista no importa: en el sitio se mezcla solo cada hora
+   y las fotos visibles van rotando. */
 export const values = [
   "Colaboración real",
   "Compromiso con el resultado",
