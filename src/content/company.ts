@@ -149,7 +149,7 @@ export const team = teamRaw.map(([name, file]) => ({ name, photo: cdn(file) }));
 /* ── Blog ────────────────────────────────────────────────────────────────
    Mejora UX: ordenado por fecha (el original estaba desordenado), título
    primero y bajada abajo, sin títulos cortados ni extractos repetidos.
-   TODO: migrar el cuerpo de cada artículo; por ahora el link abre el original. */
+   El cuerpo de cada artículo está en src/content/blog/<id>.md */
 const blogRaw = [
   { id: 3, date: "2026-01-27", title: "Oracle Database 23ai: las últimas novedades de la base de datos que impulsa la nueva era de la IA empresarial", dek: "Cómo Oracle 23ai integra inteligencia artificial, seguridad y continuidad operativa en una única plataforma.", image: "f0724a38-0ccb-4b8c-9cce-d48bbd085e8b.webp", tag: "Datos" },
   { id: 4, date: "2026-02-18", title: "Preteco y la gestión de sistemas de misión crítica: cómo garantizar la continuidad del negocio con operación 24/7", dek: "Cómo garantizamos disponibilidad, seguridad y operación 24/7 en entornos donde fallar no es una opción.", image: "8fb125a2-525e-4bd1-a97e-2aded35f4cf8.webp", tag: "CriticalOps" },
@@ -164,7 +164,7 @@ const blogRaw = [
 ];
 
 export const posts = blogRaw
-  .map((p) => ({ ...p, image: cdn(p.image), url: `https://preteco.com/blog/article/${p.id}` }))
+  .map((p) => ({ ...p, image: cdn(p.image), url: `/blog/article/${p.id}` }))
   .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id));
 
 export function formatDate(iso: string) {

@@ -33,6 +33,7 @@ Después, en Vercel, definí la variable `NEXT_PUBLIC_ASSET_BASE` con valor vac�
 | `/products` | Oracle, Okta, MuleSoft, AWS |
 | `/cases` | Casos de éxito |
 | `/blogs` | Blog |
+| `/blog/article/[id]` | 10 artículos (Markdown en `src/content/blog/`) |
 | `/about-us` | Nosotros, valores, equipo y búsqueda de talentos |
 | `/compliance` | Programa de compliance |
 | `/contact` | Contacto y oficinas |
@@ -44,6 +45,7 @@ Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links exi
 - `src/content/services.ts`: servicios, metodología y herramientas.
 - `src/content/company.ts`: casos, productos, valores, equipo, blog y compliance.
 - `src/content/site.ts`: navegación, partners, redes y oficinas.
+- `src/content/blog/<id>.md`: cuerpo de cada artículo. Para sumar uno nuevo, agregá el archivo y su entrada (título, bajada, fecha, imagen) en `company.ts`.
 
 ## Mejoras de UX/UI respecto del sitio actual
 
@@ -84,7 +86,7 @@ Se mantienen las mismas URLs que el sitio actual para no perder SEO ni links exi
 
 ## Pendientes
 
-- [ ] Migrar el cuerpo de los 10 artículos del blog (hoy las cards abren el artículo en el sitio actual).
+- [ ] Agregar las ilustraciones internas de los artículos (en el sitio actual están incrustadas en el texto; se migró solo la imagen de portada).
 - [ ] Conectar `/api/contact` a un proveedor de email o CRM.
 - [ ] Correr `npm run fetch-assets` y servir las imágenes desde este proyecto.
 - [ ] Página de AI Readiness (hoy enlaza al sitio actual).

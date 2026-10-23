@@ -43,10 +43,8 @@ export function PostCards({ limit }: { limit?: number }) {
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {list.map((p) => (
         <li key={p.id}>
-          <a
+          <Link
             href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
             className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors hover:border-accent/60"
           >
             <div className="aspect-[16/9] overflow-hidden bg-panel">
@@ -63,7 +61,7 @@ export function PostCards({ limit }: { limit?: number }) {
                 Leer artículo <Arrow />
               </span>
             </div>
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
