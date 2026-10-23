@@ -2,25 +2,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { posts, formatDate } from "@/content/company";
+import { formatDate } from "@/content/company";
 import { tagIcon } from "@/content/icons";
-import { Markdown, readArticle, readingMinutes } from "@/lib/markdown";
+import { Markdown, readingMinutes } from "@/lib/markdown";
+import { getPosts } from "@/lib/cms";
 import { Button, Section, SectionHeader } from "@/components/ui";
 import { Icon } from "@/components/Icon";
 import { HeroBackground } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 
 // Misma URL que el sitio actual (/blog/article/N) para no romper links ni SEO.
-export function generateStaticParams() {
-  return posts.map((p) => ({ id: String(p.id) }));
+// Los artículos nuevos de la planilla se generan la primera vez que alguien los visita
+// y se actualizan cada 5 minutos (o al instante con /api/revalidate).
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return (await getPosts()).map((p) => ({ id: String(p.id) }));
 }
 
 type Props = { params: Promise<{ id: string }> };
 
-const findPost = (id: string) => posts.find((p) => String(p.id) === id);
+const findPost = async (id: string) => (await getPosts()).find((p) => String(p.id) === id);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = findPost((await params).id);
+  const post = await findPost((await params).id);
   if (!post) return {};
   return {
     title: post.title,
@@ -30,10 +36,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const post = findPost((await params).id);
+  const posts = await getPosts();
+  const { id } = await params;
+  const post = posts.find((p) => String(p.id) === id);
   if (!post) notFound();
 
-  const body = readArticle(post.id);
+  const body = post.body;
   const related = [
     ...posts.filter((p) => p.id !== post.id && p.tag === post.tag),
     ...posts.filter((p) => p.id !== post.id && p.tag !== post.tag),

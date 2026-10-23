@@ -152,7 +152,7 @@ export function ContactForm({
       return;
     }
     setStatus("sending");
-    const data = { ...Object.fromEntries(new FormData(form).entries()), origen: variant };
+    const data = { ...Object.fromEntries(new FormData(form).entries()), origen: variant, pagina: window.location.pathname };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -207,6 +207,11 @@ export function ContactForm({
         </div>
       ) : (
         <form noValidate onSubmit={onSubmit} className="mt-8 grid gap-5 md:grid-cols-2">
+          {/* Campo trampa para bots: oculto para personas y lectores de pantalla */}
+          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <label htmlFor={`${id}-website`}>No completar</label>
+            <input id={`${id}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           {fields.map((f) => {
             const fid = `${id}-${f.name}`;
             const err = errors[f.name];

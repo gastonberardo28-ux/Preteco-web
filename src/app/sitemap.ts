@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/content/services";
-import { posts } from "@/content/company";
+import { getPosts } from "@/lib/cms";
 
 const BASE = "https://preteco.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = ["", "/services", "/products", "/cases", "/blogs", "/about-us", "/compliance", "/contact"];
+  const posts = await getPosts();
   return [
     ...pages.map((p) => ({ url: `${BASE}${p}`, changeFrequency: "monthly" as const, priority: p === "" ? 1 : 0.7 })),
     ...services.map((s) => ({ url: `${BASE}/services/${s.slug}`, changeFrequency: "monthly" as const, priority: 0.8 })),

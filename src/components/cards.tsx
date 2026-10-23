@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { cases, posts, formatDate } from "@/content/company";
+import { cases, formatDate } from "@/content/company";
+import { getPosts } from "@/lib/cms";
 import { tagIcon } from "@/content/icons";
 import { Icon } from "./Icon";
 
@@ -40,8 +41,10 @@ export function CaseCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" 
   );
 }
 
-export function PostCards({ limit }: { limit?: number }) {
+export async function PostCards({ limit }: { limit?: number }) {
+  const posts = await getPosts();
   const list = limit ? posts.slice(0, limit) : posts;
+  if (list.length === 0) return <p className="t-lead">Muy pronto vas a encontrar nuevas notas acá.</p>;
   return (
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {list.map((p, i) => (

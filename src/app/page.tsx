@@ -10,6 +10,9 @@ import { services, serviceGroups } from "@/content/services";
 import { serviceIcon, groupIcon } from "@/content/icons";
 import { team } from "@/content/company";
 
+// El blog se lee de Google Sheets: la página se regenera cada 5 minutos.
+export const revalidate = 300;
+
 const pillars = [
   {
     icon: "sparkles" as const,

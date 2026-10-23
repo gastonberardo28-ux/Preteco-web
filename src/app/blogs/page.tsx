@@ -4,6 +4,9 @@ import { Button, Section } from "@/components/ui";
 import { PostCards } from "@/components/cards";
 import { ContactForm } from "@/components/ContactForm";
 
+// El blog se lee de Google Sheets: la página se regenera cada 5 minutos.
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "Blog",
   description: "Tendencias, buenas prácticas y aprendizajes sobre IA, cloud, datos y seguridad.",
