@@ -1,4 +1,6 @@
-/* Set de íconos propio (trazo 1.75, grilla de 24 px) para mantener un estilo único en todo el sitio. */
+/* Set de íconos propio (trazo 1.5, grilla de 24 px, estilo lineal y sobrio).
+   Criterio: un ícono solo cuando ayuda a reconocer algo (un servicio, un dato de contacto,
+   una acción). Para listas de conceptos abstractos (valores, pasos) usamos números. */
 
 const paths = {
   database: (
@@ -16,10 +18,19 @@ const paths = {
     </>
   ),
   cloud: <path d="M7 18.5h10a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.1 9.1 4.75 4.75 0 0 0 7 18.5Z" />,
-  sparkles: (
+  cpu: (
     <>
-      <path d="M11 3.5 12.6 8a2 2 0 0 0 1.4 1.4l4.5 1.6-4.5 1.6a2 2 0 0 0-1.4 1.4L11 18.5 9.4 14a2 2 0 0 0-1.4-1.4L3.5 11 8 9.4A2 2 0 0 0 9.4 8Z" />
-      <path d="M18.5 3v3.5M20.25 4.75h-3.5M18.5 16.5v3M20 18h-3" />
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+      <rect x="9.5" y="9.5" width="5" height="5" rx="0.5" />
+      <path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5" />
+    </>
+  ),
+  network: (
+    <>
+      <circle cx="12" cy="5" r="2.25" />
+      <circle cx="5" cy="18.5" r="2.25" />
+      <circle cx="19" cy="18.5" r="2.25" />
+      <path d="M10.9 7 6.1 16.5M13.1 7l4.8 9.5M7.25 18.5h9.5" />
     </>
   ),
   bot: (
@@ -207,7 +218,7 @@ export function Icon({ name, className = "size-5" }: { name: IconName; className
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.75"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={`shrink-0 ${className}`}
@@ -217,7 +228,8 @@ export function Icon({ name, className = "size-5" }: { name: IconName; className
   );
 }
 
-/* Ícono dentro de una "baldosa" con borde y brillo: uso consistente en cards. */
+/* Ícono dentro de una "baldosa" sobria: borde fino, sin brillo.
+   tone="lime" solo para el elemento destacado de un grupo. */
 export function IconTile({
   name,
   tone = "violet",
@@ -227,13 +239,10 @@ export function IconTile({
   tone?: "violet" | "lime";
   size?: "md" | "lg";
 }) {
-  const toneCls =
-    tone === "lime"
-      ? "border-accent/30 bg-accent/10 text-accent shadow-[0_0_24px_-6px_rgb(203_255_0/0.45)]"
-      : "border-violet/30 bg-violet/10 text-violet shadow-[0_0_24px_-6px_rgb(165_148_255/0.5)]";
-  const sizeCls = size === "lg" ? "size-14 rounded-2xl [&_svg]:size-7" : "size-11 rounded-xl [&_svg]:size-5";
+  const toneCls = tone === "lime" ? "border-accent/35 text-accent" : "border-line-strong/70 text-violet-soft";
+  const sizeCls = size === "lg" ? "size-14 rounded-xl [&_svg]:size-7" : "size-11 rounded-lg [&_svg]:size-[22px]";
   return (
-    <span className={`inline-flex shrink-0 items-center justify-center border ${toneCls} ${sizeCls}`}>
+    <span className={`inline-flex shrink-0 items-center justify-center border bg-bg/50 transition-colors duration-300 ${toneCls} ${sizeCls}`}>
       <Icon name={name} />
     </span>
   );

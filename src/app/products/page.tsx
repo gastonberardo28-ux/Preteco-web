@@ -7,6 +7,7 @@ import { Icon } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
 import { products } from "@/content/collections/products";
 import { productsPage as c } from "@/content/pages/products";
+import { Carousel } from "@/components/Carousel";
 
 /* PRODUCTOS · textos en content/pages/products.ts · productos en content/collections/products.ts */
 
@@ -37,7 +38,7 @@ export default function ProductsPage() {
 
       <Section id="productos" tone="surface">
         <SectionHeader eyebrow={c.list.eyebrow} title={c.list.title} />
-        <ul className="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 md:gap-5">
+        <Carousel until="md" label="Productos" className="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 md:gap-5">
           {products.map((p, i) => (
             <li
               key={p.id}
@@ -59,7 +60,7 @@ export default function ProductsPage() {
               </a>
             </li>
           ))}
-        </ul>
+        </Carousel>
       </Section>
 
       <Section>

@@ -67,7 +67,7 @@ Si algo sale mal, el pull request muestra un ❌ y el sitio publicado **no se ro
 | **Pie de página** (textos y links) | `src/content/site.ts` → `footer`, `footerNav` |
 | **Redes sociales**, **partners**, **oficinas**, mail de compliance | `src/content/site.ts` |
 | Campos y textos de los **formularios** | `src/content/forms.ts` |
-| Qué **ícono** usa cada servicio, valor, paso o pilar | `src/content/icons.ts` (lista de íconos disponibles en `src/components/Icon.tsx`) |
+| Qué **ícono** usa cada servicio, área o pilar | `src/content/icons.ts` (lista de íconos disponibles en `src/components/Icon.tsx`). Criterio: íconos solo donde ayudan a reconocer algo; para listas de conceptos (valores, pasos) se usan números |
 | **Colores** y **tipografías** | `src/app/globals.css` (bloque `@theme`) — *tarea de diseño* |
 
 ### Imágenes
@@ -142,12 +142,13 @@ Todos están en `src/components/`. Usarlos mantiene el diseño consistente en to
 | `Section` | Contenedor de una sección. `tone="surface"` cambia el fondo para alternar | Todas las páginas |
 | `SectionHeader` | Etiqueta + título + bajada + link a la derecha | Comienzo de cada sección |
 | `Button` / `Actions` | Botones primario (lima), secundario (violeta) y terciario (link) | Heros y secciones |
-| `IconTile` / `Icon` | Ícono suelto o en baldosa | Tarjetas de servicios y valores |
+| `IconTile` / `Icon` | Ícono suelto o en baldosa sobria | Tarjetas de servicios |
+| `Carousel` | Convierte una grilla en fila deslizable en mobile (`until="sm" \| "md" \| "lg"`), con puntos de navegación | Blog y casos en la home, productos, oficinas |
 | `Check` | Tilde para listas de beneficios | "¿Para qué sirve?" en servicios |
 | `Accordion` | Lista desplegable | Pilares de Compliance |
 | `CaseCards` / `PostCards` | Tarjetas de casos y de artículos | Home, Casos, Blog |
 | `TeamGrid` | Grilla de personas con "ver todo" | Nosotros |
-| `ContactForm` | Formulario (`variant`: contact, careers, blog, compliance) | Final de cada página |
+| `ContactForm` | Formulario (`variant`: contact, careers, blog, compliance). En mobile se muestra paso a paso, una pregunta por vez | Final de cada página |
 | `Breadcrumbs` | Migas de pan (Inicio / Servicios / …) | Páginas de servicio y artículos |
 | `cardCls()` | Estilo estándar de tarjeta con borde y luz al pasar el mouse | — |
 

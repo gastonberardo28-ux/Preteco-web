@@ -10,6 +10,7 @@ import { clientLogos, getService, services, type ServiceHow } from "@/content/co
 import { serviceDetail as c } from "@/content/pages/services";
 import { pageMeta, SITE_URL } from "@/lib/seo";
 import { serviceIcon } from "@/content/icons";
+import { Carousel } from "@/components/Carousel";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -198,7 +199,7 @@ function How({ how }: { how: ServiceHow }) {
         </p>
       )}
       {how.kind === "steps" && (
-        <ol className="mt-12 grid gap-4 md:grid-cols-3">
+        <Carousel as="ol" until="md" label="Cómo lo hacemos" className="mt-12 grid gap-4 md:grid-cols-3">
           {how.items.map((t, i) => (
             <li
               key={t}
@@ -210,10 +211,10 @@ function How({ how }: { how: ServiceHow }) {
               <p className="text-lg text-ink">{t}</p>
             </li>
           ))}
-        </ol>
+        </Carousel>
       )}
       {how.kind === "cards" && (
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Carousel until="lg" label="Cómo lo hacemos" className="mt-12 grid gap-4 lg:grid-cols-3">
           {how.items.map((c, i) => (
             <li
               key={c.title}
@@ -226,7 +227,7 @@ function How({ how }: { how: ServiceHow }) {
               <p className="text-muted">{c.text}</p>
             </li>
           ))}
-        </ul>
+        </Carousel>
       )}
       {how.kind === "list" && (
         <ul className="mt-12 grid gap-4 md:grid-cols-2">

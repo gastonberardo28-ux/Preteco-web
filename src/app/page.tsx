@@ -6,9 +6,10 @@ import { Actions, Button, Section, SectionHeader, rich } from "@/components/ui";
 import { Icon, IconTile } from "@/components/Icon";
 import { PageHero } from "@/components/PageHero";
 import { CaseCards, PostCards } from "@/components/cards";
+import { Carousel } from "@/components/Carousel";
 import { ContactForm } from "@/components/ContactForm";
-import { services, serviceGroups } from "@/content/collections/services";
-import { serviceIcon, groupIcon } from "@/content/icons";
+import { services } from "@/content/collections/services";
+import { serviceIcon } from "@/content/icons";
 import { home as c } from "@/content/pages/home";
 
 /* HOME · textos en content/pages/home.ts */
@@ -59,9 +60,8 @@ export default function Home() {
             </Button>
           }
         />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+        <Carousel until="sm" label="Servicios" className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
           {services.map((s, i) => {
-            const group = serviceGroups.find((g) => g.slugs.includes(s.slug));
             const featured = i === 0;
             return (
               <li key={s.slug} data-reveal style={{ ["--d" as string]: i % 4 }} className={featured ? "lg:col-span-2 lg:row-span-2" : ""}>
@@ -71,10 +71,7 @@ export default function Home() {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <IconTile name={serviceIcon[s.slug]} tone={featured ? "lime" : "violet"} size={featured ? "lg" : "md"} />
-                    <span className="flex max-w-[60%] items-start justify-end gap-1.5 text-right text-xs text-muted">
-                      {group && <Icon name={groupIcon[group.name]} className="mt-px size-3.5" />}
-                      <span>{s.category}</span>
-                    </span>
+                    <span className="max-w-[60%] text-right font-mono text-[11px] tracking-[0.08em] text-muted uppercase">{s.category}</span>
                   </div>
                   <div className="mt-auto flex flex-col gap-2">
                     <h3 className={`t-h3 ${featured ? "lg:text-3xl" : ""}`}>{s.menuLabel}</h3>
@@ -104,7 +101,7 @@ export default function Home() {
               </span>
             </Link>
           </li>
-        </ul>
+        </Carousel>
       </Section>
 
       <Section tone="surface">

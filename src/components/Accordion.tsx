@@ -13,7 +13,7 @@ export function Accordion({ items }: { items: { title: string; icon?: IconName; 
         >
           <summary className="flex min-h-18 cursor-pointer list-none items-center gap-4 px-5 py-4 text-lg text-ink md:px-6 [&::-webkit-details-marker]:hidden">
             {it.icon && (
-              <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-violet/30 bg-violet/10 text-violet transition-colors group-open:border-accent/40 group-open:bg-accent/10 group-open:text-accent">
+              <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-line-strong/70 bg-bg/50 text-violet-soft transition-colors group-open:border-accent/40 group-open:text-accent">
                 <Icon name={it.icon} className="size-5" />
               </span>
             )}

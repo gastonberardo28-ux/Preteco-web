@@ -12,6 +12,7 @@ import { Breadcrumbs, Button, JsonLd, Section, SectionHeader } from "@/component
 import { Icon } from "@/components/Icon";
 import { HeroBackground } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
+import { Carousel } from "@/components/Carousel";
 
 /* ARTÍCULO · el contenido viene de la planilla del blog; textos fijos en content/pages/article.ts */
 
@@ -125,7 +126,7 @@ export default async function ArticlePage({ params }: Props) {
             </Button>
           }
         />
-        <ul className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
+        <Carousel until="md" label="Artículos relacionados" className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
           {related.map((p, i) => (
             <li key={p.id} data-reveal style={{ ["--d" as string]: i }}>
               <Link
@@ -142,7 +143,7 @@ export default async function ArticlePage({ params }: Props) {
               </Link>
             </li>
           ))}
-        </ul>
+        </Carousel>
       </Section>
 
       <Section>
