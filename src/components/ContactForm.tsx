@@ -247,9 +247,9 @@ function StepForm({
     ...fields,
     { name: "mensaje", label: msg.label, placeholder: msg.placeholder, multiline: true },
   ];
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    defaultInterest && fields.some((f) => f.name === "interes") ? { interes: defaultInterest } : {}
-  );
+  const initial: Record<string, string> = {};
+  if (defaultInterest && fields.some((x) => x.name === "interes")) initial.interes = defaultInterest;
+  const [values, setValues] = useState<Record<string, string>>(initial);
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState<1 | -1>(1);
   const [error, setError] = useState("");
