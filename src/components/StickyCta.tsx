@@ -28,26 +28,23 @@ export function StickyCta() {
     const footer = document.querySelector("footer");
     setFormId(form?.id || null);
 
-    let formVisible = false;
-    let footerVisible = false;
     let typing = false;
 
-    const update = () => {
-      const pastHero = window.scrollY > window.innerHeight * 0.75;
-      setShow(pastHero && !formVisible && !footerVisible && !typing);
+    // ¿El elemento ocupa parte de la pantalla (dejando fuera el 15% inferior, donde va el botón)?
+    const onScreen = (el: Element | null) => {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return r.top < window.innerHeight * 0.85 && r.bottom > 0;
     };
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.target === form) formVisible = e.isIntersecting;
-          if (e.target === footer) footerVisible = e.isIntersecting;
-        }
-        update();
-      },
-      { rootMargin: "0px 0px -15% 0px" }
-    );
-    if (form) io.observe(form);
-    if (footer) io.observe(footer);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const pastHero = window.scrollY > window.innerHeight * 0.75;
+      setShow(pastHero && !typing && !onScreen(form) && !onScreen(footer));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
 
     const isField = (t: EventTarget | null) => t instanceof HTMLElement && t.matches("input, textarea, select");
     const onFocusIn = (e: FocusEvent) => {
@@ -59,12 +56,14 @@ export function StickyCta() {
     };
 
     update();
-    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     document.addEventListener("focusin", onFocusIn);
     document.addEventListener("focusout", onFocusOut);
     return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", update);
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       document.removeEventListener("focusin", onFocusIn);
       document.removeEventListener("focusout", onFocusOut);
     };
