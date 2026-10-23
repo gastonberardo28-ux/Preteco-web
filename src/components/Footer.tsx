@@ -80,14 +80,14 @@ export function Footer() {
 
         <div className="sm:col-span-2 md:col-span-1">
           <p className="t-eyebrow mb-3 md:mb-4">{footer.officesTitle}</p>
-          <ul className="flex flex-wrap gap-2 text-[15px] md:grid md:gap-0">
+          <ul className="flex flex-wrap gap-1.5 text-sm md:grid md:gap-0 md:text-[15px]">
             {offices.map((o) => (
               <li key={o.city}>
                 <a
                   href={o.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tap flex min-h-10 items-center gap-2 rounded-full border border-line px-3.5 text-text transition-colors hover:text-accent md:gap-2.5 md:rounded-none md:border-0 md:px-0"
+                  className="tap flex min-h-9 items-center gap-1.5 rounded-full border border-line px-3 text-text md:min-h-10 transition-colors hover:text-accent md:gap-2.5 md:rounded-none md:border-0 md:px-0"
                 >
                   <Icon name="mapPin" className="size-4 text-violet" />
                   <span>{o.city}</span>

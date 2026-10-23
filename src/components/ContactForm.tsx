@@ -353,7 +353,7 @@ function StepForm({
         </label>
 
         {f.options ? (
-          <div role="radiogroup" aria-labelledby={`${fid}-label`} className="flex flex-wrap gap-2">
+          <div role="radiogroup" aria-labelledby={`${fid}-label`} className="flex flex-wrap gap-1.5">
             {f.options.map((o) => {
               const on = value === o;
               return (
@@ -363,7 +363,7 @@ function StepForm({
                   role="radio"
                   aria-checked={on}
                   onClick={() => choose(o)}
-                  className={`tap min-h-11 rounded-full border px-4 text-left text-[15px] transition-colors duration-200 ${
+                  className={`tap min-h-10 rounded-full border px-3.5 py-1.5 text-left text-sm leading-snug transition-colors duration-200 ${
                     on ? "border-accent bg-accent text-bg" : "border-line-strong bg-bg/60 text-text"
                   }`}
                 >
