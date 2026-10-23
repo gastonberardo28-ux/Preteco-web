@@ -117,7 +117,7 @@ export default function CompliancePage() {
           {vendorTrust.map((v) => (
             <li key={v.vendor} className="rounded-2xl border border-line bg-surface/60 p-5">
               <p className="font-semibold text-ink">{v.vendor}</p>
-              <div className="mt-2 flex flex-col">
+              <div className="mt-1 flex flex-wrap gap-x-6">
                 <ExtLink href={v.trust}>{c.data.trustLabel}</ExtLink>
                 {v.privacy && <ExtLink href={v.privacy}>{c.data.privacyLabel}</ExtLink>}
               </div>

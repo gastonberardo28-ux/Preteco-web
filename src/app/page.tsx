@@ -71,9 +71,9 @@ export default function Home() {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <IconTile name={serviceIcon[s.slug]} tone={featured ? "lime" : "violet"} size={featured ? "lg" : "md"} />
-                    <span className="inline-flex items-center gap-1.5 text-right text-xs text-muted">
-                      {group && <Icon name={groupIcon[group.name]} className="size-3.5" />}
-                      {s.category}
+                    <span className="flex max-w-[60%] items-start justify-end gap-1.5 text-right text-xs text-muted">
+                      {group && <Icon name={groupIcon[group.name]} className="mt-px size-3.5" />}
+                      <span>{s.category}</span>
                     </span>
                   </div>
                   <div className="mt-auto flex flex-col gap-2">
