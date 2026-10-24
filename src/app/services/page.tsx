@@ -27,7 +27,7 @@ export default function ServicesPage() {
             <li key={g.name}>
               <a
                 href={`#${slug(g.name)}`}
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-4 py-2 text-sm text-text transition-colors hover:border-violet hover:text-violet-soft"
+                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-line bg-surface/60 px-4 text-sm text-text transition-colors hover:border-violet hover:text-violet-soft"
               >
                 {g.name}
               </a>
@@ -49,7 +49,7 @@ export default function ServicesPage() {
                 <div className="flex items-center gap-4">
                   <IconTile name={groupIcon[g.name]} tone="lime" size="lg" />
                   <div>
-                    <p className="t-eyebrow text-[11px]">Área {String(i + 1).padStart(2, "0")}</p>
+                    <p className="t-eyebrow text-xs">Área {String(i + 1).padStart(2, "0")}</p>
                     <h2 className="t-h2 text-[clamp(24px,2.6vw,34px)]">{g.name}</h2>
                   </div>
                 </div>

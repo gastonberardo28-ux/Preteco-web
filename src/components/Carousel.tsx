@@ -134,7 +134,7 @@ export function Carousel({
                 onClick={() => go(i)}
                 aria-label={`Ir a ${i + 1} de ${count}`}
                 aria-current={i === active ? "true" : undefined}
-                className="group flex h-8 items-center px-1"
+                className="group -mx-1 flex h-10 min-w-6 items-center justify-center px-2"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all duration-500 ease-out ${

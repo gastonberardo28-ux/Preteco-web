@@ -350,7 +350,7 @@ function StepForm({
       <div key={f.name} className={`flex min-h-[176px] flex-col gap-3 ${dir === 1 ? "step-in-next" : "step-in-prev"}`}>
         <label htmlFor={f.options ? undefined : fid} id={`${fid}-label`} className="text-[22px] leading-snug font-semibold tracking-[-0.02em] text-ink">
           {f.label}
-          {!f.required && <span className="ml-2 align-middle font-mono text-[11px] font-normal tracking-[0.1em] text-muted uppercase">opcional</span>}
+          {!f.required && <span className="ml-2 align-middle font-mono text-xs font-normal tracking-[0.1em] text-muted uppercase">opcional</span>}
         </label>
 
         {f.options ? (

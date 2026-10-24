@@ -56,7 +56,7 @@ export function Header() {
   return (
     <header className="site-header sticky top-0 z-40 border-b border-transparent backdrop-blur-xl transition-colors duration-300">
       <div className="container-page flex h-[76px] items-center justify-between gap-6">
-        <Link href="/" aria-label="Preteco, ir al inicio" className="shrink-0 transition-opacity hover:opacity-80">
+        <Link href="/" aria-label="Preteco, ir al inicio" className="-my-2 flex shrink-0 items-center py-2.5 transition-opacity hover:opacity-80">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={img("logo.svg")} alt="Preteco" width={110} height={26} className="h-[26px] w-auto" />
         </Link>
@@ -105,7 +105,7 @@ export function Header() {
                   </ul>
                   <div className="flex flex-col justify-between gap-4 border-l border-line bg-panel/60 p-5">
                     <div>
-                      <p className="t-eyebrow text-[11px]">{serviceGroups.length} áreas</p>
+                      <p className="t-eyebrow text-xs">{serviceGroups.length} áreas</p>
                       <p className="mt-2 text-sm text-muted">Acompañamos tu transformación digital de punta a punta.</p>
                     </div>
                     <Link href="/services" className="group inline-flex items-center gap-2 text-sm font-medium text-accent">

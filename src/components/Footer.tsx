@@ -87,7 +87,7 @@ export function Footer() {
                   href={o.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tap flex min-h-9 items-center gap-1.5 rounded-full border border-line px-3 text-text md:min-h-10 transition-colors hover:text-accent md:gap-2.5 md:rounded-none md:border-0 md:px-0"
+                  className="tap flex min-h-10 items-center gap-1.5 rounded-full border border-line px-3 text-text transition-colors hover:text-accent md:gap-2.5 md:rounded-none md:border-0 md:px-0"
                 >
                   <Icon name="mapPin" className="size-4 text-violet" />
                   <span>{o.city}</span>

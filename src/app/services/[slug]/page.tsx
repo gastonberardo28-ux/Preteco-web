@@ -62,7 +62,7 @@ export default async function ServicePage({ params }: Props) {
         <ul className="container-page flex gap-1 overflow-x-auto py-2 text-sm">
           {c.index.map(({ id, label }) => (
             <li key={id}>
-              <a href={`#${id}`} className="block rounded-full px-4 py-2 whitespace-nowrap text-muted transition-colors hover:bg-surface hover:text-accent">
+              <a href={`#${id}`} className="flex min-h-10 items-center rounded-full px-4 whitespace-nowrap text-muted transition-colors hover:bg-surface hover:text-accent">
                 {label}
               </a>
             </li>
@@ -169,7 +169,7 @@ export default async function ServicePage({ params }: Props) {
           <span className="flex items-center gap-4 sm:gap-5">
             <IconTile name={serviceIcon[next.slug]} />
             <span>
-              <span className="t-eyebrow block text-[11px]">{c.nextLabel}</span>
+              <span className="t-eyebrow block text-xs">{c.nextLabel}</span>
               <span className="mt-1 block text-xl font-semibold tracking-[-0.02em] text-ink transition-colors group-hover:text-accent sm:text-2xl">
                 {next.menuLabel}
               </span>
