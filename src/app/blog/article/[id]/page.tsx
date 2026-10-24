@@ -54,7 +54,7 @@ export default async function ArticlePage({ params }: Props) {
         <header className="relative isolate overflow-hidden border-b border-line/60">
           <HeroBackground />
           <div className="container-page grid gap-10 py-12 md:gap-12 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
-            <div className="flex flex-col gap-5 md:gap-6">
+            <div className="flex min-w-0 flex-col gap-5 md:gap-6">
               <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Blog", href: "/blogs" }, { label: post.title }]} />
               {/* Etiqueta + fecha · lectura en una sola línea */}
               <p data-reveal="fade" className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-[0.06em] text-muted uppercase">
