@@ -253,9 +253,6 @@ html.fx [data-draw][data-in] { transform: scaleX(1); }
 /* Las tarjetas que no están al frente se atenúan apenas (solo en modo carrusel) */
 html.fx .carousel > [data-in] { transition: opacity 0.45s ease, transform 0.9s var(--ease-out-expo); }
 html.fx .carousel[data-until] > [data-in]:not([data-current]) { opacity: 0.6; }
-/* "Amague" para sugerir que se puede deslizar */
-.carousel[data-hint] > * { animation: carousel-hint 1.3s var(--ease-out-expo); }
-@keyframes carousel-hint { 0%, 100% { translate: 0; } 35% { translate: -36px; } }
 
 /* Feedback al tocar en pantallas táctiles: las tarjetas se "hunden" levemente */
 @media (hover: none) {
