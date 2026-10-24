@@ -80,7 +80,8 @@ export function Header() {
               </button>
               <div
                 id="menu-servicios"
-                className={`absolute top-full left-1/2 w-[680px] -translate-x-1/2 pt-3 transition-[opacity,transform] duration-300 ${
+                // Anclado al borde izquierdo de "Servicios" (primer ítem): centrado se salía de pantalla en laptops chicas
+                className={`absolute top-full -left-1 w-[680px] pt-3 transition-[opacity,transform] duration-300 ${
                   svcOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
                 }`}
               >

@@ -227,7 +227,7 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
     })),
   };
   return (
-    <nav aria-label="Ubicación" className="text-sm">
+    <nav aria-label="Ubicación" className="w-full min-w-0 max-w-full text-sm">
       <ol className="flex min-w-0 items-center gap-x-2 text-muted">
         {items.map((it, i) => (
           <li key={it.label} className={`flex items-center gap-2 ${it.href ? "shrink-0" : "min-w-0"}`}>
