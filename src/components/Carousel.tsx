@@ -47,14 +47,10 @@ export function Carousel({
     const items = Array.from(el.children) as HTMLElement[];
     const mq = window.matchMedia(QUERY[until]);
 
-    // Índice de la tarjeta alineada a la izquierda
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      if (!mq.matches) {
-        items.forEach((it) => it.setAttribute("data-current", ""));
-        return;
-      }
+    // Índice de la tarjeta alineada a la izquierda.
+    // Los puntos se actualizan en vivo; el "resaltado" de la tarjeta activa recién cuando
+    // el deslizamiento termina, para que las tarjetas no parpadeen mientras se mueven.
+    const current = () => {
       const start = el.getBoundingClientRect().left + parseFloat(getComputedStyle(el).paddingLeft || "0");
       let best = 0;
       let bestDist = Infinity;
@@ -62,16 +58,31 @@ export function Carousel({
         const d = Math.abs(it.getBoundingClientRect().left - start);
         if (d < bestDist) (bestDist = d), (best = i);
       });
-      // Al llegar al final, la última cuenta como activa aunque no quede alineada
       if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 4) best = items.length - 1;
-      items.forEach((it, i) => (i === best ? it.setAttribute("data-current", "") : it.removeAttribute("data-current")));
-      setActive(best);
+      return best;
     };
+    const mark = () => {
+      const best = mq.matches ? current() : -1;
+      items.forEach((it, i) => (best === -1 || i === best ? it.setAttribute("data-current", "") : it.removeAttribute("data-current")));
+    };
+    let raf = 0;
+    let settle = 0;
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
+      if (!raf)
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          setActive(current());
+        });
+      window.clearTimeout(settle);
+      settle = window.setTimeout(mark, 140); // respaldo para navegadores sin "scrollend"
+    };
+    const measure = () => {
+      setActive(current());
+      mark();
     };
     measure();
     el.addEventListener("scroll", onScroll, { passive: true });
+    el.addEventListener("scrollend", mark);
     mq.addEventListener("change", measure);
 
     // Las tarjetas que están fuera de pantalla hacia el costado nunca "entran" al viewport,
@@ -94,7 +105,9 @@ export function Carousel({
 
     return () => {
       el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("scrollend", mark);
       mq.removeEventListener("change", measure);
+      window.clearTimeout(settle);
       io.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };

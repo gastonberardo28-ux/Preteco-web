@@ -163,11 +163,12 @@ html.fx [data-reveal][data-in] { opacity: 1; transform: none; }
     transparent 70%
   );
 }
-.spotlight:hover::before { opacity: 1; }
+@media (hover: hover) { .spotlight:hover::before { opacity: 1; } }
 
 /* Borde que se ilumina en hover */
 .glow-border { transition: border-color 0.3s ease, transform 0.4s var(--ease-out-expo); }
-.glow-border:hover { border-color: color-mix(in oklab, var(--color-violet) 55%, transparent); transform: translateY(-3px); }
+/* Solo con mouse: en pantallas táctiles el :hover queda "pegado" al tocar y hace parpadear las tarjetas */
+@media (hover: hover) { .glow-border:hover { border-color: color-mix(in oklab, var(--color-violet) 55%, transparent); transform: translateY(-3px); } }
 
 /* ── Botón primario: brillo que cruza en hover ─────────────────────── */
 .btn-sheen { position: relative; overflow: hidden; }
@@ -179,11 +180,11 @@ html.fx [data-reveal][data-in] { opacity: 1; transform: none; }
   transform: translateX(-120%);
   transition: transform 0.8s var(--ease-out-expo);
 }
-.btn-sheen:hover::after { transform: translateX(120%); }
+@media (hover: hover) { .btn-sheen:hover::after { transform: translateX(120%); } }
 
 /* Subrayado animado para links terciarios */
 .link-underline { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.4s var(--ease-out-expo); }
-.link-underline:hover { background-size: 100% 1px; }
+@media (hover: hover) { .link-underline:hover { background-size: 100% 1px; } }
 
 /* Barra de progreso de lectura */
 .scroll-progress {
@@ -250,16 +251,16 @@ html.fx [data-draw][data-in] { transform: scaleX(1); }
   .carousel[data-until="lg"] > * { flex: 0 0 var(--item); min-width: 0; scroll-snap-align: start; }
 }
 /* Las tarjetas que no están al frente se atenúan apenas (solo en modo carrusel) */
-html.fx .carousel > [data-in] { transition: opacity 0.5s ease, transform 0.6s var(--ease-out-expo); }
-html.fx .carousel[data-until] > [data-in]:not([data-current]) { opacity: 0.55; transform: scale(0.97); }
+html.fx .carousel > [data-in] { transition: opacity 0.45s ease, transform 0.9s var(--ease-out-expo); }
+html.fx .carousel[data-until] > [data-in]:not([data-current]) { opacity: 0.6; }
 /* "Amague" para sugerir que se puede deslizar */
 .carousel[data-hint] > * { animation: carousel-hint 1.3s var(--ease-out-expo); }
 @keyframes carousel-hint { 0%, 100% { translate: 0; } 35% { translate: -36px; } }
 
 /* Feedback al tocar en pantallas táctiles: las tarjetas se "hunden" levemente */
 @media (hover: none) {
-  .glow-border:active, .tap:active { transform: scale(0.98); transition-duration: 0.12s; }
-  .spotlight:active::before { opacity: 1; }
+  /* Solo botones: en tarjetas, el toque para deslizar también activaba el efecto */
+  .tap:active { transform: scale(0.97); transition-duration: 0.12s; }
   /* Sin mouse: la tarjeta en el centro de la pantalla (o la activa del carrusel) se enciende */
   .glow-border[data-focus] { border-color: color-mix(in oklab, var(--color-violet) 45%, transparent); }
   .spotlight[data-focus]::before,
