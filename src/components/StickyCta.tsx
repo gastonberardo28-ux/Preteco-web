@@ -12,6 +12,7 @@ import { stickyCta as c } from "@/content/site";
    - Se oculta cuando el formulario de la página está a la vista (sería redundante),
      cuando se ve el pie, mientras se escribe en un campo (teclado abierto) y con el menú abierto.
    - Si la página tiene formulario, lleva a él y enfoca la primera pregunta; si no, va a /contact.
+   - En artículos (lectura larga) solo aparece cuando la persona sube, para no tapar el texto.
    - Texto según la sección: content/site.ts → stickyCta. */
 export function StickyCta() {
   const pathname = usePathname();
@@ -19,7 +20,10 @@ export function StickyCta() {
   const [formId, setFormId] = useState<string | null>(null);
 
   const hidden = c.hideOn.some((p) => pathname === p || pathname.startsWith(p + "/"));
-  const label = c.labels.find((l) => pathname.startsWith(l.path))?.label ?? c.defaultLabel;
+  const match = c.labels.find((l) => pathname.startsWith(l.path));
+  const label = match?.label ?? c.defaultLabel;
+  const note = match?.note ?? c.defaultNote;
+  const reading = c.readingOn.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
     setShow(false);
@@ -29,6 +33,8 @@ export function StickyCta() {
     setFormId(form?.id || null);
 
     let typing = false;
+    let lastY = window.scrollY;
+    let goingUp = false;
 
     // ¿El elemento ocupa parte de la pantalla (dejando fuera el 15% inferior, donde va el botón)?
     const onScreen = (el: Element | null) => {
@@ -39,8 +45,12 @@ export function StickyCta() {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const pastHero = window.scrollY > window.innerHeight * 0.75;
-      setShow(pastHero && !typing && !onScreen(form) && !onScreen(footer));
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) > 6) (goingUp = y < lastY), (lastY = y);
+      const pastHero = y > window.innerHeight * 0.75;
+      // En artículos no tapamos la lectura: aparece al subir (intención de salir/actuar)
+      const allowed = !reading || goingUp;
+      setShow(pastHero && allowed && !typing && !onScreen(form) && !onScreen(footer));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -67,7 +77,7 @@ export function StickyCta() {
       document.removeEventListener("focusin", onFocusIn);
       document.removeEventListener("focusout", onFocusOut);
     };
-  }, [pathname, hidden]);
+  }, [pathname, hidden, reading]);
 
   if (hidden) return null;
 
@@ -98,7 +108,7 @@ export function StickyCta() {
       >
         <span className="relative flex flex-col leading-tight">
           <span className="text-base font-semibold">{label}</span>
-          <span className="text-xs text-bg/70">{c.note}</span>
+          <span className="text-xs text-bg/70">{note}</span>
         </span>
         <span className="relative inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-bg text-accent">
           <Icon name="arrowRight" className="size-4 transition-transform group-active:translate-x-0.5" />

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
-import { Check, JsonLd, Section, SectionHeader } from "@/components/ui";
+import { Button, Check, JsonLd, Section, SectionHeader } from "@/components/ui";
 import { Icon, IconTile } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
 import { clientLogos, getService, services, type ServiceHow } from "@/content/collections/services";
@@ -97,7 +97,7 @@ export default async function ServicePage({ params }: Props) {
               key={p}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border flex items-start gap-4 rounded-2xl border border-line bg-bg/60 p-5 text-base text-ink sm:p-6 sm:text-lg"
+              className="spotlight glow-border flex items-start gap-3.5 rounded-2xl border border-line bg-bg/60 p-4 text-base leading-snug text-ink sm:gap-4 sm:p-6 sm:text-lg"
             >
               <Check className="mt-0.5" />
               {p}
@@ -144,15 +144,21 @@ export default async function ServicePage({ params }: Props) {
                     key={k}
                     data-reveal="scale"
                     style={{ ["--d" as string]: i }}
-                    className="flex h-24 items-center justify-center rounded-2xl border border-line bg-bg/60 p-4 transition-colors hover:border-violet/50 sm:h-28 sm:p-5"
+                    // Si la cantidad es impar, el último ocupa el ancho completo para no dejar un hueco
+                    className={`flex h-24 items-center justify-center rounded-2xl border border-line bg-bg/60 p-4 transition-colors hover:border-violet/50 sm:h-28 sm:p-5 ${
+                      s.logos.length % 2 === 1 && i === s.logos.length - 1 ? "col-span-2" : ""
+                    }`}
                   >
                     <img src={clientLogos[k].logo} alt={clientLogos[k].name} loading="lazy" className="max-h-12 w-auto" />
                   </li>
                 ))}
               </ul>
             ) : (
-              <div className="flex items-center justify-center rounded-2xl border border-dashed border-line p-10">
-                <IconTile name={c.sections.cases.emptyIcon} size="lg" />
+              // Sin logos cargados: en vez de un recuadro vacío, llevamos a los casos de éxito
+              <div data-reveal className="lg:justify-self-end">
+                <Button href="/cases" variant="secondary">
+                  {c.sections.cases.allCases}
+                </Button>
               </div>
             )}
           </div>

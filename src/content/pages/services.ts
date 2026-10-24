@@ -1,4 +1,3 @@
-import type { IconName } from "@/components/Icon";
 import type { Action } from "@/components/ui";
 
 /* ═════════════════════════════════════════════════════════════════════
@@ -55,11 +54,11 @@ export const serviceDetail = {
     { id: "casos", label: "Casos" },
   ],
   sections: {
-    what: { eyebrow: "Qué es" },
+    what: { eyebrow: "Definición" },
     purposes: { eyebrow: "Beneficios", title: "¿Para qué sirve?" },
     how: { eyebrow: "Enfoque", title: "¿Cómo lo hacemos?" },
     why: { eyebrow: "Diferenciales", title: "¿Por qué elegir *Preteco*?" },
-    cases: { eyebrow: "Casos de éxito", title: "Quienes ya confían en nosotros", emptyIcon: "award" as IconName },
+    cases: { eyebrow: "Casos de éxito", title: "Quienes ya confían en nosotros", allCases: "Ver casos de éxito" },
   },
   nextLabel: "Siguiente servicio",
 };

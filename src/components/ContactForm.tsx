@@ -18,12 +18,15 @@ export function ContactForm({
   text,
   defaultInterest,
   id = "formulario",
+  eyebrow,
 }: {
   variant?: FormVariant;
   title: string;
   text: string;
   defaultInterest?: string;
   id?: string;
+  /** Etiqueta chica sobre el título; por defecto la de la variante (content/forms.ts). */
+  eyebrow?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -81,9 +84,9 @@ export function ContactForm({
     >
       <div aria-hidden="true" className="pointer-events-none absolute -top-32 -left-32 size-[420px] rounded-full bg-violet/15 blur-[100px]" />
       <div className="relative flex flex-col gap-5">
-        <p className="t-eyebrow flex items-center gap-3">
-          <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-violet to-transparent" />
-          {formEyebrow[variant]}
+        <p className="t-eyebrow flex items-center gap-2.5 sm:gap-3">
+          <span aria-hidden="true" className="h-px w-6 shrink-0 bg-gradient-to-r from-violet to-transparent sm:w-8" />
+          {eyebrow ?? formEyebrow[variant]}
         </p>
         <h2 className="t-h2 text-[clamp(28px,3vw,40px)]">{title}</h2>
         <p className="t-lead">{text}</p>

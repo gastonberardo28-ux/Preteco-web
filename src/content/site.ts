@@ -1,3 +1,4 @@
+import type { IconName } from "@/components/Icon";
 import { img } from "@/lib/asset";
 
 /* ═════════════════════════════════════════════════════════════════════
@@ -44,9 +45,9 @@ export const footerNav = [
 ];
 
 export const socials = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/preteco/", icon: img("linkedin.svg") },
-  { label: "Instagram", href: "https://www.instagram.com/preteco_latam/", icon: img("instagram.svg") },
-  { label: "Facebook", href: "https://www.facebook.com/preteco/about/", icon: img("facebook.svg") },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/preteco/", icon: "linkedin" as IconName },
+  { label: "Instagram", href: "https://www.instagram.com/preteco_latam/", icon: "instagram" as IconName },
+  { label: "Facebook", href: "https://www.facebook.com/preteco/about/", icon: "facebook" as IconName },
 ];
 
 export const partners = [
@@ -77,12 +78,14 @@ export const COMPLIANCE_EMAIL = "compliance@preteco.com";
  *  - El texto cambia según la sección (se usa la primera coincidencia por inicio de URL). */
 export const stickyCta = {
   hideOn: ["/contact"],
+  /** En estas secciones (lectura larga) el botón solo aparece al subir o al terminar de leer. */
+  readingOn: ["/blog/article/"],
   labels: [
-    { path: "/services/", label: "Consultar por este servicio" },
-    { path: "/about-us", label: "Sumate al equipo" },
-    { path: "/blogs", label: "Proponé un post" },
-    { path: "/compliance", label: "Hacer una consulta" },
+    { path: "/services/", label: "Consultar por este servicio", note: "Sin compromiso" },
+    { path: "/about-us", label: "Sumate al equipo", note: "Dejanos tu perfil" },
+    { path: "/blogs", label: "Proponé un post", note: "Compartí tu experiencia" },
+    { path: "/compliance", label: "Hacer una consulta", note: "Confidencial" },
   ],
   defaultLabel: "Hablemos",
-  note: "Sin compromiso",
+  defaultNote: "Sin compromiso",
 };

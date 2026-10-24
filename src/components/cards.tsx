@@ -10,12 +10,12 @@ import { Carousel } from "./Carousel";
 export function CaseCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" }) {
   const H = headingLevel;
   return (
-    <Carousel until="md" label="Casos de éxito" className="grid gap-4 md:grid-cols-3 md:gap-6">
+    <Carousel until="lg" label="Casos de éxito" className="grid gap-6 lg:grid-cols-3">
       {cases.map((c, i) => (
         <li key={c.client} data-reveal style={{ ["--d" as string]: i }}>
           <Link
             href={c.service.href}
-            className="spotlight glow-border group relative flex h-full min-h-[320px] flex-col justify-end overflow-hidden rounded-3xl border border-line md:min-h-[400px]"
+            className="spotlight glow-border group relative flex h-full min-h-[340px] flex-col justify-end overflow-hidden rounded-3xl border border-line lg:min-h-[400px]"
           >
             <img
               src={c.image}
