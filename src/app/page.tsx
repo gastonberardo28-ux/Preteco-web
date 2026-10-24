@@ -69,11 +69,9 @@ export default function Home() {
                   href={`/services/${s.slug}`}
                   className={`spotlight glow-border group flex h-full flex-col gap-5 rounded-3xl border border-line bg-surface/70 p-6 ${featured ? "lg:p-9" : ""}`}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <IconTile name={serviceIcon[s.slug]} tone={featured ? "lime" : "violet"} size={featured ? "lg" : "md"} />
-                    <span className="max-w-[60%] text-right font-mono text-xs tracking-[0.08em] text-muted uppercase">{s.category}</span>
-                  </div>
+                  <IconTile name={serviceIcon[s.slug]} tone={featured ? "lime" : "violet"} size={featured ? "lg" : "md"} />
                   <div className="mt-auto flex flex-col gap-2">
+                    <p className="font-mono text-xs tracking-[0.08em] text-violet-soft/80 uppercase">{s.category}</p>
                     <h3 className={`t-h3 ${featured ? "lg:text-3xl" : ""}`}>{s.menuLabel}</h3>
                     {/* En mobile todas las tarjetas muestran el texto corto; la destacada suma el largo en desktop */}
                     <p className={`text-[15px] text-muted ${featured ? "lg:hidden" : ""}`}>{s.overviewText}</p>

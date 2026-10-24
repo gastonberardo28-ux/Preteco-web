@@ -50,7 +50,7 @@ export function Footer() {
                     aria-label={`Preteco en ${s.label}`}
                     className="tap flex size-11 items-center justify-center rounded-full border border-line transition-colors hover:border-violet hover:bg-violet/10"
                   >
-                    <img src={s.icon} alt="" width={18} height={18} className="size-[18px]" />
+                    <Icon name={s.icon} className="size-[18px] text-ink" />
                   </a>
                 </li>
               ))}

@@ -23,11 +23,3 @@ export const groupIcon: Record<string, IconName> = {
 
 export const pillarIcons: IconName[] = ["users", "shield", "layers", "chart", "handshake", "graduation", "megaphone"];
 
-export const tagIcon: Record<string, IconName> = {
-  Datos: "database",
-  CriticalOps: "activity",
-  Seguridad: "shield",
-  Cloud: "cloud",
-  IA: "network",
-  Desarrollo: "code",
-};

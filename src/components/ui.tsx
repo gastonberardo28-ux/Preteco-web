@@ -118,8 +118,8 @@ export function Check({ className = "" }: { className?: string }) {
 
 export function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={`t-eyebrow flex items-center gap-3 ${className}`}>
-      <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-violet to-transparent" />
+    <p className={`t-eyebrow flex items-center gap-2.5 sm:gap-3 ${className}`}>
+      <span aria-hidden="true" className="h-px w-6 shrink-0 bg-gradient-to-r from-violet to-transparent sm:w-8" />
       {children}
     </p>
   );
@@ -201,7 +201,7 @@ export function Section({
         ? "bg-dots"
         : "";
   return (
-    <section id={id} className={`relative py-20 md:py-28 ${toneCls} ${className}`}>
+    <section id={id} className={`relative py-16 md:py-28 ${toneCls} ${className}`}>
       <div className="container-page">{children}</div>
     </section>
   );
@@ -228,16 +228,16 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
   };
   return (
     <nav aria-label="Ubicación" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-muted">
+      <ol className="flex min-w-0 items-center gap-x-2 text-muted">
         {items.map((it, i) => (
-          <li key={it.label} className="flex items-center gap-2">
+          <li key={it.label} className={`flex items-center gap-2 ${it.href ? "shrink-0" : "min-w-0"}`}>
             {i > 0 && <span aria-hidden="true" className="text-line-strong">/</span>}
             {it.href ? (
               <Link href={it.href} className="link-underline inline-flex min-h-10 items-center transition-colors hover:text-accent">
                 {it.label}
               </Link>
             ) : (
-              <span aria-current="page" className="text-text">
+              <span aria-current="page" className="truncate text-text">
                 {it.label}
               </span>
             )}

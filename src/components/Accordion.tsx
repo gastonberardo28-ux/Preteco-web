@@ -17,7 +17,7 @@ export function Accordion({ items }: { items: { title: string; icon?: IconName; 
                 <Icon name={it.icon} className="size-5" />
               </span>
             )}
-            <span className="flex-1 font-medium">{it.title}</span>
+            <span className="flex-1 leading-snug font-medium">{it.title}</span>
             <span
               aria-hidden="true"
               className="flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-accent transition-transform duration-300 group-open:rotate-45"

@@ -13,7 +13,7 @@ export const contactPage = {
     title: "Cada proyecto empieza con una buena conversación.",
     text: "Si tenés un desafío, una idea o una necesidad concreta, queremos escucharte. Escribinos y empezamos a construir juntos.",
   },
-  form: { title: "Contanos en qué te podemos ayudar", text: "Te respondemos a la brevedad para coordinar una llamada sin compromiso." },
+  form: { eyebrow: "Escribinos", title: "Contanos en qué te podemos ayudar", text: "Te respondemos a la brevedad para coordinar una llamada sin compromiso." },
   offices: { eyebrow: "Oficinas", title: "Estamos cerca", text: "Equipos en Argentina, Uruguay y Bolivia.", directions: "Cómo llegar" },
   complianceLabel: "Consultas de compliance:",
 };

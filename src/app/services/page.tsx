@@ -64,10 +64,10 @@ export default function ServicesPage() {
                         >
                           <Icon name={serviceIcon[s]} className="hidden size-6 text-violet sm:block" />
                           <span className="flex-1">
-                            <span className="block text-lg font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-accent sm:text-xl">
+                            <span className="block text-lg leading-snug font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-accent sm:text-xl">
                               {svc.overviewTitle}
                             </span>
-                            <span className="block text-muted">{svc.overviewText}</span>
+                            <span className="mt-1 block leading-snug text-muted">{svc.overviewText}</span>
                           </span>
                           <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line text-accent transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
                             <Icon name="arrowRight" className="size-4" />
@@ -78,9 +78,9 @@ export default function ServicesPage() {
                   })}
                 </ul>
               </div>
-              <div className={`relative flex items-center justify-center overflow-hidden bg-bg/60 p-6 sm:p-10 ${i % 2 ? "lg:order-1" : ""}`}>
+              <div className={`relative flex items-center justify-center overflow-hidden bg-bg/60 px-6 py-5 sm:p-10 ${i % 2 ? "lg:order-1" : ""}`}>
                 <div aria-hidden="true" className="absolute size-64 rounded-full bg-accent/15 blur-[70px]" />
-                <img src={g.image} alt="" loading="lazy" className="relative max-h-[150px] w-auto animate-float sm:max-h-[260px]" style={{ animationDelay: `${-i * 1.7}s` }} />
+                <img src={g.image} alt="" loading="lazy" className="relative max-h-[110px] w-auto animate-float sm:max-h-[260px]" style={{ animationDelay: `${-i * 1.7}s` }} />
               </div>
             </li>
           ))}

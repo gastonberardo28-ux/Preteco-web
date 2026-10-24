@@ -5,11 +5,9 @@ import { notFound } from "next/navigation";
 import { formatDate } from "@/content/collections/blog";
 import { articlePage as c } from "@/content/pages/article";
 import { pageMeta, SITE_URL } from "@/lib/seo";
-import { tagIcon } from "@/content/icons";
 import { Markdown, readingMinutes } from "@/lib/markdown";
 import { getPosts } from "@/lib/cms";
 import { Breadcrumbs, Button, JsonLd, Section, SectionHeader } from "@/components/ui";
-import { Icon } from "@/components/Icon";
 import { HeroBackground } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 import { Carousel } from "@/components/Carousel";
@@ -58,18 +56,11 @@ export default async function ArticlePage({ params }: Props) {
           <div className="container-page grid gap-10 py-12 md:gap-12 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div className="flex flex-col gap-5 md:gap-6">
               <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Blog", href: "/blogs" }, { label: post.title }]} />
-              <p data-reveal="fade" className="flex flex-wrap items-center gap-3 text-sm text-muted">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-violet/40 bg-violet/10 px-3 py-1 text-violet-soft">
-                  <Icon name={tagIcon[post.tag] ?? "book"} className="size-3.5" />
-                  {post.tag}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Icon name="calendar" className="size-3.5" />
-                  <time dateTime={post.date}>{formatDate(post.date)}</time>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Icon name="clock" className="size-3.5" />
-                  {readingMinutes(body)} {c.readingTime}
+              {/* Etiqueta + fecha · lectura en una sola línea */}
+              <p data-reveal="fade" className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-[0.06em] text-muted uppercase">
+                <span className="rounded-full border border-line-strong bg-bg/60 px-3 py-1 text-violet-soft">{post.tag}</span>
+                <span>
+                  <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(body)} {c.readingTime}
                 </span>
               </p>
               <h1 className="words max-w-[22ch] font-mono text-[clamp(28px,3.8vw,50px)] leading-[1.1] tracking-[-0.04em] text-accent [overflow-wrap:anywhere]">

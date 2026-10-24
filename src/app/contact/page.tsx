@@ -16,7 +16,7 @@ export default function ContactPage() {
     <>
       <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} text={c.hero.text} />
       <Section>
-        <ContactForm title={c.form.title} text={c.form.text} />
+        <ContactForm eyebrow={c.form.eyebrow} title={c.form.title} text={c.form.text} />
       </Section>
       <Section tone="surface">
         <SectionHeader eyebrow={c.offices.eyebrow} title={c.offices.title} text={c.offices.text} />
@@ -42,9 +42,11 @@ export default function ContactPage() {
             </li>
           ))}
         </Carousel>
-        <p data-reveal className="mt-10 flex flex-wrap items-center gap-2 text-muted">
-          <Icon name="mail" className="size-4 text-violet" />
-          {c.complianceLabel}
+        <p data-reveal className="mt-10 flex flex-col gap-1 text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
+          <span className="inline-flex items-center gap-2">
+            <Icon name="mail" className="size-4 text-violet" />
+            {c.complianceLabel}
+          </span>
           <a href={`mailto:${COMPLIANCE_EMAIL}`} className="link-underline inline-flex min-h-11 items-center text-ink hover:text-accent">
             {COMPLIANCE_EMAIL}
           </a>
