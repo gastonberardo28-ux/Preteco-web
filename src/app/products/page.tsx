@@ -46,9 +46,16 @@ export default function ProductsPage() {
               style={{ ["--d" as string]: i % 2 }}
               className="spotlight glow-border group relative flex flex-col gap-5 overflow-hidden rounded-[28px] border border-line bg-bg/60 p-6 md:p-8"
             >
-              <div className="flex items-start justify-between gap-4">
-                <img src={p.logo} alt={p.name} loading="lazy" className="h-9 w-auto md:h-10" />
-                <span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
+              <div className="flex h-10 items-center justify-between gap-4">
+                {/* Logos con proporciones muy distintas: igualamos su área visual (no su altura) */}
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  loading="lazy"
+                  style={logoSize(p.logoRatio)}
+                  className="min-w-0 object-contain object-left"
+                />
+                <span className="shrink-0 font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
               </div>
               <h3 className="t-h3 md:text-2xl">{p.title}</h3>
               <p className="flex-1 text-muted">{p.text}</p>
@@ -68,4 +75,10 @@ export default function ProductsPage() {
       </Section>
     </>
   );
+}
+
+/** Tamaño del logo para un área visual pareja (~3600 px²), con alto máximo de 36 px y ancho máximo de 160 px. */
+function logoSize(ratio: number) {
+  const h = Math.min(36, Math.sqrt(3600 / ratio), 160 / ratio);
+  return { height: `${Math.round(h)}px`, width: `${Math.round(h * ratio)}px` };
 }
