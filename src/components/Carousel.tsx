@@ -7,8 +7,6 @@ import { Children, useEffect, useRef, useState } from "react";
      (la tarjeta siguiente asoma para invitar a deslizar). Desde ese breakpoint vuelve a
      ser la grilla que indique `className`.
    - Los puntos de abajo muestran en qué tarjeta estás y permiten saltar a otra.
-   - La primera vez que el carrusel entra en pantalla hace un pequeño "amague" hacia la
-     izquierda para sugerir que se desliza (no ocurre con "reducir movimiento").
    Uso:
      <Carousel until="md" label="Casos de éxito" className="grid gap-6 md:grid-cols-3">
        <li>…</li><li>…</li>
@@ -87,17 +85,10 @@ export function Carousel({
 
     // Las tarjetas que están fuera de pantalla hacia el costado nunca "entran" al viewport,
     // así que las revelamos todas juntas cuando el carrusel aparece.
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let hinted = false;
     const io = new IntersectionObserver(
       ([e]) => {
         if (!e.isIntersecting) return;
         el.querySelectorAll("[data-reveal]").forEach((n) => n.setAttribute("data-in", ""));
-        if (!hinted && mq.matches && !reduce && items.length > 1 && el.scrollLeft < 4) {
-          hinted = true;
-          window.setTimeout(() => el.setAttribute("data-hint", ""), 700);
-          window.setTimeout(() => el.removeAttribute("data-hint"), 2100);
-        }
       },
       { threshold: 0.35 }
     );
