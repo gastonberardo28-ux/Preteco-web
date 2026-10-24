@@ -233,7 +233,7 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
           <li key={it.label} className="flex items-center gap-2">
             {i > 0 && <span aria-hidden="true" className="text-line-strong">/</span>}
             {it.href ? (
-              <Link href={it.href} className="link-underline transition-colors hover:text-accent">
+              <Link href={it.href} className="link-underline inline-flex min-h-10 items-center transition-colors hover:text-accent">
                 {it.label}
               </Link>
             ) : (

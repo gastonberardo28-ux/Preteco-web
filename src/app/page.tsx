@@ -71,7 +71,7 @@ export default function Home() {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <IconTile name={serviceIcon[s.slug]} tone={featured ? "lime" : "violet"} size={featured ? "lg" : "md"} />
-                    <span className="max-w-[60%] text-right font-mono text-[11px] tracking-[0.08em] text-muted uppercase">{s.category}</span>
+                    <span className="max-w-[60%] text-right font-mono text-xs tracking-[0.08em] text-muted uppercase">{s.category}</span>
                   </div>
                   <div className="mt-auto flex flex-col gap-2">
                     <h3 className={`t-h3 ${featured ? "lg:text-3xl" : ""}`}>{s.menuLabel}</h3>

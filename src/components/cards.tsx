@@ -67,7 +67,7 @@ export async function PostCards({ limit, layout = "carousel" }: { limit?: number
         >
           <img src={p.image} alt="" loading="lazy" className="size-full object-cover transition duration-700 ease-out group-hover:scale-105" />
           <span
-            className={`absolute top-4 left-4 rounded-full border border-line-strong bg-bg/85 px-3 py-1 font-mono text-[11px] tracking-[0.08em] text-violet-soft uppercase backdrop-blur-md ${
+            className={`absolute top-4 left-4 rounded-full border border-line-strong bg-bg/85 px-3 py-1 font-mono text-xs tracking-[0.08em] text-violet-soft uppercase backdrop-blur-md ${
               compact ? "hidden sm:inline-flex" : "inline-flex"
             }`}
           >
