@@ -8,6 +8,7 @@ import { PageHero } from "@/components/PageHero";
 import { CaseCards, PostCards } from "@/components/cards";
 import { Carousel } from "@/components/Carousel";
 import { ContactForm } from "@/components/ContactForm";
+import { ClientsWall } from "@/components/ClientsWall";
 import { services } from "@/content/collections/services";
 import { serviceIcon } from "@/content/icons";
 import { home as c } from "@/content/pages/home";
@@ -100,6 +101,11 @@ export default function Home() {
             </Link>
           </li>
         </Carousel>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow={c.clients.eyebrow} title={c.clients.title} text={c.clients.text} />
+        <ClientsWall />
       </Section>
 
       <Section tone="surface">
