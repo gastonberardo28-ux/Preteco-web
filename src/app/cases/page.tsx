@@ -1,6 +1,7 @@
 import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { Section } from "@/components/ui";
+import { Section, SectionHeader } from "@/components/ui";
+import { ClientsWall } from "@/components/ClientsWall";
 import { CaseCards } from "@/components/cards";
 import { ContactForm } from "@/components/ContactForm";
 import { casesPage as c } from "@/content/pages/cases";
@@ -16,7 +17,11 @@ export default function CasesPage() {
       <Section>
         <CaseCards headingLevel="h2" />
       </Section>
-      <Section className="!pt-0">
+      <Section tone="surface">
+        <SectionHeader eyebrow={c.clients.eyebrow} title={c.clients.title} text={c.clients.text} />
+        <ClientsWall />
+      </Section>
+      <Section>
         <ContactForm title={c.form.title} text={c.form.text} />
       </Section>
     </>
