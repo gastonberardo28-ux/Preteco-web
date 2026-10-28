@@ -146,6 +146,7 @@ function PartnersStrip() {
                   src={p.logo}
                   alt={i < partners.length ? p.name : ""}
                   height={36}
+                  style={p.scale ? { transform: `scale(${p.scale})` } : undefined}
                   className="h-7 w-auto opacity-60 md:h-9 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
                 />
               </li>
