@@ -51,12 +51,13 @@ export const socials = [
   { label: "YouTube", href: "https://www.youtube.com/@Preteco5429", icon: "youtube" as IconName },
 ];
 
-export const partners = [
+/** Partners en el orden del deck. "scale" achica o agranda un logo que se ve desparejo al lado de los demás. */
+export const partners: { name: string; logo: string; scale?: number }[] = [
   { name: "Oracle Partner", logo: img("oracle.svg") },
   { name: "AWS Partner", logo: img("aws.svg") },
-  { name: "SAS Partner", logo: img("sas.svg") },
-  { name: "Okta Partner", logo: img("oktalogo.svg") },
+  { name: "Okta Partner", logo: img("oktalogo.svg"), scale: 0.8 },
   { name: "Denodo Partner", logo: img("denodo.png") },
+  { name: "SAS Partner", logo: img("sas-logo.svg") },
 ];
 
 export const offices = [
