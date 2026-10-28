@@ -11,7 +11,7 @@ export function ClientsWall() {
           key={c.sector}
           data-reveal
           style={{ ["--d" as string]: i % 4 }}
-          className={`flex flex-col gap-4 rounded-3xl bg-[#FCFFEC] p-5 sm:p-6 ${c.wide ? "md:col-span-2" : ""}`}
+          className={`flex flex-col gap-4 rounded-3xl bg-[#FCFFEC] p-5 sm:p-6 ${c.wide ? "md:col-span-2" : ""} ${"full" in c && c.full ? "lg:col-span-3" : ""}`}
         >
           <h3 className="font-mono text-xs tracking-[0.18em] text-[#4B5A00] uppercase">{c.sector}</h3>
           <div className="flex flex-1 items-center justify-center">
