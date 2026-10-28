@@ -29,13 +29,14 @@ export type FormField = {
 
 /** Opciones de "¿Sobre qué querés hablar?". Cada servicio preselecciona la suya (campo formInterest). */
 export const interestOptions = [
-  "Inteligencia artificial",
-  "Cloud",
-  "Sistemas críticos (CriticalOps)",
-  "Modernización de infraestructura",
-  "Desarrollo y modernización de aplicaciones",
   "Seguridad e identidades",
-  "Productos (Oracle, Okta, MuleSoft, AWS)",
+  "Modernización de infraestructura",
+  "Sistemas críticos (CriticalOps)",
+  "Cloud",
+  "Modernización de aplicaciones",
+  "Data & IA",
+  "Staffing IT",
+  "Productos (Oracle, AWS, Okta, Denodo, SAS)",
   "Otro",
 ];
 

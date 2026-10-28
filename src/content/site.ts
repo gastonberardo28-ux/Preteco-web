@@ -29,7 +29,7 @@ export const footer = {
   officesTitle: "Oficinas",
   partnersTitle: "Partners",
   copyright: "Preteco. Todos los derechos reservados.",
-  badge: "Más de 25 años en sistemas críticos",
+  badge: "Más de 28 años en sistemas de misión crítica",
 };
 
 /** Links del pie de página (columna "Empresa"). */
@@ -48,13 +48,15 @@ export const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/preteco/", icon: "linkedin" as IconName },
   { label: "Instagram", href: "https://www.instagram.com/preteco_latam/", icon: "instagram" as IconName },
   { label: "Facebook", href: "https://www.facebook.com/preteco/about/", icon: "facebook" as IconName },
+  { label: "YouTube", href: "https://www.youtube.com/@Preteco5429", icon: "youtube" as IconName },
 ];
 
 export const partners = [
-  { name: "Salesforce Partner", logo: img("salesforce.svg") },
   { name: "Oracle Partner", logo: img("oracle.svg") },
   { name: "AWS Partner", logo: img("aws.svg") },
   { name: "SAS Partner", logo: img("sas.svg") },
+  { name: "Okta Partner", logo: img("oktalogo.svg") },
+  { name: "Denodo Partner", logo: img("denodo.png") },
 ];
 
 export const offices = [
