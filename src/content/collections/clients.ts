@@ -3,7 +3,7 @@ import { img } from "@/lib/asset";
 /* ── Clientes por sector ─────────────────────────────────────────────────
    Las imágenes son las grillas de logos del deck institucional (una por sector).
    "names" se usa como texto alternativo y para buscadores: si se cambia una
-   imagen, actualizá también la lista. "wide" ocupa dos columnas en desktop. */
+   imagen, actualizá también la lista. "wide" ocupa dos columnas en desktop y "full", tres. */
 export const clientSectors = [
   {
     sector: "Servicios financieros",
@@ -26,6 +26,8 @@ export const clientSectors = [
     sector: "Otros",
     image: img("clientes-otros.png"),
     wide: true,
+    /** Ocupa tres columnas en pantallas grandes para completar la fila junto a "Sector público". */
+    full: true,
     names: ["EPEC", "Telefónica", "CRE", "Sofía", "UTE", "Montepaz", "Tenaris"],
   },
 ];
