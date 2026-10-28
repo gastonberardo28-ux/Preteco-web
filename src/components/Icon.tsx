@@ -17,6 +17,12 @@ const paths = {
       <path d="M17.5 6.5h.01" />
     </>
   ),
+  youtube: (
+    <>
+      <rect x="2.5" y="5" width="19" height="14" rx="4" />
+      <path d="m10 9 5 3-5 3Z" />
+    </>
+  ),
   facebook: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z" />,
   database: (
     <>
