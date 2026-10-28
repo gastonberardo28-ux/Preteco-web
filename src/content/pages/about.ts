@@ -16,7 +16,7 @@ export const aboutPage = {
       { label: "Trabajá con nosotros", href: "#sumate", variant: "secondary" },
     ] satisfies Action[],
     stats: [
-      { value: 25, prefix: "+", label: "años de trayectoria" },
+      { value: 28, prefix: "+", label: "años de trayectoria" },
       { value: "auto:team", label: "personas" },
       { value: 3, label: "países" },
       { value: "auto:values", label: "valores que nos guían" },

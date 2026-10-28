@@ -8,15 +8,15 @@ import type { Action } from "@/components/ui";
 
 export const home = {
   seo: {
-    title: "Preteco | IA, cloud, datos y desarrollo",
+    title: "Preteco | Sistemas, datos e IA para misión crítica",
     description:
-      "Impulsamos tu evolución digital con IA, tecnología y datos. Consultora con más de 25 años en sistemas críticos, cloud, desarrollo y seguridad en Latinoamérica.",
+      "Expertos en sistemas, datos e IA para misión crítica. Más de 28 años en seguridad, infraestructura y cloud, modernización de aplicaciones, Data & IA y staffing IT en Latinoamérica.",
   },
 
   hero: {
-    eyebrow: "IA · Cloud · Datos · Desarrollo",
+    eyebrow: "Sistemas · Datos · IA para misión crítica",
     title: "Impulsamos tu evolución digital con IA, tecnología y datos",
-    text: "Más de 25 años acompañando a organizaciones de Latinoamérica en sistemas críticos, cloud, desarrollo y seguridad.",
+    text: "Más de 28 años ayudando a organizaciones de Latinoamérica a asegurar su operación continua, modernizar su arquitectura, integrar sus plataformas y aprovechar sus datos y la IA de forma segura.",
     actions: [
       { label: "Ver soluciones", href: "/services", variant: "primary" },
       { label: "Hablemos", href: "/contact", variant: "secondary" },
@@ -25,26 +25,26 @@ export const home = {
     pillars: [
       {
         icon: "network" as IconName,
-        title: "Inteligencia artificial",
-        text: "Automatizamos procesos y potenciamos la toma de decisiones con IA aplicada a tu negocio.",
-        href: "/services/agent-development",
+        title: "Data & IA",
+        text: "Organizamos tus datos e implementamos IA integrada a tus sistemas, del diagnóstico a producción.",
+        href: "/services/data-ia",
       },
       {
         icon: "cloud" as IconName,
         title: "Cloud",
-        text: "Te ayudamos a migrar, escalar y operar con seguridad en la nube, sin fricciones.",
+        text: "Modernizamos tu infraestructura, operamos tus sistemas críticos y te acompañamos en la adopción cloud.",
         href: "/services/cloud",
       },
       {
         icon: "code" as IconName,
-        title: "Desarrollo",
-        text: "Creamos software a medida para resolver los desafíos únicos de tu negocio.",
-        href: "/services/app-development",
+        title: "Modernización de aplicaciones",
+        text: "Transformamos tus aplicaciones legadas en soluciones modernas, ágiles y basadas en microservicios.",
+        href: "/services/legacy-apps",
       },
     ],
     /** Franja de números. "auto:team" y "auto:services" se calculan solos. */
     stats: [
-      { value: 25, prefix: "+", label: "años en sistemas críticos" },
+      { value: 28, prefix: "+", label: "años en sistemas de misión crítica" },
       { value: "auto:team", label: "personas en el equipo" },
       { value: 4, label: "oficinas en 3 países" },
       { value: "auto:services", label: "servicios especializados" },
@@ -57,6 +57,12 @@ export const home = {
     text: "Desde la infraestructura que no puede caerse hasta los agentes de IA que potencian a tu gente.",
     link: { label: "Ver todos los servicios", href: "/services" },
     cta: { title: "¿No sabés por dónde empezar?", text: "Contanos tu desafío y te orientamos.", label: "Hablemos", href: "/contact" },
+  },
+
+  clients: {
+    eyebrow: "Organizaciones que confían en nosotros",
+    title: "Clientes en *sectores críticos*",
+    text: "Servicios financieros, seguros, salud, sector público, energía, telecomunicaciones e industria.",
   },
 
   cases: {

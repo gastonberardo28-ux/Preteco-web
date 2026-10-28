@@ -6,7 +6,7 @@ import type { Action } from "@/components/ui";
    ═════════════════════════════════════════════════════════════════════ */
 
 export const productsPage = {
-  seo: { title: "Productos", description: "Comercializamos e implementamos Oracle, Okta, MuleSoft y AWS para empresas." },
+  seo: { title: "Productos", description: "Comercializamos, implementamos y administramos Oracle, AWS, Okta, Denodo y SAS para empresas." },
   hero: {
     eyebrow: "Productos",
     title: "Soluciones tecnológicas que impulsan el crecimiento de tu empresa",
@@ -21,13 +21,13 @@ export const productsPage = {
     title: "Tecnología empresarial *de primer nivel*",
     paragraphs: [
       "No solo diseñamos e implementamos soluciones de transformación digital: también proveemos tecnología empresarial para asegurar el máximo rendimiento de tus operaciones.",
-      "Trabajamos con Oracle, Okta, MuleSoft y AWS, líderes mundiales que garantizan un stack robusto, probado y adaptable a las necesidades de tu organización.",
+      "Somos partners de Oracle, AWS, Okta, Denodo y SAS, líderes de Estados Unidos y Europa: comercializamos, implementamos y administramos su software y servicios cloud en cada uno de nuestros servicios profesionales.",
     ],
   },
   list: { eyebrow: "Portfolio", title: "Nuestros productos tecnológicos", cta: "Consultar por" },
   form: {
     title: "¿Listo para llevar tu tecnología empresarial al siguiente nivel?",
     text: "Diseñamos la arquitectura que tu negocio necesita. Contactanos y te ayudamos a implementar un ecosistema digital robusto y escalable.",
-    interest: "Productos (Oracle, Okta, MuleSoft, AWS)",
+    interest: "Productos (Oracle, AWS, Okta, Denodo, SAS)",
   },
 };
