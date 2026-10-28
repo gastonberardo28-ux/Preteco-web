@@ -182,7 +182,7 @@ const serviceList: Service[] = [
       "Acompañamiento para acelerar la adopción y evolucionar con entornos híbridos.",
     ],
     casesText:
-      "Federación Patronal Seguros, EPEC y más organizaciones confiaron en Preteco para migrar, administrar y potenciar su estrategia cloud.",
+      "Federación Patronal Seguros, EPEC, Molino Cañuelas y más organizaciones confiaron en Preteco para migrar, administrar y potenciar su estrategia cloud.",
     logos: [],
     ctaTitle: "¿Listo para migrar a la nube sin frenar el negocio?",
     ctaText: "Completá el formulario y coordinamos una reunión.",

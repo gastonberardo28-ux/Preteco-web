@@ -14,15 +14,6 @@ export const products = [
     logoRatio: 254 / 33,
   },
   {
-    id: "okta",
-    name: "Okta",
-    title: "Gestión de identidades y accesos (IAM)",
-    text: "Protegé a tus usuarios y empleados con una plataforma de autenticación segura y experiencias digitales fluidas, garantizando el cumplimiento y la confianza.",
-    logo: img("oktalogo.svg"),
-    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
-    logoRatio: 143 / 49,
-  },
-  {
     id: "aws",
     name: "AWS",
     title: "Servicios cloud escalables y seguros",
@@ -30,6 +21,15 @@ export const products = [
     logo: img("awslogo.svg"),
     /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
     logoRatio: 80 / 49,
+  },
+  {
+    id: "okta",
+    name: "Okta",
+    title: "Gestión de identidades y accesos (IAM)",
+    text: "Protegé a tus usuarios y empleados con una plataforma de autenticación segura y experiencias digitales fluidas, garantizando el cumplimiento y la confianza.",
+    logo: img("oktalogo.svg"),
+    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
+    logoRatio: 143 / 49,
   },
   {
     id: "denodo",
@@ -45,8 +45,8 @@ export const products = [
     name: "SAS",
     title: "Analítica avanzada e IA",
     text: "Convertí tus datos en decisiones con la plataforma de analítica, machine learning e IA de SAS, con gobierno y confiabilidad de nivel empresarial.",
-    logo: img("sas.svg"),
+    logo: img("sas-logo.svg"),
     /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
-    logoRatio: 104 / 100,
+    logoRatio: 103 / 44,
   },
 ];

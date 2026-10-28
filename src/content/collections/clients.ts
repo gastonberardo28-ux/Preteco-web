@@ -20,7 +20,10 @@ export const clientSectors = [
   {
     sector: "Sector público",
     image: img("clientes-sector-publico.png"),
-    names: ["SINTyS", "Provincia de Santa Fe", "INDEC", "Córdoba", "ARCA", "PSA"],
+    names: [
+      "Ministerio de Seguridad Nacional", "Policía Federal Argentina", "Policía de Seguridad Aeroportuaria",
+      "SINTyS", "Provincia de Santa Fe", "INDEC", "Gobierno de la Provincia de Córdoba", "ARCA",
+    ],
   },
   {
     sector: "Otros",
@@ -28,6 +31,6 @@ export const clientSectors = [
     wide: true,
     /** Ocupa tres columnas en pantallas grandes para completar la fila junto a "Sector público". */
     full: true,
-    names: ["EPEC", "Telefónica", "CRE", "Sofía", "UTE", "Montepaz", "Tenaris"],
+    names: ["EPEC", "Molino Cañuelas", "Telefónica", "CRE", "Sofía", "Disco", "UTE", "Montepaz", "Tenaris"],
   },
 ];
