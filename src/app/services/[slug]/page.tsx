@@ -97,7 +97,7 @@ export default async function ServicePage({ params }: Props) {
               key={p}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border flex items-start gap-3.5 rounded-2xl border border-line bg-bg/60 p-4 text-base leading-snug text-ink sm:gap-4 sm:p-6 sm:text-lg"
+              className={`spotlight glow-border flex items-start gap-3.5 rounded-2xl border border-line bg-bg/60 p-4 text-base leading-snug text-ink sm:gap-4 sm:p-6 sm:text-lg ${lastWide(s.purposes.length, i)}`}
             >
               <Check className="mt-0.5" />
               {p}
@@ -119,7 +119,7 @@ export default async function ServicePage({ params }: Props) {
               key={w}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border flex gap-4 rounded-2xl border border-line bg-bg/60 p-5 sm:gap-5 sm:p-6"
+              className={`spotlight glow-border flex gap-4 rounded-2xl border border-line bg-bg/60 p-5 sm:gap-5 sm:p-6 ${lastWide(s.why.length, i)}`}
             >
               <span className="font-mono text-3xl leading-none tracking-[-0.04em] text-violet">{String(i + 1).padStart(2, "0")}</span>
               <p className="text-base text-ink sm:text-lg">{w}</p>
@@ -220,18 +220,14 @@ function How({ how }: { how: ServiceHow }) {
         </Carousel>
       )}
       {how.kind === "cards" && (
-        // 4 tarjetas: grilla de 2×2 (o 4 en pantallas grandes) para no dejar una huérfana
-        <Carousel
-          until="lg"
-          label="Cómo lo hacemos"
-          className={`mt-12 grid gap-4 ${how.items.length === 4 ? "lg:grid-cols-2 2xl:grid-cols-4" : "lg:grid-cols-3"}`}
-        >
+        // La grilla se adapta a la cantidad de tarjetas para que ninguna fila quede con huecos
+        <Carousel until="lg" label="Cómo lo hacemos" className={`mt-12 grid gap-4 ${cardGrid(how.items.length)}`}>
           {how.items.map((c, i) => (
             <li
               key={c.title}
               data-reveal
               style={{ ["--d" as string]: i % 3 }}
-              className="spotlight glow-border flex flex-col gap-4 rounded-3xl border border-line bg-surface/70 p-7"
+              className={`spotlight glow-border flex flex-col gap-4 rounded-3xl border border-line bg-surface/70 p-7 ${cardSpan(how.items.length, i)}`}
             >
               <span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="t-h3">{c.title}</h3>
@@ -269,4 +265,21 @@ function How({ how }: { how: ServiceHow }) {
       )}
     </>
   );
+}
+
+/** Columnas de la grilla de tarjetas según cuántas hay (desktop). */
+function cardGrid(n: number) {
+  if (n === 2 || n === 4) return "lg:grid-cols-2";
+  if (n === 5) return "lg:grid-cols-6"; // 3 arriba + 2 abajo, ambas filas completas
+  return "lg:grid-cols-3";
+}
+
+function cardSpan(n: number, i: number) {
+  if (n === 5) return i < 3 ? "lg:col-span-2" : "lg:col-span-3";
+  return "";
+}
+
+/** En grillas de 2 columnas con cantidad impar, el último ítem ocupa el ancho completo. */
+function lastWide(n: number, i: number) {
+  return n % 2 === 1 && i === n - 1 ? "md:col-span-2" : "";
 }
