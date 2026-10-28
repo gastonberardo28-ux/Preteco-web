@@ -220,7 +220,12 @@ function How({ how }: { how: ServiceHow }) {
         </Carousel>
       )}
       {how.kind === "cards" && (
-        <Carousel until="lg" label="Cómo lo hacemos" className="mt-12 grid gap-4 lg:grid-cols-3">
+        // 4 tarjetas: grilla de 2×2 (o 4 en pantallas grandes) para no dejar una huérfana
+        <Carousel
+          until="lg"
+          label="Cómo lo hacemos"
+          className={`mt-12 grid gap-4 ${how.items.length === 4 ? "lg:grid-cols-2 2xl:grid-cols-4" : "lg:grid-cols-3"}`}
+        >
           {how.items.map((c, i) => (
             <li
               key={c.title}
@@ -231,6 +236,16 @@ function How({ how }: { how: ServiceHow }) {
               <span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="t-h3">{c.title}</h3>
               <p className="text-muted">{c.text}</p>
+              {c.bullets && (
+                <ul className="mt-1 grid gap-2 border-t border-line pt-4">
+                  {c.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-2.5 text-[15px] leading-snug text-ink">
+                      <Check className="mt-0.5" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </Carousel>
