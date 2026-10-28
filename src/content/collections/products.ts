@@ -14,6 +14,15 @@ export const products = [
     logoRatio: 254 / 33,
   },
   {
+    id: "aws",
+    name: "AWS",
+    title: "Servicios cloud escalables y seguros",
+    text: "Accedé a servicios en la nube líderes a nivel mundial, con la flexibilidad y seguridad que tu negocio necesita para crecer sin límites.",
+    logo: img("awslogo.svg"),
+    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
+    logoRatio: 80 / 49,
+  },
+  {
     id: "okta",
     name: "Okta",
     title: "Gestión de identidades y accesos (IAM)",
@@ -23,21 +32,21 @@ export const products = [
     logoRatio: 143 / 49,
   },
   {
-    id: "mulesoft",
-    name: "MuleSoft",
-    title: "Integración de aplicaciones y datos",
-    text: "Conectá sistemas, dispositivos y aplicaciones de manera ágil, rápida y segura, logrando una integración empresarial que acelera la innovación.",
-    logo: img("mulesoft.svg"),
+    id: "denodo",
+    name: "Denodo",
+    title: "Gestión lógica de datos",
+    text: "Integrá y accedé a los datos de toda tu organización en tiempo real, sin moverlos ni duplicarlos, con una capa de datos unificada y gobernada, lista para analítica e IA.",
+    logo: img("denodo.png"),
     /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
-    logoRatio: 217 / 65,
+    logoRatio: 214 / 58,
   },
   {
-    id: "aws",
-    name: "AWS",
-    title: "Servicios cloud escalables y seguros",
-    text: "Accedé a servicios en la nube líderes a nivel mundial, con la flexibilidad y seguridad que tu negocio necesita para crecer sin límites.",
-    logo: img("awslogo.svg"),
+    id: "sas",
+    name: "SAS",
+    title: "Analítica avanzada e IA",
+    text: "Convertí tus datos en decisiones con la plataforma de analítica, machine learning e IA de SAS, con gobierno y confiabilidad de nivel empresarial.",
+    logo: img("sas-logo.svg"),
     /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
-    logoRatio: 80 / 49,
+    logoRatio: 103 / 44,
   },
 ];

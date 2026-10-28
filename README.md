@@ -25,7 +25,7 @@ Si se agrega una imagen nueva del sitio viejo al código, `npm run fetch-assets`
 | `/` | Home |
 | `/services` | Servicios, metodología y herramientas |
 | `/services/[slug]` | 7 páginas de servicio (una sola plantilla) |
-| `/products` | Oracle, Okta, MuleSoft, AWS |
+| `/products` | Oracle, AWS, Okta, Denodo, SAS |
 | `/cases` | Casos de éxito |
 | `/blogs` | Blog |
 | `/blog/article/[id]` | Artículos (se editan desde la planilla de Google) |

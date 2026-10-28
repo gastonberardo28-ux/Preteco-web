@@ -7,18 +7,18 @@ export const serviceIcon: Record<string, IconName> = {
   "critical-ops": "activity",
   "cloud-modernization-infrastructure": "server",
   cloud: "cloud",
-  "agent-development": "bot",
   "workforce-customer-indentity": "key",
   "legacy-apps": "refresh",
-  "app-development": "layout",
+  "data-ia": "chart",
+  "staffing-it": "users",
 };
 
 export const groupIcon: Record<string, IconName> = {
-  "Database, Middleware & Virtualización": "database",
-  Cloud: "cloud",
-  "Inteligencia artificial": "network",
   Seguridad: "shield",
-  Desarrollo: "code",
+  "Database, Middleware & Cloud": "database",
+  "Modernización de aplicaciones": "code",
+  "Data & IA": "network",
+  "Staffing IT": "users",
 };
 
 export const pillarIcons: IconName[] = ["users", "shield", "layers", "chart", "handshake", "graduation", "megaphone"];

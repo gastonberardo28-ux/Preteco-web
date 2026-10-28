@@ -9,7 +9,7 @@ import type { Action } from "@/components/ui";
 export const servicesPage = {
   seo: {
     title: "Servicios",
-    description: "Sistemas críticos, infraestructura, cloud, inteligencia artificial, seguridad y desarrollo de aplicaciones.",
+    description: "Seguridad e identidades, database, middleware y cloud, modernización de aplicaciones, Data & IA y staffing IT.",
   },
   hero: {
     eyebrow: "Servicios",

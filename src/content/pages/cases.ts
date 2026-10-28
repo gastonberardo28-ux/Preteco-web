@@ -13,6 +13,11 @@ export const casesPage = {
     text: "Descubrí cómo ayudamos a distintas organizaciones a transformar sus desafíos en soluciones reales.",
     actions: [{ label: "Contanos tu desafío", href: "#formulario", variant: "secondary" }] satisfies Action[],
   },
+  clients: {
+    eyebrow: "Organizaciones que confían en nosotros",
+    title: "Nuestros *clientes*",
+    text: "Servicios financieros, seguros, salud, sector público, energía, telecomunicaciones e industria.",
+  },
   form: {
     title: "¿Querés ver cómo funciona en acción? Nosotros te mostramos.",
     text: "Completá el formulario y coordinamos una llamada sin compromiso.",

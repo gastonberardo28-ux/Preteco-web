@@ -44,7 +44,10 @@ export default function ProductsPage() {
               key={p.id}
               data-reveal
               style={{ ["--d" as string]: i % 2 }}
-              className="spotlight glow-border group relative flex flex-col gap-5 overflow-hidden rounded-[28px] border border-line bg-bg/60 p-6 md:p-8"
+              // Si la cantidad es impar, el último ocupa el ancho completo para no dejar un hueco
+              className={`spotlight glow-border group relative flex flex-col gap-5 overflow-hidden rounded-[28px] border border-line bg-bg/60 p-6 md:p-8 ${
+                products.length % 2 === 1 && i === products.length - 1 ? "md:col-span-2" : ""
+              }`}
             >
               <div className="flex h-10 items-center justify-between gap-4">
                 {/* Logos con proporciones muy distintas: igualamos su área visual (no su altura) */}
