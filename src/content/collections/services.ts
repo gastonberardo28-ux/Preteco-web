@@ -15,8 +15,6 @@ export const clientLogos: Record<string, { name: string; logo: string }> = {
   arca: { name: "ARCA (ex AFIP)", logo: img("arca.png") },
   indec: { name: "INDEC", logo: img("indec.png") },
   hacienda: { name: "Ministerio de Hacienda Córdoba", logo: img("ministerioDeHaciendoCordoba.png") },
-  cajaValores: { name: "Caja de Valores", logo: img("cajaDeValores.png") },
-  artear: { name: "ARTEAR", logo: img("artear.png") },
   mercantil: { name: "Banco Mercantil Santa Cruz", logo: img("mercantilSantaCruz.png") },
   allianz: { name: "Allianz", logo: img("allianz.png") },
   cre: { name: "Cooperativa Rural de Electrificación", logo: img("cre.png") },
@@ -25,7 +23,7 @@ export const clientLogos: Record<string, { name: string; logo: string }> = {
 export type ServiceHow =
   | { kind: "text"; text: string }
   | { kind: "steps"; intro?: string; items: string[] }
-  | { kind: "cards"; intro?: string; items: { title: string; text: string }[] }
+  | { kind: "cards"; intro?: string; items: { title: string; text: string; bullets?: string[] }[] }
   | { kind: "list"; intro?: string; items: string[] };
 
 export type Service = {
@@ -54,11 +52,11 @@ export type Service = {
   ctaText: string;
 };
 
-export const services: Service[] = [
+const serviceList: Service[] = [
   {
     slug: "critical-ops",
     formInterest: "Sistemas críticos (CriticalOps)",
-    category: "Database, Middleware & Virtualización",
+    category: "Database, Middleware & Cloud",
     menuLabel: "CriticalOps",
     overviewTitle: "Gestión de sistemas críticos",
     overviewText: "Mantener tu negocio en línea nunca fue tan crítico.",
@@ -68,7 +66,7 @@ export const services: Service[] = [
       "Monitoreo y gestión proactiva 24/7 de sistemas de misión crítica en entornos on-premise, cloud o híbridos.",
     heroImage: img("database.png"),
     whatTitle: "¿Qué es CriticalOps?",
-    what: "CriticalOps es el servicio de monitoreo y gestión proactiva 24/7 para sistemas de misión crítica, diseñado para garantizar continuidad operativa, alta disponibilidad y seguridad en entornos on-premise, cloud o híbridos.",
+    what: "CriticalOps es el servicio de asistencia técnica en el que monitoreamos y gestionamos 24/7 tus sistemas de misión crítica para que funcionen sin interrupciones, y optimizamos tus procesos para que tu negocio sea más ágil y eficiente, en entornos on-premise, cloud o híbridos.",
     whatImage: img("critical-ops.png"),
     purposes: [
       "Asegurar la continuidad operativa.",
@@ -78,11 +76,18 @@ export const services: Service[] = [
       "Reducir riesgos ante eventos pico.",
     ],
     how: {
-      kind: "text",
-      text: "Implementamos estrategias de workloads de alta disponibilidad, políticas de recuperación ante desastres y procesos ágiles que maximizan la eficiencia de tu operación.",
+      kind: "cards",
+      intro:
+        "Implementamos estrategias de workloads de alta disponibilidad, políticas de recuperación ante desastres y procesos ágiles que maximizan la eficiencia de tu operación.",
+      items: [
+        { title: "Continuidad del negocio", text: "Planificamos workloads y procesos para atender los picos de demanda y minimizar los incidentes." },
+        { title: "Eficiencia operativa", text: "Optimizamos la performance de los sistemas y la velocidad de atención ante incidentes o aumentos de demanda." },
+        { title: "Seguridad", text: "Definimos, implementamos y testeamos las políticas de seguridad y respaldo de datos." },
+        { title: "Flexibilidad", text: "Adaptamos el servicio a la necesidad de cada cliente." },
+      ],
     },
     why: [
-      "Más de 25 años acompañando a empresas y organismos críticos de Latinoamérica.",
+      "Más de 28 años acompañando a empresas y organismos críticos de Latinoamérica.",
       "Experiencia comprobada en entornos on-premise, cloud, híbridos y multicloud.",
       "Equipo senior especializado en continuidad IT y compliance.",
       "Conocimiento profundo de sectores altamente críticos como banca, salud, gobierno, energía y seguros.",
@@ -96,7 +101,7 @@ export const services: Service[] = [
   {
     slug: "cloud-modernization-infrastructure",
     formInterest: "Modernización de infraestructura",
-    category: "Database, Middleware & Virtualización",
+    category: "Database, Middleware & Cloud",
     menuLabel: "Modernización de infraestructura",
     overviewTitle: "Modernización de infraestructura",
     overviewText: "Modernizá tu base tecnológica sin frenar el negocio.",
@@ -114,12 +119,16 @@ export const services: Service[] = [
       "Preparar tu infraestructura para la nube y la innovación.",
       "Asegurar compatibilidad tecnológica.",
     ],
+    purposeIntro:
+      "Tocar un sistema que funciona implica riesgos, pero mantener software o infraestructura obsoleta te expone a vulnerabilidades, reduce la eficiencia y te quita compatibilidad con las herramientas que necesitás para innovar y escalar.",
     how: {
-      kind: "steps",
+      kind: "cards",
+      intro: "Migramos con mínima interrupción del servicio, mientras tu equipo sigue trabajando con normalidad.",
       items: [
-        "Realizamos un análisis exhaustivo del entorno actual y de las necesidades del negocio.",
-        "Diseñamos arquitecturas modernas, implementamos capacity planning y validamos la integridad de los datos.",
-        "Ejecutamos migraciones seguras con simulaciones previas, mientras tu equipo continúa trabajando sin interrupciones.",
+        { title: "Planificación", text: "Analizamos el entorno actual y planificamos y probamos la estrategia de migración que mejor se adapta a tu negocio." },
+        { title: "Arquitectura", text: "Diseñamos la nueva arquitectura evaluando las opciones más efectivas, con capacity planning incluido." },
+        { title: "Migración", text: "Ejecutamos la transición con simulaciones previas, manteniendo la integridad de tus datos." },
+        { title: "Test", text: "Probamos la actualización minimizando el impacto en la disponibilidad del servicio." },
       ],
     },
     // Mejora: el original repetía acá, textual, el paso 3 de "¿Cómo lo hacemos?".
@@ -128,15 +137,15 @@ export const services: Service[] = [
       "Proyectos exitosos en banca, seguros y gobierno.",
     ],
     casesText:
-      "Ya confiaron en nosotros EPEC, Ministerio de Hacienda Córdoba, Global Processing, Allianz y ARTEAR, entre otros. Gracias a nuestras modernizaciones, lograron operar con mayor seguridad, eficiencia y capacidad de evolución tecnológica.",
-    logos: ["hacienda", "allianz", "artear"],
+      "Ya confiaron en nosotros EPEC, Ministerio de Hacienda Córdoba y Allianz, entre otros. Gracias a nuestras modernizaciones, lograron operar con mayor seguridad, eficiencia y capacidad de evolución tecnológica.",
+    logos: ["hacienda", "allianz"],
     ctaTitle: "¿Listo para modernizar sin frenar el negocio?",
     ctaText: "Completá el formulario y coordinamos una llamada.",
   },
   {
     slug: "cloud",
     formInterest: "Cloud",
-    category: "Cloud",
+    category: "Database, Middleware & Cloud",
     menuLabel: "Cloud",
     overviewTitle: "Cloud Adoption Services",
     overviewText: "Llevá tu negocio a la nube, sin fricciones.",
@@ -156,70 +165,27 @@ export const services: Service[] = [
     ],
     how: {
       kind: "cards",
+      intro:
+        "Una suite completa de servicios que podés contratar en forma individual, combinada o total: desde el diseño de la arquitectura hasta la administración y evolución de tus entornos.",
       items: [
         { title: "Cloud Architecture & Capacity Planning", text: "Diseño y dimensionamiento estratégico de tu arquitectura cloud." },
         { title: "Move to Cloud", text: "Planificación y ejecución de migraciones en entornos simples, híbridos o multicloud." },
         { title: "Cloud Security Policy", text: "Definición e implementación de políticas de seguridad y compliance." },
-        { title: "Managed Cloud Services", text: "Soporte y operación avanzada para sacar el máximo provecho desde el día uno." },
+        { title: "DBAaaS · ITaaS", text: "Nuestros DBAs y DevOps especializados en cloud complementan a tu equipo de IT, aceleran la curva de aprendizaje y te ayudan a sacarle el máximo provecho a la nube desde el día uno." },
         { title: "Cloud Technical Assistance", text: "Resolución de incidentes y asistencia técnica especializada." },
-        { title: "Virtual Networking", text: "Diseño y gestión de redes virtuales alineadas a tus requisitos de seguridad y rendimiento." },
       ],
     },
     why: [
       "Equipo certificado en múltiples plataformas (Oracle, AWS, Azure, Google Cloud).",
-      "Más de 25 años en proyectos de infraestructura y cloud en sectores críticos.",
+      "Más de 28 años en proyectos de infraestructura y cloud en sectores críticos.",
       "Experiencia transversal en seguros, energía, retail, gobierno y salud.",
       "Acompañamiento para acelerar la adopción y evolucionar con entornos híbridos.",
     ],
     casesText:
-      "Federación Patronal Seguros, EPEC, Arcos Dorados, Molino Cañuelas y más organizaciones confiaron en Preteco para migrar, administrar y potenciar su estrategia cloud.",
+      "Federación Patronal Seguros, EPEC y más organizaciones confiaron en Preteco para migrar, administrar y potenciar su estrategia cloud.",
     logos: [],
     ctaTitle: "¿Listo para migrar a la nube sin frenar el negocio?",
     ctaText: "Completá el formulario y coordinamos una reunión.",
-  },
-  {
-    slug: "agent-development",
-    formInterest: "Inteligencia artificial",
-    category: "Inteligencia artificial",
-    menuLabel: "Desarrollo de agentes",
-    overviewTitle: "Desarrollo de agentes",
-    overviewText: "Sumá inteligencia a tu operación.",
-    title: "Desarrollo de agentes de inteligencia artificial para empresas",
-    subtitle: "Creamos agentes de IA que potencian tu equipo y se adaptan a tu negocio.",
-    metaDescription:
-      "Agentes de IA que se integran a tus sistemas para automatizar procesos, responder consultas en tiempo real y potenciar el trabajo humano.",
-    heroImage: img("ia.png"),
-    whatTitle: "¿Qué es?",
-    what: "Creamos agentes de IA que se integran en tus sistemas para automatizar procesos, responder consultas en tiempo real y potenciar el trabajo humano.",
-    whatImage: img("agent-development.png"),
-    purposes: [
-      "Liberar talento humano de tareas repetitivas.",
-      "Mejorar la experiencia del cliente con respuestas inmediatas y personalizadas.",
-      "Acceder a insights relevantes para tomar mejores decisiones.",
-      "Reducir costos operativos y mejorar la velocidad de respuesta en procesos críticos.",
-    ],
-    how: {
-      kind: "list",
-      intro:
-        "Utilizamos tecnologías líderes como AWS API, MuleSoft y Red Hat OpenShift para garantizar soluciones escalables, seguras y flexibles.",
-      items: [
-        "Analizamos en profundidad tus procesos y los puntos críticos donde la IA puede generar más valor.",
-        "Diseñamos agentes entrenables y personalizados, ajustados a tu cultura y tu stack tecnológico.",
-        "Los integramos con tus sistemas existentes, asegurando máxima compatibilidad y seguridad.",
-        "Trabajamos con metodología ágil, foco en resultados y acompañamiento experto en cada etapa.",
-      ],
-    },
-    why: [
-      "Experiencia desarrollando soluciones de IA aplicadas a procesos críticos en diferentes industrias.",
-      "Metodología ágil, enfoque en compliance y soluciones de IA escalables.",
-      "Alto nivel de personalización y adaptación a tus sistemas y cultura organizacional.",
-      "Seguridad como pilar: cumplimiento de estándares y buenas prácticas para proteger tus datos y operaciones.",
-    ],
-    casesText:
-      "Organizaciones de salud, fintech y aseguradoras ya confían en nuestros agentes para mejorar la atención al cliente, optimizar procesos internos y acelerar la toma de decisiones, manteniendo siempre un alto estándar de calidad y seguridad.",
-    logos: [],
-    ctaTitle: "¿Listo para que tu negocio piense y actúe con inteligencia?",
-    ctaText: "Contactanos y diseñemos juntos tu próximo agente.",
   },
   {
     slug: "workforce-customer-indentity",
@@ -229,24 +195,30 @@ export const services: Service[] = [
     overviewTitle: "Workforce & Customer Identity",
     overviewText: "Seguridad y confianza para cada identidad.",
     title: "Identity Management con Okta y Auth0",
-    subtitle: "Seguridad y acceso inteligente para empleados y clientes.",
+    subtitle: "Todo el ciclo de vida de la identidad, para empleados, clientes, proveedores y agentes de IA.",
     metaDescription:
-      "Gestión de identidades con SSO, MFA y governance centralizada para proteger los accesos de clientes y empleados.",
+      "Gestión de identidades con Okta y Auth0: SSO, MFA resistente a phishing, identity governance, passwordless y acceso seguro para agentes de IA.",
     heroImage: img("workforce.png"),
     whatTitle: "¿Qué es?",
-    what: "Soluciones de gestión de identidades que combinan Single Sign-On (SSO), Multi-Factor Authentication (MFA) y governance centralizada para proteger los accesos de clientes y empleados.",
+    what: "Cubrimos todo el ciclo de vida de la identidad, desde la gobernanza hasta el acceso y los controles de acceso privado. Junto a Okta brindamos una plataforma neutral, potente y extensible que pone la identidad en el centro de la seguridad de tus datos: protegemos el acceso a datos, aplicaciones y dispositivos de empleados, proveedores, clientes, socios y agentes de IA.",
     whatImage: img("workforce-customer-indentity.png"),
     purposes: [
       "Aumentar la seguridad digital y reducir riesgos de accesos no autorizados.",
       "Mejorar la experiencia de acceso para empleados y clientes.",
       "Acelerar procesos de onboarding y operaciones internas.",
       "Cumplir con regulaciones y normativas de privacidad.",
+      "Dar acceso seguro a los agentes de IA que trabajan con tus herramientas y datos.",
     ],
     how: {
-      kind: "list",
+      kind: "cards",
+      intro:
+        "Integramos estas soluciones con tus sistemas legacy y plataformas cloud, sin importar quién necesite acceder, el caso de uso o el nivel de soporte que necesites.",
       items: [
-        "Integramos autenticación multifactor y políticas avanzadas de seguridad para proteger todos los puntos de entrada.",
-        "Aseguramos compatibilidad con tus sistemas legacy y plataformas cloud.",
+        { title: "Single Sign-On", text: "Acceso seguro a aplicaciones y datos para empleados, clientes, contratistas y socios, con la mejor experiencia de trabajo." },
+        { title: "Autenticación multifactor", text: "Autenticación inteligente y resistente a phishing, sin comprometer la experiencia del usuario." },
+        { title: "Identity Governance", text: "Más seguridad y menos complejidad en la administración de accesos, desde una plataforma de identidades unificada." },
+        { title: "Passwordless", text: "Acceso más rápido y seguro a través de autenticación biométrica." },
+        { title: "Auth0 para aplicaciones de GenAI", text: "Agentes de IA que acceden de forma segura a herramientas, workflows y datos, con unas pocas líneas de código." },
       ],
     },
     why: [
@@ -264,10 +236,10 @@ export const services: Service[] = [
   },
   {
     slug: "legacy-apps",
-    formInterest: "Desarrollo y modernización de aplicaciones",
-    category: "Desarrollo",
-    menuLabel: "Modernización de aplicaciones legacy",
-    overviewTitle: "Modernización de aplicaciones legacy",
+    formInterest: "Modernización de aplicaciones",
+    category: "Modernización de aplicaciones",
+    menuLabel: "Modernización de aplicaciones",
+    overviewTitle: "Modernización de aplicaciones",
     overviewText: "Transformá tu legado en innovación.",
     title: "Transformá tu legado en innovación",
     subtitle: "Modernización de aplicaciones legacy con microservicios y cloud.",
@@ -291,11 +263,13 @@ export const services: Service[] = [
       items: [
         {
           title: "Migración automatizada (AI/ML)",
-          text: "Migramos el código existente con herramientas inteligentes para acelerar el proceso. Preservamos la lógica del negocio y dejamos el sistema listo para la nube.",
+          text: "Migramos el código existente con herramientas de análisis y generación basadas en IA, que respetan la lógica de negocio. Ideal para modernizaciones as is.",
+          bullets: ["Código cloud-ready", "Migración a tecnologías open source", "Mayor velocidad de migración", "Microservicios nativos", "Sin reingeniería de procesos"],
         },
         {
           title: "Migración manual con reingeniería y metodologías ágiles",
-          text: "Analizamos tu sistema actual, rediseñamos la arquitectura y desarrollamos una solución moderna equivalente con tecnologías open source y microservicios. Nuestras células especializadas colaboran con tu equipo y garantizan una rápida salida al negocio.",
+          text: "Analizamos tu sistema actual, rediseñamos la arquitectura y desarrollamos una solución moderna equivalente con tecnologías open source y microservicios. Ideal para modernizar con rediseño de procesos y pantallas.",
+          bullets: ["Equipos dedicados por especialidad", "Selección de tecnologías", "Escalabilidad del proceso con células de trabajo", "Implementación directa", "Alta reingeniería de procesos"],
         },
       ],
     },
@@ -306,66 +280,142 @@ export const services: Service[] = [
       "Preparación para arquitecturas cloud, on-premise o híbridas, listas para escalar en múltiples plataformas.",
     ],
     casesText:
-      "Federación Patronal Seguros, Hospital Alemán, Hospital Garrahan y Cooperativa Rural de Electrificación confiaron en nosotros para transformar sus sistemas legados y habilitar nuevas oportunidades de negocio.",
+      "Federación Patronal Seguros, Hospital Alemán y Cooperativa Rural de Electrificación confiaron en nosotros para transformar sus sistemas legados y habilitar nuevas oportunidades de negocio.",
     logos: ["cre"],
     ctaTitle: "¿Listo para modernizar sin frenar el negocio?",
     ctaText: "Completá el formulario y coordinamos una reunión.",
   },
   {
-    slug: "app-development",
-    formInterest: "Desarrollo y modernización de aplicaciones",
-    category: "Desarrollo",
-    menuLabel: "Desarrollo de aplicaciones",
-    overviewTitle: "Desarrollo de aplicaciones",
-    overviewText: "Convertí tus ideas en soluciones digitales reales.",
-    title: "Desarrollo de aplicaciones a medida para empresas",
-    subtitle:
-      "Convertí tus ideas en soluciones digitales reales. Creamos aplicaciones a medida para que tu negocio crezca, innove y se diferencie.",
+    slug: "data-ia",
+    formInterest: "Data & IA",
+    category: "Data & IA",
+    menuLabel: "Data & IA",
+    overviewTitle: "Data & IA",
+    overviewText: "Datos ordenados e IA aplicada, del diagnóstico a producción.",
+    title: "Data & IA para potenciar el talento de tu organización",
+    subtitle: "Organizamos tus datos e implementamos IA para que tu equipo ponga su energía y creatividad donde más valor genera.",
     metaDescription:
-      "Aplicaciones web, móviles y empresariales a medida que automatizan procesos, mejoran la experiencia del cliente y optimizan decisiones.",
-    heroImage: img("development.png"),
+      "Organizamos los datos e implementamos IA integrada a tus sistemas: AI Readiness, soluciones co-creadas (demo, PoC, MVP), arquitectura y LLMOps, y un AI Squad dedicado.",
+    heroImage: img("ia.png"),
     whatTitle: "¿Qué es?",
-    what: "Creamos aplicaciones web, móviles y empresariales personalizadas, que automatizan procesos, mejoran la experiencia del cliente y optimizan las decisiones de negocio.",
-    whatImage: img("app-development.png"),
-    purposeIntro:
-      "Te permite adaptarte a las necesidades de tu organización, generar valor diferencial y tomar decisiones basadas en datos conectados.",
+    what: "Organizamos los datos e implementamos IA para que el talento humano de tu organización pueda poner toda su energía y creatividad en generar aún más valor para el negocio, apoyándose en insights y en herramientas de inteligencia artificial integradas a tus sistemas existentes, con los más altos niveles de seguridad.",
+    whatImage: img("agent-development.png"),
+    purposeIntro: "Trabajamos en cuatro frentes, para que puedas empezar por donde más lo necesites.",
     purposes: [
-      "Personalizar la relación con el cliente.",
-      "Automatizar procesos críticos para ganar eficiencia.",
-      "Diferenciarte en el mercado con experiencias digitales innovadoras.",
-      "Tomar decisiones basadas en datos y procesos conectados.",
+      "Saber qué tan preparada está tu organización para la IA y tener un roadmap concreto.",
+      "Validar ideas rápido, con demos y pruebas de concepto, antes de invertir a escala.",
+      "Contar con datos normalizados, integraciones y una arquitectura lista para IA.",
+      "Llevar agentes, automatizaciones y modelos a producción de forma segura.",
     ],
     how: {
-      kind: "list",
+      kind: "cards",
+      intro: "¿Qué hacemos? Cuatro frentes de trabajo:",
       items: [
-        "Equipos ágiles y multidisciplinarios que trabajan desde la idea hasta el soporte post-implementación.",
-        "Células de trabajo especializadas, que pueden integrarse a tu equipo actual o funcionar de forma autónoma.",
-        "DevOps y tecnologías de vanguardia para garantizar escalabilidad y rendimiento.",
+        {
+          title: "Transformación de negocio",
+          text: "AI Readiness en cuatro niveles, del diagnóstico a la transformación.",
+          bullets: ["Lite · diagnóstico rápido inicial", "Starter · evaluación por dimensiones", "Intermediate · roadmap validado a 90 días", "Advanced · transformación integral"],
+        },
+        {
+          title: "Soluciones co-creadas",
+          text: "Validamos cada idea por etapas, junto a tu equipo.",
+          bullets: ["Quick Win Demo · prueba conceptual visual", "PoC · validación técnica acotada", "MVP · primera versión funcional", "Producto · solución lista para escalar"],
+        },
+        {
+          title: "Tecnología correcta",
+          text: "La base técnica para que la IA funcione en producción.",
+          bullets: [
+            "Arquitectura de IA",
+            "Data Readiness · normalización de datos",
+            "Integraciones entre sistemas",
+            "Infraestructura cloud, on-premise o híbrida",
+            "LLMOps · modelos en producción",
+            "Seguridad, privacidad y compliance",
+            "Desarrollo a medida",
+          ],
+        },
+        {
+          title: "AI Squad · IA Lab",
+          text: "Un equipo dedicado que construye soluciones de IA para tu negocio.",
+          bullets: ["Agentes · decisiones autónomas", "Automatizaciones · flujos sin intervención", "IA generativa · soporte de procesos con GenAI", "Predictivo / ML · predicción y análisis"],
+        },
       ],
     },
     why: [
-      "Experiencia comprobada en múltiples sectores y metodologías ágiles para reducir los tiempos de salida a producción.",
-      "Flexibilidad total: nos adaptamos a tus necesidades, sin imponer estructuras rígidas.",
-      "Relación cercana y transparente, basada en la confianza y en la búsqueda constante de resultados concretos.",
-      "Compromiso real con el éxito y la innovación de tu negocio.",
+      "Más de 28 años en sistemas de misión crítica: integramos la IA con lo que ya funciona.",
+      "Seguridad y compliance como pilar, desde el diseño.",
+      "Un enfoque por etapas (demo, PoC, MVP, producto) que reduce el riesgo de cada inversión.",
+      "Un AI Squad propio para pasar del piloto a producción.",
     ],
     casesText:
-      "Ministerio de Salud de Panamá, Molino Cañuelas, OMINT, Sanatorio Modelo de Quilmes y NewTravel son algunas de las organizaciones que confiaron en nosotros para desarrollar soluciones que transformaron sus operaciones y experiencias digitales.",
+      "Organizaciones de servicios financieros, seguros, salud y sector público confían en Preteco para operar sus sistemas más críticos, y hoy suman datos e IA sobre esa misma base.",
     logos: [],
-    ctaTitle: "¿Listo para convertir tu idea en una solución real?",
-    ctaText: "Completá el formulario y coordinamos una reunión.",
+    ctaTitle: "¿Listo para poner tus datos y la IA a trabajar?",
+    ctaText: "Contanos tu desafío y te proponemos por dónde empezar.",
+  },
+  {
+    slug: "staffing-it",
+    formInterest: "Staffing IT",
+    category: "Staffing IT",
+    menuLabel: "Staffing IT",
+    overviewTitle: "Staffing IT",
+    overviewText: "No solo cubrimos posiciones: construimos equipos.",
+    title: "Staffing IT en modalidad de servicio continuo",
+    subtitle: "No solo cubrimos posiciones. Construimos equipos que generan resultados.",
+    metaDescription:
+      "Staffing IT como servicio continuo: diagnóstico, gestión con IA y criterio humano, pipeline visible, sourcing multicanal, onboarding y seguimiento.",
+    heroImage: img("development.png"),
+    whatTitle: "¿Qué es?",
+    what: "Un servicio continuo de staffing IT: entendemos tu negocio, tu stack y tu equipo, gestionamos cada búsqueda combinando IA y criterio humano, y acompañamos la integración de cada profesional para asegurar la continuidad del servicio.",
+    whatImage: img("unSoloEquipo.png"),
+    purposeIntro: "Resuelve los desafíos que más vemos en nuestros clientes:",
+    purposes: [
+      "Bajar la alta rotación.",
+      "Ganar visibilidad sobre cada búsqueda.",
+      "Pasar de cubrir posiciones a construir equipos.",
+      "Asegurar la continuidad del servicio.",
+    ],
+    how: {
+      kind: "cards",
+      items: [
+        { title: "Diagnóstico", text: "Entendemos tu negocio, tu stack y tu equipo." },
+        { title: "Gestión", text: "IA + criterio humano, pipeline visible y sourcing multicanal." },
+        { title: "Integración", text: "Onboarding y seguimiento continuo de cada profesional." },
+      ],
+    },
+    why: [
+      "Resultado: profesionales integrados y continuidad del servicio.",
+      "Pipeline visible: sabés en qué estado está cada búsqueda.",
+      "Más de 28 años armando y gestionando equipos técnicos en sistemas de misión crítica.",
+    ],
+    casesText:
+      "Organizaciones de servicios financieros, seguros, salud y sector público confían en Preteco para sostener la operación de sus sistemas más críticos.",
+    logos: [],
+    ctaTitle: "¿Necesitás sumar talento IT a tu equipo?",
+    ctaText: "Contanos qué perfiles buscás y coordinamos una llamada.",
   },
 ];
 
-export const getService = (slug: string) => services.find((s) => s.slug === slug);
 
+/* Áreas en el orden del deck institucional (01 Seguridad … 05 Staffing IT).
+   El orden de `services` (menú y "Siguiente servicio") sale de acá. */
 export const serviceGroups = [
-  { name: "Database, Middleware & Virtualización", image: img("database.png"), slugs: ["critical-ops", "cloud-modernization-infrastructure"] },
-  { name: "Cloud", image: img("cloud.png"), slugs: ["cloud"] },
-  { name: "Inteligencia artificial", image: img("ia.png"), slugs: ["agent-development"] },
   { name: "Seguridad", image: img("security.png"), slugs: ["workforce-customer-indentity"] },
-  { name: "Desarrollo", image: img("development.png"), slugs: ["legacy-apps", "app-development"] },
+  { name: "Database, Middleware & Cloud", image: img("database.png"), slugs: ["cloud-modernization-infrastructure", "critical-ops", "cloud"] },
+  { name: "Modernización de aplicaciones", image: img("development.png"), slugs: ["legacy-apps"] },
+  { name: "Data & IA", image: img("ia.png"), slugs: ["data-ia"] },
+  { name: "Staffing IT", image: img("development.png"), slugs: ["staffing-it"] },
 ];
+
+export const services: Service[] = serviceGroups.flatMap((g) =>
+  g.slugs.map((slug) => {
+    const svc = serviceList.find((s) => s.slug === slug);
+    if (!svc) throw new Error(`Servicio "${slug}" listado en serviceGroups pero no definido`);
+    return svc;
+  }),
+);
+
+export const getService = (slug: string) => services.find((s) => s.slug === slug);
 
 export const workSteps = [
   {

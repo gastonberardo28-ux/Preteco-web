@@ -23,15 +23,6 @@ export const products = [
     logoRatio: 143 / 49,
   },
   {
-    id: "mulesoft",
-    name: "MuleSoft",
-    title: "Integración de aplicaciones y datos",
-    text: "Conectá sistemas, dispositivos y aplicaciones de manera ágil, rápida y segura, logrando una integración empresarial que acelera la innovación.",
-    logo: img("mulesoft.svg"),
-    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
-    logoRatio: 217 / 65,
-  },
-  {
     id: "aws",
     name: "AWS",
     title: "Servicios cloud escalables y seguros",
@@ -39,5 +30,23 @@ export const products = [
     logo: img("awslogo.svg"),
     /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
     logoRatio: 80 / 49,
+  },
+  {
+    id: "denodo",
+    name: "Denodo",
+    title: "Gestión lógica de datos",
+    text: "Integrá y accedé a los datos de toda tu organización en tiempo real, sin moverlos ni duplicarlos, con una capa de datos unificada y gobernada, lista para analítica e IA.",
+    logo: img("denodo.png"),
+    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
+    logoRatio: 214 / 58,
+  },
+  {
+    id: "sas",
+    name: "SAS",
+    title: "Analítica avanzada e IA",
+    text: "Convertí tus datos en decisiones con la plataforma de analítica, machine learning e IA de SAS, con gobierno y confiabilidad de nivel empresarial.",
+    logo: img("sas.svg"),
+    /** Proporción ancho / alto del logo: se usa para que todos se vean del mismo "peso". */
+    logoRatio: 104 / 100,
   },
 ];
